@@ -343,18 +343,18 @@ C:\ServerLauncher\ReArise\RSource\RSource\src\Source\Application\DigitalWorldOnl
 C:\ServerLauncher\ReArise\RSource\RSource\src\Source\Application\DigitalWorldOnline.Application\obj\Debug\net7.0\refint\DigitalWorldOnline.Application.dll
 C:\ServerLauncher\ReArise\RSource\RSource\src\Source\Application\DigitalWorldOnline.Application\obj\Debug\net7.0\DigitalWorldOnline.Application.pdb
 C:\ServerLauncher\ReArise\RSource\RSource\src\Source\Application\DigitalWorldOnline.Application\obj\Debug\net7.0\ref\DigitalWorldOnline.Application.dll
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Application\DigitalWorldOnline.Application\bin\Debug\net7.0\DigitalWorldOnline.Application.deps.json
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Application\DigitalWorldOnline.Application\bin\Debug\net7.0\DigitalWorldOnline.Application.dll
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Application\DigitalWorldOnline.Application\bin\Debug\net7.0\DigitalWorldOnline.Application.pdb
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Application\DigitalWorldOnline.Application\bin\Debug\net7.0\DigitalWorldOnline.Commons.dll
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Application\DigitalWorldOnline.Application\bin\Debug\net7.0\DigitalWorldOnline.Commons.pdb
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Application\DigitalWorldOnline.Application\obj\Debug\net7.0\DigitalWorldOnline.Application.csproj.AssemblyReference.cache
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Application\DigitalWorldOnline.Application\obj\Debug\net7.0\DigitalWorldOnline.Application.GeneratedMSBuildEditorConfig.editorconfig
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Application\DigitalWorldOnline.Application\obj\Debug\net7.0\DigitalWorldOnline.Application.AssemblyInfoInputs.cache
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Application\DigitalWorldOnline.Application\obj\Debug\net7.0\DigitalWorldOnline.Application.AssemblyInfo.cs
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Application\DigitalWorldOnline.Application\obj\Debug\net7.0\DigitalWorldOnline.Application.csproj.CoreCompileInputs.cache
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Application\DigitalWorldOnline.Application\obj\Debug\net7.0\DigitalW.B459DF74.Up2Date
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Application\DigitalWorldOnline.Application\obj\Debug\net7.0\DigitalWorldOnline.Application.dll
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Application\DigitalWorldOnline.Application\obj\Debug\net7.0\refint\DigitalWorldOnline.Application.dll
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Application\DigitalWorldOnline.Application\obj\Debug\net7.0\DigitalWorldOnline.Application.pdb
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Application\DigitalWorldOnline.Application\obj\Debug\net7.0\ref\DigitalWorldOnline.Application.dll
+C:\ServerLauncher\RSource\RSource\src\Source\Application\DigitalWorldOnline.Application\bin\Debug\net7.0\DigitalWorldOnline.Application.deps.json
+C:\ServerLauncher\RSource\RSource\src\Source\Application\DigitalWorldOnline.Application\bin\Debug\net7.0\DigitalWorldOnline.Application.dll
+C:\ServerLauncher\RSource\RSource\src\Source\Application\DigitalWorldOnline.Application\bin\Debug\net7.0\DigitalWorldOnline.Application.pdb
+C:\ServerLauncher\RSource\RSource\src\Source\Application\DigitalWorldOnline.Application\bin\Debug\net7.0\DigitalWorldOnline.Commons.dll
+C:\ServerLauncher\RSource\RSource\src\Source\Application\DigitalWorldOnline.Application\bin\Debug\net7.0\DigitalWorldOnline.Commons.pdb
+C:\ServerLauncher\RSource\RSource\src\Source\Application\DigitalWorldOnline.Application\obj\Debug\net7.0\DigitalWorldOnline.Application.csproj.AssemblyReference.cache
+C:\ServerLauncher\RSource\RSource\src\Source\Application\DigitalWorldOnline.Application\obj\Debug\net7.0\DigitalWorldOnline.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\ServerLauncher\RSource\RSource\src\Source\Application\DigitalWorldOnline.Application\obj\Debug\net7.0\DigitalWorldOnline.Application.AssemblyInfoInputs.cache
+C:\ServerLauncher\RSource\RSource\src\Source\Application\DigitalWorldOnline.Application\obj\Debug\net7.0\DigitalWorldOnline.Application.AssemblyInfo.cs
+C:\ServerLauncher\RSource\RSource\src\Source\Application\DigitalWorldOnline.Application\obj\Debug\net7.0\DigitalWorldOnline.Application.csproj.CoreCompileInputs.cache
+C:\ServerLauncher\RSource\RSource\src\Source\Application\DigitalWorldOnline.Application\obj\Debug\net7.0\DigitalW.B459DF74.Up2Date
+C:\ServerLauncher\RSource\RSource\src\Source\Application\DigitalWorldOnline.Application\obj\Debug\net7.0\DigitalWorldOnline.Application.dll
+C:\ServerLauncher\RSource\RSource\src\Source\Application\DigitalWorldOnline.Application\obj\Debug\net7.0\refint\DigitalWorldOnline.Application.dll
+C:\ServerLauncher\RSource\RSource\src\Source\Application\DigitalWorldOnline.Application\obj\Debug\net7.0\DigitalWorldOnline.Application.pdb
+C:\ServerLauncher\RSource\RSource\src\Source\Application\DigitalWorldOnline.Application\obj\Debug\net7.0\ref\DigitalWorldOnline.Application.dll

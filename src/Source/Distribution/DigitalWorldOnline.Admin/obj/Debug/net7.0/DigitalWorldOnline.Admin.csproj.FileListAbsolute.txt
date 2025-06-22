@@ -838,38 +838,38 @@ C:\ServerLauncher\ReArise\RSource\RSource\src\Source\Distribution\DigitalWorldOn
 C:\ServerLauncher\ReArise\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Admin\obj\Debug\net7.0\DigitalWorldOnline.Admin.pdb
 C:\ServerLauncher\ReArise\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Admin\obj\Debug\net7.0\DigitalWorldOnline.Admin.genruntimeconfig.cache
 C:\ServerLauncher\ReArise\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Admin\obj\Debug\net7.0\ref\DigitalWorldOnline.Admin.dll
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\Build\Admin\Debug\net7.0\wwwroot\Images\dmo_login_v2.png
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\Build\Admin\Debug\net7.0\appsettings.json
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\Build\Admin\Debug\net7.0\DigitalWorldOnline.Admin.staticwebassets.endpoints.json
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\Build\Admin\Debug\net7.0\DigitalWorldOnline.Admin.staticwebassets.runtime.json
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\Build\Admin\Debug\net7.0\DigitalWorldOnline.Admin.exe
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\Build\Admin\Debug\net7.0\wwwroot\Images\dmo_header.png
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\Build\Admin\Debug\net7.0\DigitalWorldOnline.Admin.deps.json
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\Build\Admin\Debug\net7.0\DigitalWorldOnline.Admin.runtimeconfig.json
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\Build\Admin\Debug\net7.0\DigitalWorldOnline.Admin.dll
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\Build\Admin\Debug\net7.0\DigitalWorldOnline.Admin.pdb
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Admin\obj\Debug\net7.0\DigitalWorldOnline.Admin.csproj.AssemblyReference.cache
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Admin\obj\Debug\net7.0\DigitalWorldOnline.Admin.GeneratedMSBuildEditorConfig.editorconfig
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Admin\obj\Debug\net7.0\DigitalWorldOnline.Admin.AssemblyInfoInputs.cache
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Admin\obj\Debug\net7.0\DigitalWorldOnline.Admin.AssemblyInfo.cs
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Admin\obj\Debug\net7.0\DigitalWorldOnline.Admin.csproj.CoreCompileInputs.cache
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Admin\obj\Debug\net7.0\DigitalWorldOnline.Admin.MvcApplicationPartsAssemblyInfo.cache
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Admin\obj\Debug\net7.0\DigitalWorldOnline.Admin.RazorAssemblyInfo.cache
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Admin\obj\Debug\net7.0\DigitalWorldOnline.Admin.RazorAssemblyInfo.cs
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Admin\obj\Debug\net7.0\scopedcss\bundle\DigitalWorldOnline.Admin.styles.css
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Admin\obj\Debug\net7.0\staticwebassets.build.json
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Admin\obj\Debug\net7.0\staticwebassets.development.json
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Admin\obj\Debug\net7.0\staticwebassets.build.endpoints.json
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Admin\obj\Debug\net7.0\staticwebassets\msbuild.DigitalWorldOnline.Admin.Microsoft.AspNetCore.StaticWebAssets.props
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Admin\obj\Debug\net7.0\staticwebassets\msbuild.DigitalWorldOnline.Admin.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Admin\obj\Debug\net7.0\staticwebassets\msbuild.build.DigitalWorldOnline.Admin.props
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Admin\obj\Debug\net7.0\staticwebassets\msbuild.buildMultiTargeting.DigitalWorldOnline.Admin.props
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Admin\obj\Debug\net7.0\staticwebassets\msbuild.buildTransitive.DigitalWorldOnline.Admin.props
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Admin\obj\Debug\net7.0\staticwebassets.pack.json
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Admin\obj\Debug\net7.0\staticwebassets.upToDateCheck.txt
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Admin\obj\Debug\net7.0\DigitalW.41987B5E.Up2Date
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Admin\obj\Debug\net7.0\DigitalWorldOnline.Admin.dll
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Admin\obj\Debug\net7.0\refint\DigitalWorldOnline.Admin.dll
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Admin\obj\Debug\net7.0\DigitalWorldOnline.Admin.pdb
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Admin\obj\Debug\net7.0\DigitalWorldOnline.Admin.genruntimeconfig.cache
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Admin\obj\Debug\net7.0\ref\DigitalWorldOnline.Admin.dll
+C:\ServerLauncher\RSource\RSource\Build\Admin\Debug\net7.0\wwwroot\Images\dmo_login_v2.png
+C:\ServerLauncher\RSource\RSource\Build\Admin\Debug\net7.0\appsettings.json
+C:\ServerLauncher\RSource\RSource\Build\Admin\Debug\net7.0\DigitalWorldOnline.Admin.staticwebassets.endpoints.json
+C:\ServerLauncher\RSource\RSource\Build\Admin\Debug\net7.0\DigitalWorldOnline.Admin.staticwebassets.runtime.json
+C:\ServerLauncher\RSource\RSource\Build\Admin\Debug\net7.0\DigitalWorldOnline.Admin.exe
+C:\ServerLauncher\RSource\RSource\Build\Admin\Debug\net7.0\wwwroot\Images\dmo_header.png
+C:\ServerLauncher\RSource\RSource\Build\Admin\Debug\net7.0\DigitalWorldOnline.Admin.deps.json
+C:\ServerLauncher\RSource\RSource\Build\Admin\Debug\net7.0\DigitalWorldOnline.Admin.runtimeconfig.json
+C:\ServerLauncher\RSource\RSource\Build\Admin\Debug\net7.0\DigitalWorldOnline.Admin.dll
+C:\ServerLauncher\RSource\RSource\Build\Admin\Debug\net7.0\DigitalWorldOnline.Admin.pdb
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Admin\obj\Debug\net7.0\DigitalWorldOnline.Admin.csproj.AssemblyReference.cache
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Admin\obj\Debug\net7.0\DigitalWorldOnline.Admin.GeneratedMSBuildEditorConfig.editorconfig
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Admin\obj\Debug\net7.0\DigitalWorldOnline.Admin.AssemblyInfoInputs.cache
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Admin\obj\Debug\net7.0\DigitalWorldOnline.Admin.AssemblyInfo.cs
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Admin\obj\Debug\net7.0\DigitalWorldOnline.Admin.csproj.CoreCompileInputs.cache
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Admin\obj\Debug\net7.0\DigitalWorldOnline.Admin.MvcApplicationPartsAssemblyInfo.cache
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Admin\obj\Debug\net7.0\DigitalWorldOnline.Admin.RazorAssemblyInfo.cache
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Admin\obj\Debug\net7.0\DigitalWorldOnline.Admin.RazorAssemblyInfo.cs
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Admin\obj\Debug\net7.0\scopedcss\bundle\DigitalWorldOnline.Admin.styles.css
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Admin\obj\Debug\net7.0\staticwebassets.build.json
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Admin\obj\Debug\net7.0\staticwebassets.development.json
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Admin\obj\Debug\net7.0\staticwebassets.build.endpoints.json
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Admin\obj\Debug\net7.0\staticwebassets\msbuild.DigitalWorldOnline.Admin.Microsoft.AspNetCore.StaticWebAssets.props
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Admin\obj\Debug\net7.0\staticwebassets\msbuild.DigitalWorldOnline.Admin.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Admin\obj\Debug\net7.0\staticwebassets\msbuild.build.DigitalWorldOnline.Admin.props
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Admin\obj\Debug\net7.0\staticwebassets\msbuild.buildMultiTargeting.DigitalWorldOnline.Admin.props
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Admin\obj\Debug\net7.0\staticwebassets\msbuild.buildTransitive.DigitalWorldOnline.Admin.props
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Admin\obj\Debug\net7.0\staticwebassets.pack.json
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Admin\obj\Debug\net7.0\staticwebassets.upToDateCheck.txt
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Admin\obj\Debug\net7.0\DigitalW.41987B5E.Up2Date
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Admin\obj\Debug\net7.0\DigitalWorldOnline.Admin.dll
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Admin\obj\Debug\net7.0\refint\DigitalWorldOnline.Admin.dll
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Admin\obj\Debug\net7.0\DigitalWorldOnline.Admin.pdb
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Admin\obj\Debug\net7.0\DigitalWorldOnline.Admin.genruntimeconfig.cache
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Admin\obj\Debug\net7.0\ref\DigitalWorldOnline.Admin.dll

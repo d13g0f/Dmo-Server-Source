@@ -1136,44 +1136,44 @@ C:\ServerLauncher\ReArise\RSource\RSource\src\Source\Distribution\DigitalWorldOn
 C:\ServerLauncher\ReArise\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Api\obj\Debug\net7.0\DigitalWorldOnline.Api.pdb
 C:\ServerLauncher\ReArise\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Api\obj\Debug\net7.0\DigitalWorldOnline.Api.genruntimeconfig.cache
 C:\ServerLauncher\ReArise\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Api\obj\Debug\net7.0\ref\DigitalWorldOnline.Api.dll
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\Build\Api\Debug\net7.0\appsettings.Development.json
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\Build\Api\Debug\net7.0\appsettings.json
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\Build\Api\Debug\net7.0\appsettings.Production.json
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\Build\Api\Debug\net7.0\appsettings.Staging.json
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\Build\Api\Debug\net7.0\bin\Debug\net7.0\appsettings.Development.json
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\Build\Api\Debug\net7.0\bin\Debug\net7.0\appsettings.json
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\Build\Api\Debug\net7.0\bin\Debug\net7.0\appsettings.Production.json
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\Build\Api\Debug\net7.0\bin\Debug\net7.0\appsettings.Staging.json
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\Build\Api\Debug\net7.0\bin\Debug\net7.0\DigitalWorldOnline.Api.deps.json
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\Build\Api\Debug\net7.0\bin\Debug\net7.0\DigitalWorldOnline.Api.runtimeconfig.json
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\Build\Api\Debug\net7.0\bin\Debug\net7.0\DigitalWorldOnline.Api.staticwebassets.endpoints.json
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\Build\Api\Debug\net7.0\DigitalWorldOnline.Api.staticwebassets.endpoints.json
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\Build\Api\Debug\net7.0\DigitalWorldOnline.Api.exe
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\Build\Api\Debug\net7.0\DigitalWorldOnline.Api.deps.json
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\Build\Api\Debug\net7.0\DigitalWorldOnline.Api.runtimeconfig.json
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\Build\Api\Debug\net7.0\DigitalWorldOnline.Api.dll
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\Build\Api\Debug\net7.0\DigitalWorldOnline.Api.pdb
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Api\obj\Debug\net7.0\DigitalWorldOnline.Api.csproj.AssemblyReference.cache
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Api\obj\Debug\net7.0\DigitalWorldOnline.Api.GeneratedMSBuildEditorConfig.editorconfig
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Api\obj\Debug\net7.0\DigitalWorldOnline.Api.AssemblyInfoInputs.cache
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Api\obj\Debug\net7.0\DigitalWorldOnline.Api.AssemblyInfo.cs
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Api\obj\Debug\net7.0\DigitalWorldOnline.Api.csproj.CoreCompileInputs.cache
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Api\obj\Debug\net7.0\DigitalWorldOnline.Api.MvcApplicationPartsAssemblyInfo.cs
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Api\obj\Debug\net7.0\DigitalWorldOnline.Api.MvcApplicationPartsAssemblyInfo.cache
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Api\obj\Debug\net7.0\scopedcss\bundle\DigitalWorldOnline.Api.styles.css
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Api\obj\Debug\net7.0\staticwebassets.build.json
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Api\obj\Debug\net7.0\staticwebassets.development.json
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Api\obj\Debug\net7.0\staticwebassets.build.endpoints.json
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Api\obj\Debug\net7.0\staticwebassets\msbuild.DigitalWorldOnline.Api.Microsoft.AspNetCore.StaticWebAssets.props
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Api\obj\Debug\net7.0\staticwebassets\msbuild.DigitalWorldOnline.Api.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Api\obj\Debug\net7.0\staticwebassets\msbuild.build.DigitalWorldOnline.Api.props
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Api\obj\Debug\net7.0\staticwebassets\msbuild.buildMultiTargeting.DigitalWorldOnline.Api.props
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Api\obj\Debug\net7.0\staticwebassets\msbuild.buildTransitive.DigitalWorldOnline.Api.props
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Api\obj\Debug\net7.0\staticwebassets.pack.json
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Api\obj\Debug\net7.0\staticwebassets.upToDateCheck.txt
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Api\obj\Debug\net7.0\DigitalW.757BB9D0.Up2Date
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Api\obj\Debug\net7.0\DigitalWorldOnline.Api.dll
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Api\obj\Debug\net7.0\refint\DigitalWorldOnline.Api.dll
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Api\obj\Debug\net7.0\DigitalWorldOnline.Api.pdb
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Api\obj\Debug\net7.0\DigitalWorldOnline.Api.genruntimeconfig.cache
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Api\obj\Debug\net7.0\ref\DigitalWorldOnline.Api.dll
+C:\ServerLauncher\RSource\RSource\Build\Api\Debug\net7.0\appsettings.Development.json
+C:\ServerLauncher\RSource\RSource\Build\Api\Debug\net7.0\appsettings.json
+C:\ServerLauncher\RSource\RSource\Build\Api\Debug\net7.0\appsettings.Production.json
+C:\ServerLauncher\RSource\RSource\Build\Api\Debug\net7.0\appsettings.Staging.json
+C:\ServerLauncher\RSource\RSource\Build\Api\Debug\net7.0\bin\Debug\net7.0\appsettings.Development.json
+C:\ServerLauncher\RSource\RSource\Build\Api\Debug\net7.0\bin\Debug\net7.0\appsettings.json
+C:\ServerLauncher\RSource\RSource\Build\Api\Debug\net7.0\bin\Debug\net7.0\appsettings.Production.json
+C:\ServerLauncher\RSource\RSource\Build\Api\Debug\net7.0\bin\Debug\net7.0\appsettings.Staging.json
+C:\ServerLauncher\RSource\RSource\Build\Api\Debug\net7.0\bin\Debug\net7.0\DigitalWorldOnline.Api.deps.json
+C:\ServerLauncher\RSource\RSource\Build\Api\Debug\net7.0\bin\Debug\net7.0\DigitalWorldOnline.Api.runtimeconfig.json
+C:\ServerLauncher\RSource\RSource\Build\Api\Debug\net7.0\bin\Debug\net7.0\DigitalWorldOnline.Api.staticwebassets.endpoints.json
+C:\ServerLauncher\RSource\RSource\Build\Api\Debug\net7.0\DigitalWorldOnline.Api.staticwebassets.endpoints.json
+C:\ServerLauncher\RSource\RSource\Build\Api\Debug\net7.0\DigitalWorldOnline.Api.exe
+C:\ServerLauncher\RSource\RSource\Build\Api\Debug\net7.0\DigitalWorldOnline.Api.deps.json
+C:\ServerLauncher\RSource\RSource\Build\Api\Debug\net7.0\DigitalWorldOnline.Api.runtimeconfig.json
+C:\ServerLauncher\RSource\RSource\Build\Api\Debug\net7.0\DigitalWorldOnline.Api.dll
+C:\ServerLauncher\RSource\RSource\Build\Api\Debug\net7.0\DigitalWorldOnline.Api.pdb
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Api\obj\Debug\net7.0\DigitalWorldOnline.Api.csproj.AssemblyReference.cache
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Api\obj\Debug\net7.0\DigitalWorldOnline.Api.GeneratedMSBuildEditorConfig.editorconfig
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Api\obj\Debug\net7.0\DigitalWorldOnline.Api.AssemblyInfoInputs.cache
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Api\obj\Debug\net7.0\DigitalWorldOnline.Api.AssemblyInfo.cs
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Api\obj\Debug\net7.0\DigitalWorldOnline.Api.csproj.CoreCompileInputs.cache
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Api\obj\Debug\net7.0\DigitalWorldOnline.Api.MvcApplicationPartsAssemblyInfo.cs
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Api\obj\Debug\net7.0\DigitalWorldOnline.Api.MvcApplicationPartsAssemblyInfo.cache
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Api\obj\Debug\net7.0\scopedcss\bundle\DigitalWorldOnline.Api.styles.css
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Api\obj\Debug\net7.0\staticwebassets.build.json
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Api\obj\Debug\net7.0\staticwebassets.development.json
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Api\obj\Debug\net7.0\staticwebassets.build.endpoints.json
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Api\obj\Debug\net7.0\staticwebassets\msbuild.DigitalWorldOnline.Api.Microsoft.AspNetCore.StaticWebAssets.props
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Api\obj\Debug\net7.0\staticwebassets\msbuild.DigitalWorldOnline.Api.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Api\obj\Debug\net7.0\staticwebassets\msbuild.build.DigitalWorldOnline.Api.props
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Api\obj\Debug\net7.0\staticwebassets\msbuild.buildMultiTargeting.DigitalWorldOnline.Api.props
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Api\obj\Debug\net7.0\staticwebassets\msbuild.buildTransitive.DigitalWorldOnline.Api.props
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Api\obj\Debug\net7.0\staticwebassets.pack.json
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Api\obj\Debug\net7.0\staticwebassets.upToDateCheck.txt
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Api\obj\Debug\net7.0\DigitalW.757BB9D0.Up2Date
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Api\obj\Debug\net7.0\DigitalWorldOnline.Api.dll
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Api\obj\Debug\net7.0\refint\DigitalWorldOnline.Api.dll
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Api\obj\Debug\net7.0\DigitalWorldOnline.Api.pdb
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Api\obj\Debug\net7.0\DigitalWorldOnline.Api.genruntimeconfig.cache
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Api\obj\Debug\net7.0\ref\DigitalWorldOnline.Api.dll

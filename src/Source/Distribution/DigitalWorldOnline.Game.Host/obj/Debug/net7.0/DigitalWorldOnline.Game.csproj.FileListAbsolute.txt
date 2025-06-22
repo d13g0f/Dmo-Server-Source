@@ -513,22 +513,22 @@ C:\ServerLauncher\ReArise\RSource\RSource\src\Source\Distribution\DigitalWorldOn
 C:\ServerLauncher\ReArise\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Game.Host\obj\Debug\net7.0\DigitalWorldOnline.Game.pdb
 C:\ServerLauncher\ReArise\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Game.Host\obj\Debug\net7.0\DigitalWorldOnline.Game.genruntimeconfig.cache
 C:\ServerLauncher\ReArise\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Game.Host\obj\Debug\net7.0\ref\DigitalWorldOnline.Game.dll
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\Build\GameServer\Debug\net7.0\DigitalWorldOnline.Game.exe
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\Build\GameServer\Debug\net7.0\appsettings.Development.json
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\Build\GameServer\Debug\net7.0\appsettings.json
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\Build\GameServer\Debug\net7.0\PacketErrors\doc.temp
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\Build\GameServer\Debug\net7.0\DigitalWorldOnline.Game.deps.json
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\Build\GameServer\Debug\net7.0\DigitalWorldOnline.Game.runtimeconfig.json
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\Build\GameServer\Debug\net7.0\DigitalWorldOnline.Game.dll
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\Build\GameServer\Debug\net7.0\DigitalWorldOnline.Game.pdb
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Game.Host\obj\Debug\net7.0\DigitalWorldOnline.Game.csproj.AssemblyReference.cache
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Game.Host\obj\Debug\net7.0\DigitalWorldOnline.Game.GeneratedMSBuildEditorConfig.editorconfig
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Game.Host\obj\Debug\net7.0\DigitalWorldOnline.Game.AssemblyInfoInputs.cache
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Game.Host\obj\Debug\net7.0\DigitalWorldOnline.Game.AssemblyInfo.cs
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Game.Host\obj\Debug\net7.0\DigitalWorldOnline.Game.csproj.CoreCompileInputs.cache
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Game.Host\obj\Debug\net7.0\DigitalW.33F16261.Up2Date
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Game.Host\obj\Debug\net7.0\DigitalWorldOnline.Game.dll
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Game.Host\obj\Debug\net7.0\refint\DigitalWorldOnline.Game.dll
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Game.Host\obj\Debug\net7.0\DigitalWorldOnline.Game.pdb
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Game.Host\obj\Debug\net7.0\DigitalWorldOnline.Game.genruntimeconfig.cache
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Game.Host\obj\Debug\net7.0\ref\DigitalWorldOnline.Game.dll
+C:\ServerLauncher\RSource\RSource\Build\GameServer\Debug\net7.0\DigitalWorldOnline.Game.exe
+C:\ServerLauncher\RSource\RSource\Build\GameServer\Debug\net7.0\appsettings.Development.json
+C:\ServerLauncher\RSource\RSource\Build\GameServer\Debug\net7.0\appsettings.json
+C:\ServerLauncher\RSource\RSource\Build\GameServer\Debug\net7.0\PacketErrors\doc.temp
+C:\ServerLauncher\RSource\RSource\Build\GameServer\Debug\net7.0\DigitalWorldOnline.Game.deps.json
+C:\ServerLauncher\RSource\RSource\Build\GameServer\Debug\net7.0\DigitalWorldOnline.Game.runtimeconfig.json
+C:\ServerLauncher\RSource\RSource\Build\GameServer\Debug\net7.0\DigitalWorldOnline.Game.dll
+C:\ServerLauncher\RSource\RSource\Build\GameServer\Debug\net7.0\DigitalWorldOnline.Game.pdb
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Game.Host\obj\Debug\net7.0\DigitalWorldOnline.Game.csproj.AssemblyReference.cache
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Game.Host\obj\Debug\net7.0\DigitalWorldOnline.Game.GeneratedMSBuildEditorConfig.editorconfig
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Game.Host\obj\Debug\net7.0\DigitalWorldOnline.Game.AssemblyInfoInputs.cache
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Game.Host\obj\Debug\net7.0\DigitalWorldOnline.Game.AssemblyInfo.cs
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Game.Host\obj\Debug\net7.0\DigitalWorldOnline.Game.csproj.CoreCompileInputs.cache
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Game.Host\obj\Debug\net7.0\DigitalW.33F16261.Up2Date
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Game.Host\obj\Debug\net7.0\DigitalWorldOnline.Game.dll
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Game.Host\obj\Debug\net7.0\refint\DigitalWorldOnline.Game.dll
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Game.Host\obj\Debug\net7.0\DigitalWorldOnline.Game.pdb
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Game.Host\obj\Debug\net7.0\DigitalWorldOnline.Game.genruntimeconfig.cache
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Game.Host\obj\Debug\net7.0\ref\DigitalWorldOnline.Game.dll

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "8C+EZygoeMme+vcgrQuseVs5q8Ktq/WXzAg3znjHY7Y=",
+  "Hash": "uiaZoKK6sXaKO2s/shxPD9eKrywUCNrMD3F4vlyyLd0=",
   "Source": "DigitalWorldOnline.Admin",
   "BasePath": "_content/DigitalWorldOnline.Admin",
   "Mode": "Default",
@@ -10,17 +10,17 @@
     {
       "Name": "DigitalWorldOnline.Admin\\wwwroot",
       "Source": "DigitalWorldOnline.Admin",
-      "ContentRoot": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
+      "ContentRoot": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
       "BasePath": "_content/DigitalWorldOnline.Admin",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\_content1\\MudBlazor\\MudBlazor.min.css",
+      "Identity": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\_content1\\MudBlazor\\MudBlazor.min.css",
       "SourceId": "DigitalWorldOnline.Admin",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
+      "ContentRoot": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
       "BasePath": "_content/DigitalWorldOnline.Admin",
       "RelativePath": "_content1/MudBlazor/MudBlazor.min#[.{fingerprint}]?.css",
       "AssetKind": "All",
@@ -38,10 +38,10 @@
       "OriginalItemSpec": "wwwroot\\_content1\\MudBlazor\\MudBlazor.min.css"
     },
     {
-      "Identity": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\_content1\\MudBlazor\\MudBlazor.min.js",
+      "Identity": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\_content1\\MudBlazor\\MudBlazor.min.js",
       "SourceId": "DigitalWorldOnline.Admin",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
+      "ContentRoot": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
       "BasePath": "_content/DigitalWorldOnline.Admin",
       "RelativePath": "_content1/MudBlazor/MudBlazor.min#[.{fingerprint}]?.js",
       "AssetKind": "All",
@@ -59,10 +59,10 @@
       "OriginalItemSpec": "wwwroot\\_content1\\MudBlazor\\MudBlazor.min.js"
     },
     {
-      "Identity": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
+      "Identity": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
       "SourceId": "DigitalWorldOnline.Admin",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
+      "ContentRoot": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
       "BasePath": "_content/DigitalWorldOnline.Admin",
       "RelativePath": "css/bootstrap/bootstrap.min#[.{fingerprint}]?.css",
       "AssetKind": "All",
@@ -80,10 +80,10 @@
       "OriginalItemSpec": "wwwroot\\css\\bootstrap\\bootstrap.min.css"
     },
     {
-      "Identity": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
+      "Identity": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
       "SourceId": "DigitalWorldOnline.Admin",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
+      "ContentRoot": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
       "BasePath": "_content/DigitalWorldOnline.Admin",
       "RelativePath": "css/bootstrap/bootstrap.min.css#[.{fingerprint}]?.map",
       "AssetKind": "All",
@@ -101,10 +101,10 @@
       "OriginalItemSpec": "wwwroot\\css\\bootstrap\\bootstrap.min.css.map"
     },
     {
-      "Identity": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css",
+      "Identity": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css",
       "SourceId": "DigitalWorldOnline.Admin",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
+      "ContentRoot": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
       "BasePath": "_content/DigitalWorldOnline.Admin",
       "RelativePath": "css/open-iconic/font/css/open-iconic-bootstrap.min#[.{fingerprint}]?.css",
       "AssetKind": "All",
@@ -122,10 +122,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css"
     },
     {
-      "Identity": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot",
+      "Identity": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot",
       "SourceId": "DigitalWorldOnline.Admin",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
+      "ContentRoot": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
       "BasePath": "_content/DigitalWorldOnline.Admin",
       "RelativePath": "css/open-iconic/font/fonts/open-iconic#[.{fingerprint}]?.eot",
       "AssetKind": "All",
@@ -143,10 +143,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot"
     },
     {
-      "Identity": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf",
+      "Identity": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf",
       "SourceId": "DigitalWorldOnline.Admin",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
+      "ContentRoot": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
       "BasePath": "_content/DigitalWorldOnline.Admin",
       "RelativePath": "css/open-iconic/font/fonts/open-iconic#[.{fingerprint}]?.otf",
       "AssetKind": "All",
@@ -164,10 +164,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf"
     },
     {
-      "Identity": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg",
+      "Identity": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg",
       "SourceId": "DigitalWorldOnline.Admin",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
+      "ContentRoot": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
       "BasePath": "_content/DigitalWorldOnline.Admin",
       "RelativePath": "css/open-iconic/font/fonts/open-iconic#[.{fingerprint}]?.svg",
       "AssetKind": "All",
@@ -185,10 +185,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg"
     },
     {
-      "Identity": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf",
+      "Identity": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf",
       "SourceId": "DigitalWorldOnline.Admin",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
+      "ContentRoot": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
       "BasePath": "_content/DigitalWorldOnline.Admin",
       "RelativePath": "css/open-iconic/font/fonts/open-iconic#[.{fingerprint}]?.ttf",
       "AssetKind": "All",
@@ -206,10 +206,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf"
     },
     {
-      "Identity": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff",
+      "Identity": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff",
       "SourceId": "DigitalWorldOnline.Admin",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
+      "ContentRoot": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
       "BasePath": "_content/DigitalWorldOnline.Admin",
       "RelativePath": "css/open-iconic/font/fonts/open-iconic#[.{fingerprint}]?.woff",
       "AssetKind": "All",
@@ -227,10 +227,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff"
     },
     {
-      "Identity": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\FONT-LICENSE",
+      "Identity": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\FONT-LICENSE",
       "SourceId": "DigitalWorldOnline.Admin",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
+      "ContentRoot": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
       "BasePath": "_content/DigitalWorldOnline.Admin",
       "RelativePath": "css/open-iconic/FONT-LICENSE#[.{fingerprint}]?",
       "AssetKind": "All",
@@ -248,10 +248,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\FONT-LICENSE"
     },
     {
-      "Identity": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\ICON-LICENSE",
+      "Identity": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\ICON-LICENSE",
       "SourceId": "DigitalWorldOnline.Admin",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
+      "ContentRoot": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
       "BasePath": "_content/DigitalWorldOnline.Admin",
       "RelativePath": "css/open-iconic/ICON-LICENSE#[.{fingerprint}]?",
       "AssetKind": "All",
@@ -269,10 +269,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\ICON-LICENSE"
     },
     {
-      "Identity": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\README.md",
+      "Identity": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\README.md",
       "SourceId": "DigitalWorldOnline.Admin",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
+      "ContentRoot": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
       "BasePath": "_content/DigitalWorldOnline.Admin",
       "RelativePath": "css/open-iconic/README#[.{fingerprint}]?.md",
       "AssetKind": "All",
@@ -290,10 +290,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\README.md"
     },
     {
-      "Identity": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\site.css",
+      "Identity": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\site.css",
       "SourceId": "DigitalWorldOnline.Admin",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
+      "ContentRoot": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
       "BasePath": "_content/DigitalWorldOnline.Admin",
       "RelativePath": "css/site#[.{fingerprint}]?.css",
       "AssetKind": "All",
@@ -311,10 +311,10 @@
       "OriginalItemSpec": "wwwroot\\css\\site.css"
     },
     {
-      "Identity": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\favicon.ico",
+      "Identity": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\favicon.ico",
       "SourceId": "DigitalWorldOnline.Admin",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
+      "ContentRoot": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
       "BasePath": "_content/DigitalWorldOnline.Admin",
       "RelativePath": "favicon#[.{fingerprint}]?.ico",
       "AssetKind": "All",
@@ -332,10 +332,10 @@
       "OriginalItemSpec": "wwwroot\\favicon.ico"
     },
     {
-      "Identity": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\Images\\dmo_header.png",
+      "Identity": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\Images\\dmo_header.png",
       "SourceId": "DigitalWorldOnline.Admin",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
+      "ContentRoot": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
       "BasePath": "_content/DigitalWorldOnline.Admin",
       "RelativePath": "Images/dmo_header#[.{fingerprint}]?.png",
       "AssetKind": "All",
@@ -353,10 +353,10 @@
       "OriginalItemSpec": "wwwroot\\Images\\dmo_header.png"
     },
     {
-      "Identity": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\Images\\dmo_login_v2.png",
+      "Identity": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\Images\\dmo_login_v2.png",
       "SourceId": "DigitalWorldOnline.Admin",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
+      "ContentRoot": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
       "BasePath": "_content/DigitalWorldOnline.Admin",
       "RelativePath": "Images/dmo_login_v2#[.{fingerprint}]?.png",
       "AssetKind": "All",
@@ -374,10 +374,10 @@
       "OriginalItemSpec": "wwwroot\\Images\\dmo_login_v2.png"
     },
     {
-      "Identity": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\js\\script.js",
+      "Identity": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\js\\script.js",
       "SourceId": "DigitalWorldOnline.Admin",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
+      "ContentRoot": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
       "BasePath": "_content/DigitalWorldOnline.Admin",
       "RelativePath": "js/script#[.{fingerprint}]?.js",
       "AssetKind": "All",
@@ -514,7 +514,7 @@
     },
     {
       "Route": "_content1/MudBlazor/MudBlazor.min.4zzcyv4eu3.css",
-      "AssetFile": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\_content1\\MudBlazor\\MudBlazor.min.css",
+      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\_content1\\MudBlazor\\MudBlazor.min.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -559,7 +559,7 @@
     },
     {
       "Route": "_content1/MudBlazor/MudBlazor.min.css",
-      "AssetFile": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\_content1\\MudBlazor\\MudBlazor.min.css",
+      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\_content1\\MudBlazor\\MudBlazor.min.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -596,7 +596,7 @@
     },
     {
       "Route": "_content1/MudBlazor/MudBlazor.min.js",
-      "AssetFile": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\_content1\\MudBlazor\\MudBlazor.min.js",
+      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\_content1\\MudBlazor\\MudBlazor.min.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -633,7 +633,7 @@
     },
     {
       "Route": "_content1/MudBlazor/MudBlazor.min.r28yrlkyxf.js",
-      "AssetFile": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\_content1\\MudBlazor\\MudBlazor.min.js",
+      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\_content1\\MudBlazor\\MudBlazor.min.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -678,7 +678,7 @@
     },
     {
       "Route": "css/bootstrap/bootstrap.min.css",
-      "AssetFile": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
+      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -715,7 +715,7 @@
     },
     {
       "Route": "css/bootstrap/bootstrap.min.css.kao5znno1s.map",
-      "AssetFile": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
+      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -760,7 +760,7 @@
     },
     {
       "Route": "css/bootstrap/bootstrap.min.css.map",
-      "AssetFile": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
+      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -797,7 +797,7 @@
     },
     {
       "Route": "css/bootstrap/bootstrap.min.o2wlpouf80.css",
-      "AssetFile": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
+      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -842,7 +842,7 @@
     },
     {
       "Route": "css/open-iconic/font/css/open-iconic-bootstrap.min.cmapd0fi15.css",
-      "AssetFile": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css",
+      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -887,7 +887,7 @@
     },
     {
       "Route": "css/open-iconic/font/css/open-iconic-bootstrap.min.css",
-      "AssetFile": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css",
+      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -924,7 +924,7 @@
     },
     {
       "Route": "css/open-iconic/font/fonts/open-iconic.0uw8dim9nl.eot",
-      "AssetFile": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot",
+      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -969,7 +969,7 @@
     },
     {
       "Route": "css/open-iconic/font/fonts/open-iconic.10uzszoped.svg",
-      "AssetFile": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg",
+      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1014,7 +1014,7 @@
     },
     {
       "Route": "css/open-iconic/font/fonts/open-iconic.eot",
-      "AssetFile": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot",
+      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1051,7 +1051,7 @@
     },
     {
       "Route": "css/open-iconic/font/fonts/open-iconic.h4d0pazwgy.woff",
-      "AssetFile": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff",
+      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1096,7 +1096,7 @@
     },
     {
       "Route": "css/open-iconic/font/fonts/open-iconic.ll5grcv8wv.ttf",
-      "AssetFile": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf",
+      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1141,7 +1141,7 @@
     },
     {
       "Route": "css/open-iconic/font/fonts/open-iconic.otf",
-      "AssetFile": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf",
+      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1178,7 +1178,7 @@
     },
     {
       "Route": "css/open-iconic/font/fonts/open-iconic.svg",
-      "AssetFile": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg",
+      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1215,7 +1215,7 @@
     },
     {
       "Route": "css/open-iconic/font/fonts/open-iconic.ttf",
-      "AssetFile": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf",
+      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1252,7 +1252,7 @@
     },
     {
       "Route": "css/open-iconic/font/fonts/open-iconic.wk8x8xm0ah.otf",
-      "AssetFile": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf",
+      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1297,7 +1297,7 @@
     },
     {
       "Route": "css/open-iconic/font/fonts/open-iconic.woff",
-      "AssetFile": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff",
+      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1334,7 +1334,7 @@
     },
     {
       "Route": "css/open-iconic/FONT-LICENSE",
-      "AssetFile": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\FONT-LICENSE",
+      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\FONT-LICENSE",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1371,7 +1371,7 @@
     },
     {
       "Route": "css/open-iconic/FONT-LICENSE.z189sdz1gv",
-      "AssetFile": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\FONT-LICENSE",
+      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\FONT-LICENSE",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1416,7 +1416,7 @@
     },
     {
       "Route": "css/open-iconic/ICON-LICENSE",
-      "AssetFile": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\ICON-LICENSE",
+      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\ICON-LICENSE",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1453,7 +1453,7 @@
     },
     {
       "Route": "css/open-iconic/ICON-LICENSE.3cg08az021",
-      "AssetFile": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\ICON-LICENSE",
+      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\ICON-LICENSE",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1498,7 +1498,7 @@
     },
     {
       "Route": "css/open-iconic/README.l5877nzu3a.md",
-      "AssetFile": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\README.md",
+      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\README.md",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1543,7 +1543,7 @@
     },
     {
       "Route": "css/open-iconic/README.md",
-      "AssetFile": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\README.md",
+      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\README.md",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1580,7 +1580,7 @@
     },
     {
       "Route": "css/site.1vtxvcb14m.css",
-      "AssetFile": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\site.css",
+      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\site.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1625,7 +1625,7 @@
     },
     {
       "Route": "css/site.css",
-      "AssetFile": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\site.css",
+      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\site.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1662,7 +1662,7 @@
     },
     {
       "Route": "favicon.61n19gt1b8.ico",
-      "AssetFile": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\favicon.ico",
+      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\favicon.ico",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1707,7 +1707,7 @@
     },
     {
       "Route": "favicon.ico",
-      "AssetFile": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\favicon.ico",
+      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\favicon.ico",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1744,7 +1744,7 @@
     },
     {
       "Route": "Images/dmo_header.7e25eyq1m0.png",
-      "AssetFile": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\Images\\dmo_header.png",
+      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\Images\\dmo_header.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1789,7 +1789,7 @@
     },
     {
       "Route": "Images/dmo_header.png",
-      "AssetFile": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\Images\\dmo_header.png",
+      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\Images\\dmo_header.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1826,7 +1826,7 @@
     },
     {
       "Route": "Images/dmo_login_v2.iev14uswfk.png",
-      "AssetFile": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\Images\\dmo_login_v2.png",
+      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\Images\\dmo_login_v2.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1871,7 +1871,7 @@
     },
     {
       "Route": "Images/dmo_login_v2.png",
-      "AssetFile": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\Images\\dmo_login_v2.png",
+      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\Images\\dmo_login_v2.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1908,7 +1908,7 @@
     },
     {
       "Route": "js/script.js",
-      "AssetFile": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\js\\script.js",
+      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\js\\script.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1945,7 +1945,7 @@
     },
     {
       "Route": "js/script.qlpid94yti.js",
-      "AssetFile": "C:\\Digimon Masters Online\\DMO SERVER PACK\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\js\\script.js",
+      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\js\\script.js",
       "Selectors": [],
       "ResponseHeaders": [
         {

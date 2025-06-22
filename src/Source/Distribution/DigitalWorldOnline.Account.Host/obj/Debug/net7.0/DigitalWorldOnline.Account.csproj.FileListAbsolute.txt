@@ -655,28 +655,28 @@ C:\ServerLauncher\ReArise\RSource\RSource\src\Source\Distribution\DigitalWorldOn
 C:\ServerLauncher\ReArise\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Host\obj\Debug\net7.0\DigitalWorldOnline.Account.pdb
 C:\ServerLauncher\ReArise\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Host\obj\Debug\net7.0\DigitalWorldOnline.Account.genruntimeconfig.cache
 C:\ServerLauncher\ReArise\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Host\obj\Debug\net7.0\ref\DigitalWorldOnline.Account.dll
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\Build\Account\Debug\net7.0\DigitalWorldOnline.Character.deps.json
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\Build\Account\Debug\net7.0\DigitalWorldOnline.Character.runtimeconfig.json
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\Build\Account\Debug\net7.0\DigitalWorldOnline.Character.exe
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\Build\Account\Debug\net7.0\DigitalWorldOnline.Game.deps.json
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\Build\Account\Debug\net7.0\DigitalWorldOnline.Game.runtimeconfig.json
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\Build\Account\Debug\net7.0\DigitalWorldOnline.Game.exe
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\Build\Account\Debug\net7.0\DigitalWorldOnline.Account.exe
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\Build\Account\Debug\net7.0\appsettings.Development.json
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\Build\Account\Debug\net7.0\appsettings.json
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\Build\Account\Debug\net7.0\PacketErrors\doc.temp
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\Build\Account\Debug\net7.0\DigitalWorldOnline.Account.deps.json
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\Build\Account\Debug\net7.0\DigitalWorldOnline.Account.runtimeconfig.json
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\Build\Account\Debug\net7.0\DigitalWorldOnline.Account.dll
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\Build\Account\Debug\net7.0\DigitalWorldOnline.Account.pdb
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Host\obj\Debug\net7.0\DigitalWorldOnline.Account.csproj.AssemblyReference.cache
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Host\obj\Debug\net7.0\DigitalWorldOnline.Account.GeneratedMSBuildEditorConfig.editorconfig
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Host\obj\Debug\net7.0\DigitalWorldOnline.Account.AssemblyInfoInputs.cache
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Host\obj\Debug\net7.0\DigitalWorldOnline.Account.AssemblyInfo.cs
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Host\obj\Debug\net7.0\DigitalWorldOnline.Account.csproj.CoreCompileInputs.cache
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Host\obj\Debug\net7.0\DigitalW.2261661E.Up2Date
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Host\obj\Debug\net7.0\DigitalWorldOnline.Account.dll
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Host\obj\Debug\net7.0\refint\DigitalWorldOnline.Account.dll
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Host\obj\Debug\net7.0\DigitalWorldOnline.Account.pdb
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Host\obj\Debug\net7.0\DigitalWorldOnline.Account.genruntimeconfig.cache
-C:\Digimon Masters Online\DMO SERVER PACK\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Host\obj\Debug\net7.0\ref\DigitalWorldOnline.Account.dll
+C:\ServerLauncher\RSource\RSource\Build\Account\Debug\net7.0\DigitalWorldOnline.Character.deps.json
+C:\ServerLauncher\RSource\RSource\Build\Account\Debug\net7.0\DigitalWorldOnline.Character.runtimeconfig.json
+C:\ServerLauncher\RSource\RSource\Build\Account\Debug\net7.0\DigitalWorldOnline.Character.exe
+C:\ServerLauncher\RSource\RSource\Build\Account\Debug\net7.0\DigitalWorldOnline.Game.deps.json
+C:\ServerLauncher\RSource\RSource\Build\Account\Debug\net7.0\DigitalWorldOnline.Game.runtimeconfig.json
+C:\ServerLauncher\RSource\RSource\Build\Account\Debug\net7.0\DigitalWorldOnline.Game.exe
+C:\ServerLauncher\RSource\RSource\Build\Account\Debug\net7.0\DigitalWorldOnline.Account.exe
+C:\ServerLauncher\RSource\RSource\Build\Account\Debug\net7.0\appsettings.Development.json
+C:\ServerLauncher\RSource\RSource\Build\Account\Debug\net7.0\appsettings.json
+C:\ServerLauncher\RSource\RSource\Build\Account\Debug\net7.0\PacketErrors\doc.temp
+C:\ServerLauncher\RSource\RSource\Build\Account\Debug\net7.0\DigitalWorldOnline.Account.deps.json
+C:\ServerLauncher\RSource\RSource\Build\Account\Debug\net7.0\DigitalWorldOnline.Account.runtimeconfig.json
+C:\ServerLauncher\RSource\RSource\Build\Account\Debug\net7.0\DigitalWorldOnline.Account.dll
+C:\ServerLauncher\RSource\RSource\Build\Account\Debug\net7.0\DigitalWorldOnline.Account.pdb
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Host\obj\Debug\net7.0\DigitalWorldOnline.Account.csproj.AssemblyReference.cache
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Host\obj\Debug\net7.0\DigitalWorldOnline.Account.GeneratedMSBuildEditorConfig.editorconfig
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Host\obj\Debug\net7.0\DigitalWorldOnline.Account.AssemblyInfoInputs.cache
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Host\obj\Debug\net7.0\DigitalWorldOnline.Account.AssemblyInfo.cs
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Host\obj\Debug\net7.0\DigitalWorldOnline.Account.csproj.CoreCompileInputs.cache
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Host\obj\Debug\net7.0\DigitalW.2261661E.Up2Date
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Host\obj\Debug\net7.0\DigitalWorldOnline.Account.dll
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Host\obj\Debug\net7.0\refint\DigitalWorldOnline.Account.dll
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Host\obj\Debug\net7.0\DigitalWorldOnline.Account.pdb
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Host\obj\Debug\net7.0\DigitalWorldOnline.Account.genruntimeconfig.cache
+C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Account.Host\obj\Debug\net7.0\ref\DigitalWorldOnline.Account.dll

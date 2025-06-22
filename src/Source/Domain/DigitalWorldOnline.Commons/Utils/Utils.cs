@@ -10,7 +10,7 @@ namespace DigitalWorldOnline.Commons.Utils
     {
         public static List<short> DungeonMapIds = new List<short>()
         {
-            13, 17, 50, 51, 10, 210, 211, 212, 213, 214, 252, 263, 264, 300, 301, 1110, 1111, 1112, 1304, 1308, 1310, 1311, 1403,
+            17, 50, 51, 10, 210, 211, 212, 213, 214, 252, 263, 264, 300, 301, 1110, 1111, 1112, 1304, 1308, 1310, 1311, 1403,
             1404, 1406, 1500, 1501, 1502, 1600, 1601, 1602, 1603, 1604, 1605, 1606, 1607, 1608, 1609, 1610, 1611, 1612, 1613, 1614,
             1615, 1701, 1702, 1703, 1704, 1705, 1706, 1809, 1810, 1911, 2001, 2002, 9103, 9861
         };
@@ -483,7 +483,7 @@ namespace DigitalWorldOnline.Commons.Utils
             {
                 return 2; // Dterminal
             }
-            else if (mapId == 17 || mapId == 300 || mapId == 301 || mapId == 13 || mapId == 89 || mapId == 9861 || mapId == 9860 || mapId == 9700)
+            else if (mapId == 17 || mapId == 300 || mapId == 301 || mapId == 89 || mapId == 9861 || mapId == 9860 || mapId == 9700)
             {
                 return 3; // Dats
             }
@@ -513,15 +513,15 @@ namespace DigitalWorldOnline.Commons.Utils
             }
             else if (mapId == 1701)
             {
-                return 1701; // Royal Base
+                return 1700; // Royal Base
             }
             else if (mapId == 1702)
             {
-                return 1702; // Royal Base
+                return 1700; // Royal Base
             }
             else if (mapId == 1703)
             {
-                return 1703; // Royal Base
+                return 1700; // Royal Base
             }
             else
             {

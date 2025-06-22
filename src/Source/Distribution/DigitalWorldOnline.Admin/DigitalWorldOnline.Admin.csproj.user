@@ -4,6 +4,6 @@
     <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup>
-    <ActiveDebugProfile>MudblazorDemo.CRUD</ActiveDebugProfile>
+    <ActiveDebugProfile>WSL</ActiveDebugProfile>
   </PropertyGroup>
 </Project>
