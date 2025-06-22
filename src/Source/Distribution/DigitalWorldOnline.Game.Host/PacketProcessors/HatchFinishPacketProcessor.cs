@@ -176,66 +176,49 @@ namespace DigitalWorldOnline.Game.PacketProcessors
 
             // ------------------------------------------------------------------------------------------
 
-        var digimonBaseInfo = newDigimon.BaseInfo;
-        var digimonEvolutions = newDigimon.Evolutions;
+            var digimonBaseInfo = newDigimon.BaseInfo;
+            var digimonEvolutions = newDigimon.Evolutions;
 
-        var encyclopediaExists = client.Tamer.Encyclopedia.Exists(x => x.DigimonEvolutionId == digimonEvolutionInfo?.Id);
+            //_logger.Information($"type: {newDigimon.BaseType}, info: {digimonEvolutionInfo?.Id.ToString()}");
 
-        if (encyclopediaExists)
-        {
-            // La enciclopedia ya existe, actualizamos las evoluciones
-            var existingEncyclopedia = client.Tamer.Encyclopedia.First(x => x.DigimonEvolutionId == digimonEvolutionInfo?.Id);
-            
-            digimonEvolutions?.ForEach(x =>
+            var encyclopediaExists =
+                client.Tamer.Encyclopedia.Exists(x => x.DigimonEvolutionId == digimonEvolutionInfo?.Id);
+
+            // Check if encyclopedia exists
+            if (encyclopediaExists)
             {
-                var evolutionLine = digimonEvolutionInfo.Lines.FirstOrDefault(y => y.Type == x.Type);
-                byte slotLevel = evolutionLine != null ? evolutionLine.SlotLevel : (byte)0;
-
-                var existingEvolution = existingEncyclopedia.Evolutions.FirstOrDefault(e => e.DigimonBaseType == x.Type);
-                if (existingEvolution == null)
-                {
-                    // Si la evolución no está en la enciclopedia, la añadimos
-                    existingEncyclopedia.Evolutions.Add(CharacterEncyclopediaEvolutionsModel.Create(
-                        existingEncyclopedia.Id, x.Type, slotLevel, Convert.ToBoolean(x.Unlocked)));
-                    _logger.Information($"[HatchFinishPacketProcessor] Añadida nueva evolución DigimonBaseType: {x.Type} para EncyclopediaId: {existingEncyclopedia.Id}, IsUnlocked: {x.Unlocked}");
-                }
-                else if (Convert.ToBoolean(x.Unlocked) && !existingEvolution.IsUnlocked)
-                {
-                    // Si la evolución existe pero ahora está desbloqueada, la reemplazamos
-                    existingEncyclopedia.Evolutions.Remove(existingEvolution);
-                    existingEncyclopedia.Evolutions.Add(CharacterEncyclopediaEvolutionsModel.Create(
-                        existingEncyclopedia.Id, x.Type, slotLevel, true));
-                    _logger.Information($"[HatchFinishPacketProcessor] Reemplazada evolución DigimonBaseType: {x.Type} con IsUnlocked: true para EncyclopediaId: {existingEncyclopedia.Id}");
-                }
-            });
-
-            // Ejecutamos el comando de actualización
-            await _sender.Send(new UpdateCharacterEncyclopediaCommand(existingEncyclopedia));
-            _logger.Information($"[HatchFinishPacketProcessor] Enciclopedia actualizada para TamerId: {client.TamerId}, DigimonEvolutionId: {digimonEvolutionInfo?.Id}");
-        }
-        else
-        {
-            // La enciclopedia no existe, creamos una nueva entrada
-            if (digimonEvolutionInfo != null)
-            {
-                var encyclopedia = CharacterEncyclopediaModel.Create(client.TamerId, digimonEvolutionInfo.Id,
-                    newDigimon.Level, newDigimon.Size, 0, 0, 0, 0, 0, false, false);
-
-                digimonEvolutions?.ForEach(x =>
-                {
-                    var evolutionLine = digimonEvolutionInfo.Lines.FirstOrDefault(y => y.Type == x.Type);
-                    byte slotLevel = evolutionLine != null ? evolutionLine.SlotLevel : (byte)0;
-
-                    encyclopedia.Evolutions.Add(CharacterEncyclopediaEvolutionsModel.Create(
-                        encyclopedia.Id, x.Type, slotLevel, Convert.ToBoolean(x.Unlocked)));
-                    _logger.Information($"[HatchFinishPacketProcessor] Añadida evolución DigimonBaseType: {x.Type} a nueva enciclopedia para TamerId: {client.TamerId}, IsUnlocked: {x.Unlocked}");
-                });
-
-                var encyclopediaAdded = await _sender.Send(new CreateCharacterEncyclopediaCommand(encyclopedia));
-                client.Tamer.Encyclopedia.Add(encyclopediaAdded);
-                _logger.Information($"[HatchFinishPacketProcessor] Enciclopedia creada para TamerId: {client.TamerId}, DigimonEvolutionId: {digimonEvolutionInfo?.Id}, EncyclopediaId: {encyclopediaAdded.Id}");
+                _logger.Debug(
+                    $"type: {newDigimon.BaseType}, info: {digimonEvolutionInfo?.Id.ToString()}, encyclopedia exists");
             }
-        }
+            else
+            {
+                if (digimonEvolutionInfo != null)
+                {
+                    var encyclopedia = CharacterEncyclopediaModel.Create(client.TamerId, digimonEvolutionInfo.Id,
+                        newDigimon.Level, newDigimon.Size, 0, 0, 0, 0, 0, false, false);
+
+                    digimonEvolutions?.ForEach(x =>
+                    {
+                        var evolutionLine = digimonEvolutionInfo.Lines.FirstOrDefault(y => y.Type == x.Type);
+                        byte slotLevel = 0;
+                        if (evolutionLine != null)
+                        {
+                            slotLevel = evolutionLine.SlotLevel;
+                        }
+
+                        encyclopedia.Evolutions.Add(CharacterEncyclopediaEvolutionsModel.Create(encyclopedia.Id, x.Type,
+                            slotLevel, Convert.ToBoolean(x.Unlocked)));
+                    });
+
+                    var encyclopediaAdded = await _sender.Send(new CreateCharacterEncyclopediaCommand(encyclopedia));
+
+                    client.Tamer.Encyclopedia.Add(encyclopediaAdded);
+
+                    _logger.Debug(
+                        $"Tamer encyclopedia count: {client.Tamer.Encyclopedia.Count} and last id is {client.Tamer.Encyclopedia.Last().Id}");
+                }
+            }
+
             _logger.Debug(
                 $"Hatching Leveling status for character {client.Tamer.Name} is: {client.Tamer.LevelingStatus?.Id}");
             _logger.Debug(

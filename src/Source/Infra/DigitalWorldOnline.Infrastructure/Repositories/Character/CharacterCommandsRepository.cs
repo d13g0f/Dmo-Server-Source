@@ -832,7 +832,7 @@ namespace DigitalWorldOnline.Infrastructure.Repositories.Character
         //}
 
         // Remove Slot when deleted
-        
+
         private async Task RemoveDeletedItems2(List<ItemModel> items)
         {
             if (!items.Any())
@@ -1496,91 +1496,91 @@ namespace DigitalWorldOnline.Infrastructure.Repositories.Character
             }
         }
 
-    public async Task<CharacterEncyclopediaModel> CreateCharacterEncyclopediaAsync(CharacterEncyclopediaModel characterEncyclopedia)
-    {
-        _logger.Information($"[CreateCharacterEncyclopediaAsync] Inicio para CharacterId: {characterEncyclopedia.CharacterId}, DigimonEvolutionId: {characterEncyclopedia.DigimonEvolutionId}, Evolutions: {characterEncyclopedia.Evolutions?.Count ?? 0}");
-
-        var tamerDto = await _context.Character
-            .Include(x => x.Encyclopedia)
-            .ThenInclude(x => x.Evolutions)
-            .SingleOrDefaultAsync(x => x.Id == characterEncyclopedia.CharacterId);
-
-        _logger.Information($"[CreateCharacterEncyclopediaAsync] tamerDto {(tamerDto == null ? "no encontrado" : $"encontrado para CharacterId: {tamerDto.Id}")}");
-
-        var dto = _mapper.Map<CharacterEncyclopediaDTO>(characterEncyclopedia);
-        _logger.Information($"[CreateCharacterEncyclopediaAsync] Mapeado DTO con {dto.Evolutions?.Count ?? 0} evoluciones");
-
-        var validEvolutions = new List<CharacterEncyclopediaEvolutionsDTO>();
-
-        if (dto.Evolutions != null && dto.Evolutions.Any())
+        public async Task<CharacterEncyclopediaModel> CreateCharacterEncyclopediaAsync(CharacterEncyclopediaModel characterEncyclopedia)
         {
-            _logger.Information($"[CreateCharacterEncyclopediaAsync] Validando {dto.Evolutions.Count} evoluciones");
-            foreach (var evolutionDto in dto.Evolutions)
-            {
-                var digimonBaseInfoExists = await _context.DigimonBaseInfoAsset
-                    .AnyAsync(dbi => dbi.Type == evolutionDto.DigimonBaseType);
+            _logger.Information($"[CreateCharacterEncyclopediaAsync] CharacterId: {characterEncyclopedia.CharacterId}, DigimonEvolutionId: {characterEncyclopedia.DigimonEvolutionId}, Evolutions: {characterEncyclopedia.Evolutions?.Count ?? 0}");
 
-                if (digimonBaseInfoExists)
+            var tamerDto = await _context.Character
+                .Include(x => x.Encyclopedia)
+                .ThenInclude(x => x.Evolutions)
+                .SingleOrDefaultAsync(x => x.Id == characterEncyclopedia.CharacterId);
+
+            _logger.Information($"[CreateCharacterEncyclopediaAsync] tamerDto {(tamerDto == null ? "no" : $"CharacterId: {tamerDto.Id}")}");
+
+            var dto = _mapper.Map<CharacterEncyclopediaDTO>(characterEncyclopedia);
+            _logger.Information($"[CreateCharacterEncyclopediaAsync]  DTO  {dto.Evolutions?.Count ?? 0} ");
+
+            var validEvolutions = new List<CharacterEncyclopediaEvolutionsDTO>();
+
+            if (dto.Evolutions != null && dto.Evolutions.Any())
+            {
+                _logger.Information($"[CreateCharacterEncyclopediaAsync] Validando {dto.Evolutions.Count} ");
+                foreach (var evolutionDto in dto.Evolutions)
                 {
-                    _logger.Information($"[CreateCharacterEncyclopediaAsync] DigimonBaseType {evolutionDto.DigimonBaseType} válido, añadiendo evolución");
-                    validEvolutions.Add(evolutionDto);
+                    var digimonBaseInfoExists = await _context.DigimonBaseInfoAsset
+                        .AnyAsync(dbi => dbi.Type == evolutionDto.DigimonBaseType);
+
+                    if (digimonBaseInfoExists)
+                    {
+                        _logger.Information($"[CreateCharacterEncyclopediaAsync] DigimonBaseType {evolutionDto.DigimonBaseType} ");
+                        validEvolutions.Add(evolutionDto);
+                    }
+                    else
+                    {
+                        _logger.Error($"[CreateCharacterEncyclopediaAsync] DigimonBaseType {evolutionDto.DigimonBaseType} ");
+                    }
                 }
-                else
+                dto.Evolutions = validEvolutions;
+                _logger.Information($"[CreateCharacterEncyclopediaAsync] {validEvolutions.Count} Evolution");
+            }
+
+            if (tamerDto != null)
+            {
+                try
                 {
-                    _logger.Error($"[CreateCharacterEncyclopediaAsync] DigimonBaseType {evolutionDto.DigimonBaseType} no encontrado, ignorando evolución");
+                    if (tamerDto.Encyclopedia == null)
+                    {
+                        _logger.Information($"[CreateCharacterEncyclopediaAsync] Enciclopedia no existe");
+                        tamerDto.Encyclopedia = new List<CharacterEncyclopediaDTO>();
+                    }
+
+                    // Verificar por CharacterId y DigimonEvolutionId
+                    var existingEncyclopedia = tamerDto.Encyclopedia.FirstOrDefault(e =>
+                        e.CharacterId == characterEncyclopedia.CharacterId &&
+                        e.DigimonEvolutionId == characterEncyclopedia.DigimonEvolutionId);
+
+                    _logger.Information($"[CreateCharacterEncyclopediaAsync] existingEncyclopedia {(existingEncyclopedia == null ? "no" : $" para CharacterId: {existingEncyclopedia.CharacterId}, DigimonEvolutionId: {existingEncyclopedia.DigimonEvolutionId}")}");
+
+                    if (existingEncyclopedia == null)
+                    {
+                        _logger.Information($"[CreateCharacterEncyclopediaAsync] {validEvolutions.Count} ");
+                        tamerDto.Encyclopedia.Add(dto);
+
+                        _logger.Information($"[CreateCharacterEncyclopediaAsync] ");
+                        _context.Update(tamerDto);
+
+                        _logger.Information($"[CreateCharacterEncyclopediaAsync] ");
+                        await _context.SaveChangesAsync();
+                        _logger.Information($"[CreateCharacterEncyclopediaAsync] ");
+
+                        return _mapper.Map<CharacterEncyclopediaModel>(dto);
+                    }
+                    else
+                    {
+                        _logger.Information($"[CreateCharacterEncyclopediaAsync]  {existingEncyclopedia.Evolutions?.Count ?? 0} evoluciones");
+                        return _mapper.Map<CharacterEncyclopediaModel>(existingEncyclopedia);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    _logger.Error($"[CreateCharacterEncyclopediaAsync] Error: {ex.Message}, StackTrace: {ex.StackTrace}");
+                    return null;
                 }
             }
-            dto.Evolutions = validEvolutions;
-            _logger.Information($"[CreateCharacterEncyclopediaAsync] {validEvolutions.Count} evoluciones válidas tras validación");
+
+            _logger.Warning($"[CreateCharacterEncyclopediaAsync] tamerDto");
+            return _mapper.Map<CharacterEncyclopediaModel>(dto);
         }
-
-        if (tamerDto != null)
-        {
-            try
-            {
-                if (tamerDto.Encyclopedia == null)
-                {
-                    _logger.Information($"[CreateCharacterEncyclopediaAsync] Enciclopedia no existe, inicializando lista vacía");
-                    tamerDto.Encyclopedia = new List<CharacterEncyclopediaDTO>();
-                }
-
-                // Verificar por CharacterId y DigimonEvolutionId
-                var existingEncyclopedia = tamerDto.Encyclopedia.FirstOrDefault(e => 
-                    e.CharacterId == characterEncyclopedia.CharacterId && 
-                    e.DigimonEvolutionId == characterEncyclopedia.DigimonEvolutionId);
-
-                _logger.Information($"[CreateCharacterEncyclopediaAsync] existingEncyclopedia {(existingEncyclopedia == null ? "no encontrada" : $"encontrada para CharacterId: {existingEncyclopedia.CharacterId}, DigimonEvolutionId: {existingEncyclopedia.DigimonEvolutionId}")}");
-
-                if (existingEncyclopedia == null)
-                {
-                    _logger.Information($"[CreateCharacterEncyclopediaAsync] Añadiendo nueva enciclopedia con {validEvolutions.Count} evoluciones");
-                    tamerDto.Encyclopedia.Add(dto);
-
-                    _logger.Information($"[CreateCharacterEncyclopediaAsync] Actualizando tamerDto en la base de datos");
-                    _context.Update(tamerDto);
-
-                    _logger.Information($"[CreateCharacterEncyclopediaAsync] Guardando cambios en la base de datos");
-                    await _context.SaveChangesAsync();
-                    _logger.Information($"[CreateCharacterEncyclopediaAsync] Cambios guardados exitosamente");
-
-                    return _mapper.Map<CharacterEncyclopediaModel>(dto);
-                }
-                else
-                {
-                    _logger.Information($"[CreateCharacterEncyclopediaAsync] Devolviendo enciclopedia existente con {existingEncyclopedia.Evolutions?.Count ?? 0} evoluciones");
-                    return _mapper.Map<CharacterEncyclopediaModel>(existingEncyclopedia);
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.Error($"[CreateCharacterEncyclopediaAsync] Error: {ex.Message}, StackTrace: {ex.StackTrace}");
-                return null;
-            }
-        }
-
-        _logger.Warning($"[CreateCharacterEncyclopediaAsync] tamerDto no encontrado, devolviendo DTO mapeado sin guardar");
-        return _mapper.Map<CharacterEncyclopediaModel>(dto);
-    }
 
 
 
