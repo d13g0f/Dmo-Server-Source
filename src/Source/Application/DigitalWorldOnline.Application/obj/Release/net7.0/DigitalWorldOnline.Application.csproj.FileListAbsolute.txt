@@ -1,0 +1,15 @@
+D:\GAME_SERVERS\DMO_SELL\DMO_Server_Source_v5\src\Source\Application\DigitalWorldOnline.Application\bin\Release\net7.0\DigitalWorldOnline.Application.deps.json
+D:\GAME_SERVERS\DMO_SELL\DMO_Server_Source_v5\src\Source\Application\DigitalWorldOnline.Application\bin\Release\net7.0\DigitalWorldOnline.Application.dll
+D:\GAME_SERVERS\DMO_SELL\DMO_Server_Source_v5\src\Source\Application\DigitalWorldOnline.Application\bin\Release\net7.0\DigitalWorldOnline.Application.pdb
+D:\GAME_SERVERS\DMO_SELL\DMO_Server_Source_v5\src\Source\Application\DigitalWorldOnline.Application\bin\Release\net7.0\DigitalWorldOnline.Commons.dll
+D:\GAME_SERVERS\DMO_SELL\DMO_Server_Source_v5\src\Source\Application\DigitalWorldOnline.Application\bin\Release\net7.0\DigitalWorldOnline.Commons.pdb
+D:\GAME_SERVERS\DMO_SELL\DMO_Server_Source_v5\src\Source\Application\DigitalWorldOnline.Application\obj\Release\net7.0\DigitalWorldOnline.Application.csproj.AssemblyReference.cache
+D:\GAME_SERVERS\DMO_SELL\DMO_Server_Source_v5\src\Source\Application\DigitalWorldOnline.Application\obj\Release\net7.0\DigitalWorldOnline.Application.GeneratedMSBuildEditorConfig.editorconfig
+D:\GAME_SERVERS\DMO_SELL\DMO_Server_Source_v5\src\Source\Application\DigitalWorldOnline.Application\obj\Release\net7.0\DigitalWorldOnline.Application.AssemblyInfoInputs.cache
+D:\GAME_SERVERS\DMO_SELL\DMO_Server_Source_v5\src\Source\Application\DigitalWorldOnline.Application\obj\Release\net7.0\DigitalWorldOnline.Application.AssemblyInfo.cs
+D:\GAME_SERVERS\DMO_SELL\DMO_Server_Source_v5\src\Source\Application\DigitalWorldOnline.Application\obj\Release\net7.0\DigitalWorldOnline.Application.csproj.CoreCompileInputs.cache
+D:\GAME_SERVERS\DMO_SELL\DMO_Server_Source_v5\src\Source\Application\DigitalWorldOnline.Application\obj\Release\net7.0\DigitalW.B459DF74.Up2Date
+D:\GAME_SERVERS\DMO_SELL\DMO_Server_Source_v5\src\Source\Application\DigitalWorldOnline.Application\obj\Release\net7.0\DigitalWorldOnline.Application.dll
+D:\GAME_SERVERS\DMO_SELL\DMO_Server_Source_v5\src\Source\Application\DigitalWorldOnline.Application\obj\Release\net7.0\refint\DigitalWorldOnline.Application.dll
+D:\GAME_SERVERS\DMO_SELL\DMO_Server_Source_v5\src\Source\Application\DigitalWorldOnline.Application\obj\Release\net7.0\DigitalWorldOnline.Application.pdb
+D:\GAME_SERVERS\DMO_SELL\DMO_Server_Source_v5\src\Source\Application\DigitalWorldOnline.Application\obj\Release\net7.0\ref\DigitalWorldOnline.Application.dll

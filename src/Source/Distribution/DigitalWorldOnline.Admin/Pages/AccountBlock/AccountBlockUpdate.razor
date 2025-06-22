@@ -1,0 +1,76 @@
+﻿@page "/accountBlock/update/{AccountBlockId}"
+@attribute [Authorize(Roles = "Administrator, GameMaster")]
+
+@using DigitalWorldOnline.Commons.Enums.Account;
+@using DigitalWorldOnline.Commons.Enums;
+@using DigitalWorldOnline.Commons.ViewModel.Asset;
+
+<MudPaper Style="overflow-x: hidden;
+        padding: 20px;
+        margin-top: 15px;">
+    <Loader Loading="@Loading">
+        <EditForm Model="@_accountBlock" OnValidSubmit="Update">
+            <MudGrid>
+                <MudItem xs="12" xl="12" sm="12">
+                    <MudStack Row="true" Spacing="2">
+                        <MudIcon Icon="@Icons.Material.Filled.Block" Class="icon-title"></MudIcon>
+                        <MudText Typo="Typo.h5"><b>Update AccountBlock config</b></MudText>
+                    </MudStack>
+                </MudItem>
+
+                <MudItem xs="6" xl="6" sm="6">
+                    <MudSelect Label="Block Type"
+                               Required
+                               RequiredError="Required"
+                               T="AccountBlockEnum"
+                               For="@(() => _accountBlock.Type)"
+                               @bind-Value="_accountBlock.Type">
+                        <MudSelectItem T="AccountBlockEnum" Value="AccountBlockEnum.Unblocked">Unblocked</MudSelectItem>
+                        <MudSelectItem T="AccountBlockEnum" Value="AccountBlockEnum.Short">Short</MudSelectItem>
+                        <MudSelectItem T="AccountBlockEnum" Value="AccountBlockEnum.Medium">Medium</MudSelectItem>
+                        <MudSelectItem T="AccountBlockEnum" Value="AccountBlockEnum.Long">Long</MudSelectItem>
+                        <MudSelectItem T="AccountBlockEnum" Value="AccountBlockEnum.Permanent">Permanent</MudSelectItem>
+                    </MudSelect>
+                </MudItem>
+
+                <MudItem xs="6" xl="6" sm="6">
+                    <MudTextField @bind-Value="_accountBlock.Reason"
+                                     For="@(() => _accountBlock.Reason)"
+                                     Label="Block Reason"
+                                     T="String"
+                                     Variant="Variant.Outlined"
+                                     Required
+                                     RequiredError="Required" />
+                </MudItem>
+
+                <MudItem xs="6" xl="6" sm="6">
+                    <MudDatePicker @bind-Date="_accountBlock.StartDate"
+                                     For="@(() => _accountBlock.StartDate)"
+                                     Label="Start Date"
+                                     Variant="Variant.Outlined"
+                                     Required
+                                     RequiredError="Required" />
+                </MudItem>
+
+                <MudItem xs="6" xl="6" sm="6">
+                    <MudDatePicker @bind-Date="_accountBlock.EndDate"
+                                     For="@(() => _accountBlock.EndDate)"
+                                     Label="End Date"
+                                     Variant="Variant.Outlined"
+                                     Required
+                                     RequiredError="Required" />
+                </MudItem>
+
+                <MudItem xs="12" xl="12" sm="12">
+                </MudItem>
+
+                <MudItem xs="12" xl="12" sm="12">
+                    <MudStack Row="true" Spacing="2">
+                        <MudButton Color="Color.Primary" Variant="Variant.Filled" ButtonType="ButtonType.Submit">Save changes</MudButton>
+                        <MudButton Color="Color.Inherit" Variant="Variant.Filled" ButtonType="ButtonType.Button" OnClick="Return">Return</MudButton>
+                    </MudStack>
+                </MudItem>
+            </MudGrid>
+        </EditForm>
+    </Loader>
+</MudPaper>

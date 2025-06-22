@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "IohZcZ2v5tc1fFs57FvNYWyp9KRBUEIxNOizjzZmQW4=",
+  "Source": "DigitalWorldOnline.Api",
+  "BasePath": "_content/DigitalWorldOnline.Api",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}

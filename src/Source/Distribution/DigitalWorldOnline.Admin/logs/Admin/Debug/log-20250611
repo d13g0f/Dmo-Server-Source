@@ -1,0 +1,9 @@
+2025-06-11 15:36:03.963 -03:00 [Information] Log-in successfull for username "admin"
+2025-06-11 15:36:13.354 -03:00 [Information] Searching mobs by map id 1
+2025-06-11 15:37:12.580 -03:00 [Information] Creating new account with username "diegof"
+2025-06-11 15:37:13.055 -03:00 [Error] Error creating account with username "diegof": "An error occurred while saving the entity changes. See the inner exception for details."
+2025-06-11 15:37:19.178 -03:00 [Information] Creating new account with username "diegof"
+2025-06-11 15:37:19.614 -03:00 [Information] Account created with username "diegof"
+2025-06-11 15:37:57.471 -03:00 [Information] Searching account by id 2889
+2025-06-11 16:12:23.656 -03:00 [Information] Creating new account with username "shadowching"
+2025-06-11 16:12:24.442 -03:00 [Information] Account created with username "shadowching"

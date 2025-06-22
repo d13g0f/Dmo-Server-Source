@@ -162,3 +162,4 @@ Distribution/DigitalWorldOnline.Account.Host/obj/Release/net7.0/DigitalWorldOnli
 Distribution/DigitalWorldOnline.Account.Host/obj/Release/net7.0/DigitalWorldOnline.Account.GlobalUsings.g.cs
 Distribution/DigitalWorldOnline.Account.Host/obj/Release/net7.0/DigitalWorldOnline.Account.sourcelink.json
 Distribution/DigitalWorldOnline.Account.Host/obj/project.assets.json
+*.temp
