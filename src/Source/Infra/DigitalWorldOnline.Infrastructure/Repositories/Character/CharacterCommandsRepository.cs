@@ -620,6 +620,18 @@ namespace DigitalWorldOnline.Infrastructure.Repositories.Character
             }
         }
 
+
+        public async Task<long?> GetInventoryBitsByItemListIdAsync(long itemListId)
+        {
+            var itemList = await _context.ItemLists
+               .AsNoTracking()
+               .FirstOrDefaultAsync(x => x.Id == itemListId && x.Type == ItemListEnum.Inventory);
+
+            return itemList?.Bits;
+        }
+
+
+
         // -------------------------------------------------------------------------------------
 
         public async Task UpdateItemsAsync(List<ItemModel> items)

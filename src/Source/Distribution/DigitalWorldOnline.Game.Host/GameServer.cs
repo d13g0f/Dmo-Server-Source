@@ -17,6 +17,7 @@ using DigitalWorldOnline.Commons.Utils;
 using DigitalWorldOnline.Game.Managers;
 using DigitalWorldOnline.GameHost;
 using DigitalWorldOnline.GameHost.EventsServer;
+using GameServer.Logging;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -166,8 +167,16 @@ namespace DigitalWorldOnline.Game
                         await DungeonWarpGate(gameClientEvent);
                     }
                 }
+
+                //  Cleaning up the client state
+                gameClientEvent.Client.ResetState();
+                gameClientEvent.Client.SetGameQuit(false);
+                await GameLogger.LogInfo(
+                    $"Client cleanup: AccountId={gameClientEvent.Client.AccountId}, TamerId={gameClientEvent.Client.TamerId} | IP: {gameClientEvent.Client.ClientAddress}",
+                    "session/disconnects");
             }
         }
+
 
         private async Task PartyNotification(GameClientEvent gameClientEvent)
         {

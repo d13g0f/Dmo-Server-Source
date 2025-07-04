@@ -21,10 +21,10 @@ namespace DigitalWorldOnline.Commons.Entities
 
         public bool IsConnected => Socket.Connected;
 
-        public string ClientAddress => Socket?.RemoteEndPoint?.ToString();
-        
+        public string? ClientAddress => Socket?.RemoteEndPoint?.ToString();
+
         public bool blockAchievement { get; set; } = false;
-        
+
         public string HiddenAddress
         {
             get
@@ -48,7 +48,7 @@ namespace DigitalWorldOnline.Commons.Entities
         public short Handshake { get; private set; }
 
         public long AccountId { get; private set; }
-        public string AccountEmail { get; private set; }
+        public string? AccountEmail { get; private set; }
         public string? AccountSecondaryPassword { get; private set; }
         public long ServerId { get; private set; }
 
@@ -62,7 +62,7 @@ namespace DigitalWorldOnline.Commons.Entities
         public AccountAccessLevelEnum AccessLevel { get; private set; }
         public bool Loading { get; private set; }
 
-        public CharacterModel Tamer { get; private set; }
+        public CharacterModel? Tamer { get; private set; }
 
         public DigimonModel Partner => Tamer.Partner;
 
@@ -288,5 +288,32 @@ namespace DigitalWorldOnline.Commons.Entities
             if (IsConnected)
                 Server.Disconnect(this, raiseEvent);
         }
+
+
+        public void ResetState()
+        {
+            Tamer = null;
+
+            AccountId = 0;
+            AccountEmail = null;
+            AccountSecondaryPassword = null;
+            ServerId = 0;
+
+            ServerExperience = 0;
+            ServerExperienceType = 0;
+
+            MembershipExpirationDate = null;
+            Premium = 0;
+            Silk = 0;
+            AccessLevel = AccountAccessLevelEnum.Default;
+
+            Loading = false;
+            ReceiveWelcome = false;
+            GameQuit = true;
+            SentOnceDataSent = false;
+            Handshake = 0;
+        }
+
     }
+
 }

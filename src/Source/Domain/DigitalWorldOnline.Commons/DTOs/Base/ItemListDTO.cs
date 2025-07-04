@@ -2,31 +2,17 @@
 
 namespace DigitalWorldOnline.Commons.DTOs.Base
 {
-    public sealed class ItemListDTO
-    {
-        /// <summary>
-        /// Unique sequential identifier.
-        /// </summary>
-        public long Id { get; set; }
+public sealed class ItemListDTO
+{
+    public long Id { get; set; }
+    public ItemListEnum  Type { get; set; }
+    public byte Size { get; set; }
+    public long Bits { get; set; }
 
-        /// <summary>
-        /// Item list enumeration.
-        /// </summary>
-        public ItemListEnum Type { get; set; }
+    public long? AccountId { get; set; }
+    public long? CharacterId { get; set; } 
 
-        /// <summary>
-        /// Current item list slots amount.
-        /// </summary>
-        public byte Size { get; set; }
+    public List<ItemDTO> Items { get; set; }
+}
 
-        /// <summary>
-        /// Item list bits.
-        /// </summary>
-        public long Bits { get; set; }
-
-        /// <summary>
-        /// Items inside the list.
-        /// </summary>
-        public List<ItemDTO> Items { get; set; }
-    }
 }

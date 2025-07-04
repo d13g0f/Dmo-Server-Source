@@ -77,7 +77,7 @@ namespace DigitalWorldOnline.Api.Controllers
             var itemClone = (ItemModel)newItem.Clone();
             var characterDto = await _sender.Send(new AccountByIdQuery(AccountId));
 
-            var characterModel = _mapper.Map<ItemListModel>(characterDto.ItemList.FirstOrDefault(x => x.Type == Commons.Enums.ItemListEnum.CashWarehouse)); // Utilizando o mapper para realizar o mapeamento
+            var characterModel = _mapper.Map<ItemListModel>(characterDto.ItemList.FirstOrDefault(x => (Commons.Enums.ItemListEnum)x.Type == Commons.Enums.ItemListEnum.CashWarehouse)); 
 
             if (characterModel != null)
             {

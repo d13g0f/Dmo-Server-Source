@@ -38,6 +38,7 @@ using DigitalWorldOnline.Commons.Models.Servers;
 using DigitalWorldOnline.Commons.Models;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using System.Net.NetworkInformation;
+using GameServer.Logging;
 
 namespace DigitalWorldOnline.Game
 {
@@ -111,6 +112,12 @@ namespace DigitalWorldOnline.Game
                 { "ping", (PingCommand, null) },
             };
         }
+
+        private static string FormatGMLog(GameClient client, string command, string context)
+            {
+                return $"AccountID: {client.AccountId}, Tamer: {client.Tamer?.Name ?? "Unknown"}, Command: {command}, Context: {context}";
+            }
+
 
         public async Task ExecuteCommand(GameClient client, string message)
         {
@@ -3252,128 +3259,139 @@ namespace DigitalWorldOnline.Game
             client.Send(new SystemMessagePacket($"Server Time is: {DateTime.UtcNow}"));
         }
 
-        private async Task ItemCommand(GameClient client, string[] command)
+       private async Task ItemCommand(GameClient client, string[] command)
         {
             string message = string.Join(" ", command);
-
             var regex = @"(item\s\d{1,7}\s\d{1,4}$){1}|(item\s\d{1,7}$){1}";
-            var match = Regex.Match(message, regex, RegexOptions.IgnoreCase);
 
-            if (!match.Success)
+            if (!Regex.IsMatch(message, regex, RegexOptions.IgnoreCase))
             {
-                client.Send(new SystemMessagePacket($"Invalid command!! Type !item (itemId) (amount)"));
+                client.Send(new SystemMessagePacket("Invalid command!! Type !item (itemId) (amount)"));
+                await GameLogger.LogWarning(FormatGMLog(client, "item", "Invalid syntax"), "GMCommands");
                 return;
             }
 
-            var itemId = int.Parse(command[1].ToLower());
+            int itemId = int.Parse(command[1]);
+            int amount = command.Length == 3 ? int.Parse(command[2]) : 1;
 
-            var newItem = new ItemModel();
-            newItem.SetItemInfo(_assets.ItemInfo.FirstOrDefault(x => x.ItemId == itemId));
-
-            if (newItem.ItemInfo == null)
+            var itemInfo = _assets.ItemInfo.FirstOrDefault(x => x.ItemId == itemId);
+            if (itemInfo == null)
             {
-                _logger.Warning($"No item info found with ID {itemId} for tamer {client.TamerId}.");
                 client.Send(new SystemMessagePacket($"No item info found with ID {itemId}."));
+                await GameLogger.LogWarning(FormatGMLog(client, "item", $"Item {itemId} not found"), "GMCommands");
                 return;
             }
 
-            newItem.ItemId = itemId;
-            newItem.Amount = command.Length == 2 ? 1 : int.Parse(command[2]);
+            var newItem = new ItemModel { ItemId = itemId, Amount = amount };
+            newItem.SetItemInfo(itemInfo);
 
             if (newItem.IsTemporary)
-                newItem.SetRemainingTime((uint)newItem.ItemInfo.UsageTimeMinutes);
-
-            var itemClone = (ItemModel)newItem.Clone();
+                newItem.SetRemainingTime((uint)itemInfo.UsageTimeMinutes);
 
             if (client.Tamer.Inventory.AddItem(newItem))
             {
                 client.Send(new ReceiveItemPacket(newItem, InventoryTypeEnum.Inventory));
                 await _sender.Send(new UpdateItemsCommand(client.Tamer.Inventory));
-
-                client.Send(new SystemMessagePacket($"ItemID {newItem.ItemId} x{newItem.Amount} added to your Inventory."));
+                client.Send(new SystemMessagePacket($"ItemID {itemId} x{amount} added to your Inventory."));
+                await GameLogger.LogInfo(FormatGMLog(client, "item", $"Granted item {itemId} x{amount}"), "GMCommands");
             }
             else
             {
                 client.Send(new PickItemFailPacket(PickItemFailReasonEnum.InventoryFull));
+                await GameLogger.LogError(FormatGMLog(client, "item", $"Failed to grant item {itemId} – Inventory full"), "GMCommands");
             }
+        }
+
+        /// <summary>
+        /// Determina el GameClient objetivo (otro tamer) según el tipo de mapa en el que está el emisor del comando.
+        /// </summary>
+        private async Task<GameClient?> ResolveTargetPlayer(GameClient senderClient, string tamerName)
+        {
+            var mapConfig = await _sender.Send(new GameMapConfigByMapIdQuery(senderClient.Tamer.Location.MapId));
+
+            return mapConfig!.Type switch
+            {
+                MapTypeEnum.Dungeon => _dungeonServer.FindClientByTamerName(tamerName),
+                MapTypeEnum.Pvp => _pvpServer.FindClientByTamerName(tamerName),
+                MapTypeEnum.Event => _eventServer.FindClientByTamerName(tamerName),
+                _ => _mapServer.FindClientByTamerName(tamerName),
+            };
         }
 
         private async Task ItemToCommand(GameClient client, string[] command)
         {
             string message = string.Join(" ", command);
-
             var regex = @"^itemto\s+(\w+)\s+(\d{1,7})\s+(\d{1,4})$";
             var match = Regex.Match(message, regex, RegexOptions.IgnoreCase);
 
             if (!match.Success)
             {
-                client.Send(new SystemMessagePacket($"Invalid command!! Type !itemto (TamerName) (itemId) (amount)"));
+                client.Send(new SystemMessagePacket("Invalid command!! Type !itemto (TamerName) (itemId) (amount)"));
+                await GameLogger.LogWarning(
+                    FormatGMLog(client, "itemto", $"Invalid syntax: {message}"), 
+                    "GMCommands"
+                );
                 return;
             }
 
             var tamerName = match.Groups[1].Value;
-            GameClient? TargetPlayer = null;
+            int itemId = int.Parse(match.Groups[2].Value);
+            int amount = int.Parse(match.Groups[3].Value);
 
-            var mapConfig = await _sender.Send(new GameMapConfigByMapIdQuery(client.Tamer.Location.MapId));
+            GameClient? targetPlayer = await ResolveTargetPlayer(client, tamerName);
 
-            switch (mapConfig!.Type)
-            {
-                case MapTypeEnum.Dungeon:
-                    TargetPlayer = _dungeonServer.FindClientByTamerName(tamerName);
-                    break;
-                case MapTypeEnum.Pvp:
-                    TargetPlayer = _pvpServer.FindClientByTamerName(tamerName);
-                    break;
-                case MapTypeEnum.Event:
-                    TargetPlayer = _eventServer.FindClientByTamerName(tamerName);
-                    break;
-                default:
-                    TargetPlayer = _mapServer.FindClientByTamerName(tamerName);
-                    break;
-            }
-
-            if (TargetPlayer == null)
+            if (targetPlayer == null)
             {
                 client.Send(new SystemMessagePacket($"Tamer {tamerName} is not online!"));
+                await GameLogger.LogWarning(
+                    FormatGMLog(client, "itemto", $"Target tamer '{tamerName}' not found online"),
+                    "GMCommands"
+                );
                 return;
             }
 
-            var itemId = int.Parse(match.Groups[2].Value);
-            var newItem = new ItemModel();
-
-            newItem.SetItemInfo(_assets.ItemInfo.FirstOrDefault(x => x.ItemId == itemId));
-
-            if (newItem.ItemInfo == null)
+            var itemInfo = _assets.ItemInfo.FirstOrDefault(x => x.ItemId == itemId);
+            if (itemInfo == null)
             {
-                _logger.Warning($"No item info found with ID {itemId} for tamer {client.TamerId}.");
                 client.Send(new SystemMessagePacket($"No item info found with ID {itemId}."));
+                await GameLogger.LogWarning(
+                    FormatGMLog(client, "itemto", $"Item {itemId} not found in asset DB"),
+                    "GMCommands"
+                );
                 return;
             }
 
-            newItem.ItemId = itemId;
-            newItem.Amount = match.Groups.Count == 4 ? int.Parse(match.Groups[3].Value) : 1;
+            var newItem = new ItemModel { ItemId = itemId, Amount = amount };
+            newItem.SetItemInfo(itemInfo);
 
             if (newItem.IsTemporary)
-                newItem.SetRemainingTime((uint)newItem.ItemInfo.UsageTimeMinutes);
+                newItem.SetRemainingTime((uint)itemInfo.UsageTimeMinutes);
 
-            var itemClone = (ItemModel)newItem.Clone();
-
-            if (TargetPlayer.Tamer.Inventory.AddItem(newItem))
+            if (targetPlayer.Tamer.Inventory.AddItem(newItem))
             {
-                TargetPlayer.Send(new ReceiveItemPacket(newItem, InventoryTypeEnum.Inventory));
-                await _sender.Send(new UpdateItemsCommand(TargetPlayer.Tamer.Inventory));
+                targetPlayer.Send(new ReceiveItemPacket(newItem, InventoryTypeEnum.Inventory));
+                await _sender.Send(new UpdateItemsCommand(targetPlayer.Tamer.Inventory));
 
-                _logger.Information($"Tamer {tamerName} received the item {itemId} in their inventory.");
-                TargetPlayer.Send(new SystemMessagePacket($"Tamer {client.Tamer.Name} sended the item {newItem.ItemInfo.Name} to you in inventory."));
+                targetPlayer.Send(new SystemMessagePacket($"Tamer {client.Tamer.Name} sent you item {itemInfo.Name}."));
                 client.Send(new SystemMessagePacket($"Tamer {tamerName} received the item {itemId} in their inventory."));
+
+                await GameLogger.LogInfo(
+                    FormatGMLog(client, "itemto", $"Sent item {itemId} x{amount} to tamer '{tamerName}'"),
+                    "GMCommands"
+                );
             }
             else
             {
                 client.Send(new PickItemFailPacket(PickItemFailReasonEnum.InventoryFull));
                 client.Send(new SystemMessagePacket($"Tamer {tamerName}'s inventory is full."));
-                _logger.Error($"Tamer {tamerName}'s inventory is full.");
+
+                await GameLogger.LogError(
+                    FormatGMLog(client, "itemto", $"Inventory full when sending item {itemId} to '{tamerName}'"),
+                    "GMCommands"
+                );
             }
         }
+
 
         private async Task BitsCommand(GameClient client, string[] command)
         {
@@ -3699,16 +3717,10 @@ namespace DigitalWorldOnline.Game
         {
             string message = string.Join(" ", command);
 
-            var regex = @"^hatch";
+            var regex = "^hatch";
             var match = Regex.IsMatch(message, regex, RegexOptions.IgnoreCase);
 
-            if (!match)
-            {
-                client.Send(new SystemMessagePacket($"Unknown command.\nType !hatch (Type) (Name)"));
-                return;
-            }
-
-            if (command.Length < 3)
+            if (!match || command.Length < 3)
             {
                 client.Send(new SystemMessagePacket("Invalid command.\nType !hatch (Type) (Name)"));
                 return;
@@ -3724,12 +3736,11 @@ namespace DigitalWorldOnline.Game
 
             if (digiId == 31001 || digiId == 31002 || digiId == 31003 || digiId == 31004)
             {
-                client.Send(new SystemMessagePacket($"You cant hatch starter digimon, sorry :P"));
+                client.Send(new SystemMessagePacket("You can't hatch starter Digimon, sorry :P"));
                 return;
             }
 
-            var digiBase = _assets.DigimonBaseInfo.First(x => x.Type == digiId);
-
+            var digiBase = _assets.DigimonBaseInfo.FirstOrDefault(x => x.Type == digiId);
             if (digiBase == null)
             {
                 client.Send(new SystemMessagePacket($"Digimon Type {digiId} not found on database !!"));
@@ -3737,17 +3748,8 @@ namespace DigitalWorldOnline.Game
                 return;
             }
 
-            try
-            {
-                var digiEvo = _assets.EvolutionInfo.First(x => x.Type == digiId);
-
-                if (digiEvo == null)
-                {
-                    client.Send(new SystemMessagePacket($"Digimon Type {digiId} not available,\nneed to be Rookie/Spirit !!"));
-                    return;
-                }
-            }
-            catch (Exception ex)
+            var digiEvo = _assets.EvolutionInfo.FirstOrDefault(x => x.Type == digiId);
+            if (digiEvo == null)
             {
                 client.Send(new SystemMessagePacket($"Digimon Type {digiId} not available,\nneed to be Rookie/Spirit !!"));
                 return;
@@ -3757,15 +3759,12 @@ namespace DigitalWorldOnline.Game
                 .FirstOrDefault(slot => client.Tamer.Digimons.FirstOrDefault(x => x.Slot == slot) == null);
 
             var newDigimon = DigimonModel.Create(digiName, digiId, digiId, DigimonHatchGradeEnum.Perfect, 12500, digimonSlot);
-
             newDigimon.NewLocation(client.Tamer.Location.MapId, client.Tamer.Location.X, client.Tamer.Location.Y);
 
             newDigimon.SetBaseInfo(_statusManager.GetDigimonBaseInfo(newDigimon.BaseType));
             newDigimon.SetBaseStatus(_statusManager.GetDigimonBaseStatus(newDigimon.BaseType, newDigimon.Level, newDigimon.Size));
 
-            var digimonEvolutionInfo = _assets.EvolutionInfo.First(x => x.Type == newDigimon.BaseType);
-
-            newDigimon.AddEvolutions(digimonEvolutionInfo);
+            newDigimon.AddEvolutions(digiEvo);
 
             if (newDigimon.BaseInfo == null || newDigimon.BaseStatus == null || !newDigimon.Evolutions.Any())
             {
@@ -3778,33 +3777,30 @@ namespace DigitalWorldOnline.Game
 
             client.Send(new HatchFinishPacket(newDigimon, (ushort)(client.Partner.GeneralHandler + 1000), newDigimon.Slot));
 
-            var digimonInfo = _mapper.Map<DigimonModel>(await _sender.Send(new CreateDigimonCommand(newDigimon)));
+            await GameLogger.LogInfo(
+                $"HatchCommand executed: AccountId={client.AccountId}, Tamer={client.Tamer?.Name}, DigiType={newDigimon.BaseType}, Name={newDigimon.Name}, Size={newDigimon.Size}",
+                "gmcommands"
+            );
 
+            var digimonInfo = _mapper.Map<DigimonModel>(await _sender.Send(new CreateDigimonCommand(newDigimon)));
             client.Tamer.AddDigimon(digimonInfo);
 
             if (digimonInfo != null)
             {
                 newDigimon.SetId(digimonInfo.Id);
-                var slot = -1;
-
+                int slot = -1;
                 foreach (var digimon in newDigimon.Evolutions)
                 {
                     slot++;
-
                     var evolution = digimonInfo.Evolutions[slot];
-
                     if (evolution != null)
                     {
                         digimon.SetId(evolution.Id);
-
-                        var skillSlot = -1;
-
+                        int skillSlot = -1;
                         foreach (var skill in digimon.Skills)
                         {
                             skillSlot++;
-
                             var dtoSkill = evolution.Skills[skillSlot];
-
                             skill.SetId(dtoSkill.Id);
                         }
                     }
@@ -3813,45 +3809,27 @@ namespace DigitalWorldOnline.Game
 
             client.Send(new NeonMessagePacket(NeonMessageTypeEnum.Scale, client.Tamer.Name, newDigimon.BaseType, newDigimon.Size).Serialize());
 
-            // ------------------------------------------------------------------------------------------------------
-
-            var digimonBaseInfo = newDigimon.BaseInfo;
-            var digimonEvolutions = newDigimon.Evolutions;
-
-            //_logger.Information($"DigimonType: {newDigimon.BaseType} | DigimonInfo: {digimonEvolutionInfo?.Id.ToString()}");
-
-            var encyclopediaExists =
-                client.Tamer.Encyclopedia.Exists(x => x.DigimonEvolutionId == digimonEvolutionInfo?.Id);
-
-            // Check if encyclopedia exists
-            if (!encyclopediaExists && digimonEvolutionInfo != null)
+            var digimonEvolutionInfo = _assets.EvolutionInfo.FirstOrDefault(x => x.Type == newDigimon.BaseType);
+            if (digimonEvolutionInfo != null && !client.Tamer.Encyclopedia.Exists(x => x.DigimonEvolutionId == digimonEvolutionInfo.Id))
             {
                 var encyclopedia = CharacterEncyclopediaModel.Create(client.TamerId, digimonEvolutionInfo.Id,
                     newDigimon.Level, newDigimon.Size, 0, 0, 0, 0, 0, false, false);
 
-                digimonEvolutions?.ForEach(x =>
+                foreach (var x in newDigimon.Evolutions)
                 {
                     var evolutionLine = digimonEvolutionInfo.Lines.FirstOrDefault(y => y.Type == x.Type);
-                    byte slotLevel = 0;
-
-                    if (evolutionLine != null)
-                    {
-                        slotLevel = evolutionLine.SlotLevel;
-                    }
-
+                    byte slotLevel = evolutionLine?.SlotLevel ?? 0;
                     var encyclopediaEvo = CharacterEncyclopediaEvolutionsModel.Create(x.Type, slotLevel, Convert.ToBoolean(x.Unlocked));
-
-                    _logger.Debug(
-                        $"{encyclopediaEvo.Id}, {encyclopediaEvo.DigimonBaseType}, {encyclopediaEvo.SlotLevel}, {encyclopediaEvo.IsUnlocked}");
-
+                    _logger.Debug($"{encyclopediaEvo.Id}, {encyclopediaEvo.DigimonBaseType}, {encyclopediaEvo.SlotLevel}, {encyclopediaEvo.IsUnlocked}");
                     encyclopedia.Evolutions.Add(encyclopediaEvo);
-                });
+                }
 
                 var encyclopediaAdded = await _sender.Send(new CreateCharacterEncyclopediaCommand(encyclopedia));
-
                 client.Tamer.Encyclopedia.Add(encyclopediaAdded);
             }
         }
+
+
 
         private async Task GodmodeCommand(GameClient client, string[] command)
         {

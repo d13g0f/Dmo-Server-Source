@@ -41,43 +41,34 @@ namespace DigitalWorldOnline.Api.Controllers
             try
             {
                 var command = CreateAccountCommandConverter.Convert(account);
-
                 var validator = new CreateUserAccountCommandValidator();
                 var validationResult = validator.Validate(command);
 
-                if (validationResult.IsValid)
+                if (!validationResult.IsValid)
                 {
-                    var result = await _sender.Send(command);
+                    var validationErrors = string.Join(", ", validationResult.Errors.Select(x => x.ErrorMessage));
+                    _logger.Information($"Invalid data for account create request: {validationErrors}");
+                    return BadRequest(new { Errors = validationErrors });
+                }
 
-                    if (result == AccountCreateResult.Created)
-                    {
-                        _logger.Information($"Account created for username {account.Username}.");
-                        return Created("", new { Result = HttpStatusCode.Created });
-                    }
-                    else
-                    {
-                        _logger.Information($"Unable to create account for username {account.Username}: {result}.");
-                        return Problem(detail: result.GetDescription(), statusCode: result.GetHashCode());
-                    }
+                var result = await _sender.Send(command);
+
+                if (result == AccountCreateResult.Created)
+                {
+                    _logger.Information($"Account created for username {account.Username}.");
+                    return Created("", new { Result = HttpStatusCode.Created });
                 }
                 else
                 {
-                    var validationErrors = string.Join(',', validationResult.Errors.Select(x => x.ErrorMessage));
-
-                    _logger.Information($"Invalid data for account create request. {validationErrors}");
-
-                    return Problem(
-                        detail: validationErrors,
-                        statusCode: AccountCreateResult.InvalidData.GetHashCode()
-                    );
+                    _logger.Information($"Unable to create account for username {account.Username}: {result}.");
+                    return BadRequest(new { Errors = result.GetDescription() });
                 }
             }
             catch (Exception ex)
             {
                 _logger.Error($"Unexpected error on account create request. Ex.: {ex.Message}. Stack: {ex.StackTrace}");
-                return Problem(detail: ex.Message, statusCode: ex.HResult);
+                return StatusCode(500, new { Errors = ex.Message });
             }
         }
-
     }
 }

@@ -7,7 +7,7 @@ using Serilog;
 
 namespace DigitalWorldOnline.Account
 {
-    public sealed class AuthenticationServer : GameServer, IHostedService
+    public sealed class AuthenticationServer : DigitalWorldOnline.Commons.Entities.GameServer, IHostedService
     {
         private readonly IHostApplicationLifetime _hostApplicationLifetime;
         private readonly IConfiguration _configuration;

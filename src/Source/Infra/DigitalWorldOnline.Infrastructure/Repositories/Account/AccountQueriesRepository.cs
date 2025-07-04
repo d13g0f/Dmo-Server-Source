@@ -7,6 +7,10 @@ using DigitalWorldOnline.Commons.Interfaces;
 using System.Linq;
 using DigitalWorldOnline.Commons.DTOs.Base;
 using DigitalWorldOnline.Commons.Enums;
+using DigitalWorldOnline.Commons.Enums.Account;
+using DigitalWorldOnline.Commons.Enums.ClientEnums;
+using DigitalWorldOnline.Commons.Models.Account;
+using AutoMapper;
 
 namespace DigitalWorldOnline.Infrastructure.Repositories.Account
 {
@@ -14,9 +18,15 @@ namespace DigitalWorldOnline.Infrastructure.Repositories.Account
     {
         private readonly DatabaseContext _context;
 
-        public AccountQueriesRepository(DatabaseContext context)
+
+        private readonly IMapper _mapper;
+
+
+
+        public AccountQueriesRepository(DatabaseContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public async Task<AccountDTO?> GetAccountByUsernameAsync(string username)
@@ -86,36 +96,39 @@ namespace DigitalWorldOnline.Infrastructure.Repositories.Account
                 .ToListAsync();
         }
 
-        public async Task<AccountDTO> CreateGameAccountAsync(string username, string password, string email = null)
-        {
-            var account = new AccountDTO
-            {
-                Username = username,
-                Password = password,
-                Email = string.IsNullOrEmpty(email) ? $"test-email-{DateTime.UtcNow.ToLongDateString()}@email.com" : email,
-                ReceiveWelcome = false,
-                DiscordId = string.Empty,
-                CreateDate = DateTime.UtcNow,
-                Premium = 0,
-                Silk = 0,
-                ItemList = new List<ItemListDTO>
-                {
-                    new() { Type = ItemListEnum.ShopWarehouse, Size = 18 },
-                    new() { Type = ItemListEnum.AccountWarehouse, Size = 14 },
-                    new() { Type = ItemListEnum.CashWarehouse, Size = 49 },
-                    new() { Type = ItemListEnum.BuyHistory, Size = 255},
-                },
-                SystemInformation = new SystemInformationDTO
-                {
-                    Cpu = "",
-                    Gpu = "",
-                    Ip = ""
-                }
-            };
 
-            await _context.Account.AddAsync(account);
-            await _context.SaveChangesAsync();
-            return account;
-        }
+        public async Task<AccountDTO> CreateGameAccountAsync(string username, string password, string email = null)
+            {
+                // 1️⃣ Usar AccountModel para consistencia
+                var model = AccountModel.Create(
+                    username: username,
+                    password: password,
+                    email: email ?? $"test-{Guid.NewGuid()}@test.com",
+                    secondaryPassword: null,
+                    accessLevel: AccountAccessLevelEnum.Default
+                );
+
+                // 2️⃣ Mapear a DTO con AutoMapper
+                var dto = _mapper.Map<AccountDTO>(model);
+
+                // 3️⃣ Guardar cuenta primero
+                await _context.Account.AddAsync(dto);
+                await _context.SaveChangesAsync();
+
+                // 4️⃣ Insertar ItemLists explícitos
+                var accountWideLists = new List<ItemListDTO>
+        {
+            new() { AccountId = dto.Id, Type = ItemListEnum.AccountWarehouse, Size = (byte)GeneralSizeEnum.InitialAccountWarehouse, Bits = 0 },
+            new() { AccountId = dto.Id, Type = ItemListEnum.CashWarehouse, Size = (byte)GeneralSizeEnum.CashWarehouse, Bits = 0 },
+            new() { AccountId = dto.Id, Type = ItemListEnum.ShopWarehouse, Size = (byte)GeneralSizeEnum.ShopWarehouse, Bits = 0 },
+            new() { AccountId = dto.Id, Type = ItemListEnum.BuyHistory, Size = (byte)GeneralSizeEnum.CashShopBuyHistory, Bits = 0 }
+        };
+
+                _context.ItemLists.AddRange(accountWideLists);
+                await _context.SaveChangesAsync();
+
+                return dto;
+            }
+
     }
 }

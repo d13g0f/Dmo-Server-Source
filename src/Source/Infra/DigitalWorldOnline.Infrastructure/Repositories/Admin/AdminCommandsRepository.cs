@@ -2,12 +2,14 @@
 using DigitalWorldOnline.Application.Admin.Commands;
 using DigitalWorldOnline.Commons.DTOs.Account;
 using DigitalWorldOnline.Commons.DTOs.Assets;
+using DigitalWorldOnline.Commons.DTOs.Base;
 using DigitalWorldOnline.Commons.DTOs.Character;
 using DigitalWorldOnline.Commons.DTOs.Config;
 using DigitalWorldOnline.Commons.DTOs.Config.Events;
 using DigitalWorldOnline.Commons.DTOs.Server;
 using DigitalWorldOnline.Commons.Enums;
 using DigitalWorldOnline.Commons.Enums.Account;
+using DigitalWorldOnline.Commons.Enums.ClientEnums;
 using DigitalWorldOnline.Commons.Models.Account;
 using DigitalWorldOnline.Commons.Models.Summon;
 using DigitalWorldOnline.Commons.Repositories.Admin;
@@ -704,8 +706,7 @@ namespace DigitalWorldOnline.Infrastructure.Repositories.Admin
 
         // ----------------------------------------------
 
-        public async Task<AccountCreateResult> CreateAccountAsync(string username, string email, string discordId,
-            string password)
+        public async Task<AccountCreateResult> CreateAccountAsync(string username, string email, string discordId, string password)
         {
             var existentAccount = await _context.Account
                 .FirstOrDefaultAsync(x =>
@@ -728,10 +729,25 @@ namespace DigitalWorldOnline.Infrastructure.Repositories.Admin
             var dto = _mapper.Map<AccountDTO>(AccountModel.Create(username, email, discordId, password));
 
             _context.Add(dto);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
+
+            // Inserta los ItemLists explicitamente vinculados al AccountId
+            var accountWideLists = new List<ItemListDTO>
+            {
+                new() { AccountId = dto.Id, Type = ItemListEnum.AccountWarehouse, Size = (byte)GeneralSizeEnum.InitialAccountWarehouse, Bits = 0 },
+                new() { AccountId = dto.Id, Type = ItemListEnum.CashWarehouse, Size = (byte)GeneralSizeEnum.CashWarehouse, Bits = 0 },
+                new() { AccountId = dto.Id, Type = ItemListEnum.ShopWarehouse, Size = (byte)GeneralSizeEnum.ShopWarehouse, Bits = 0 },
+                new() { AccountId = dto.Id, Type = ItemListEnum.BuyHistory, Size = (byte)GeneralSizeEnum.CashShopBuyHistory, Bits = 0 }
+            };
+
+
+            _context.ItemLists.AddRange(accountWideLists);
+            await _context.SaveChangesAsync();
 
             return AccountCreateResult.Created;
         }
+
+
 
         public async Task<EventConfigDTO> AddEventConfigAsync(EventConfigDTO eventConfig)
         {
