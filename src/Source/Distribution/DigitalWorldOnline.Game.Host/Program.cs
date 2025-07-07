@@ -25,6 +25,7 @@ using System.Reflection;
 using DigitalWorldOnline.Commons.Utils;
 using DigitalWorldOnline.Game.PacketProcessors;
 using DigitalWorldOnline.Game.Commands;
+using DigitalWorldOnline.Game.Managers.Combat;
 
 namespace DigitalWorldOnline.Game
 {
@@ -95,7 +96,11 @@ namespace DigitalWorldOnline.Game
                     services.AddSingleton<PartyManager>();
                     services.AddSingleton<EventManager>();
                     services.AddSingleton<AttackManager>();
-                    services.AddSingleton<DigimonSkillManager>();
+                    //services.AddSingleton<DigimonSkillManager>();
+                    //segmented into multiple managers
+                    services.AddSingleton<ISkillDamageCalculator, SkillDamageCalculator>();
+                    services.AddSingleton<IBuffManager, BuffManager>();
+                    services.AddSingleton<ICombatBroadcaster, CombatBroadcaster>();
 
 
                     services.AddSingleton<EventQueueManager>();

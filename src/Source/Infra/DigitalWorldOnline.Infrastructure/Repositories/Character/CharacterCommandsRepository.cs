@@ -632,6 +632,22 @@ namespace DigitalWorldOnline.Infrastructure.Repositories.Character
 
 
 
+        public async Task<bool> TrySpendBitsAsync(long itemListId, long cost)
+        {
+            // Ejecuta un UPDATE directo: solo descontará si hay saldo suficiente
+            var affected = await _context.ItemLists
+                .Where(x => x.Id == itemListId
+                            && x.Type == ItemListEnum.Inventory
+                            && x.Bits >= cost)
+                .ExecuteUpdateAsync(u => u
+                    .SetProperty(x => x.Bits, x => x.Bits - cost));
+
+            return affected > 0;
+        }
+
+
+
+
         // -------------------------------------------------------------------------------------
 
         public async Task UpdateItemsAsync(List<ItemModel> items)

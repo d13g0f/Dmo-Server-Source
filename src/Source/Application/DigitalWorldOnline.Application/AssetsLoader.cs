@@ -10,6 +10,10 @@ using DigitalWorldOnline.Commons.Models.Summon;
 using FluentValidation;
 using MediatR;
 using Serilog;
+using DigitalWorldOnline.Models;
+using System.Text.Json.Serialization;
+using Newtonsoft.Json;
+
 
 namespace DigitalWorldOnline.Application
 {
@@ -66,6 +70,9 @@ namespace DigitalWorldOnline.Application
         public List<TimeRewardModel> TimeRewardEvents { get; private set; }
         public List<GotchaAssetModel> Gotcha { get; private set; }
         public List<DeckBuffModel> DeckBuffs { get; private set; }
+        public List<DigimonSkillJsonModel> DigimonSkillsJson { get; private set; }
+        public List<DigimonBuffJsonModel> DigimonBuffsJson { get; private set; }
+
 
         public AssetsLoader(ISender sender, IMapper mapper, ILogger logger)
         {
@@ -171,11 +178,42 @@ namespace DigitalWorldOnline.Application
                 TimeRewardEvents = _mapper.Map<List<TimeRewardModel>>(await _sender.Send(new TimeRewardEventsQuery()));
                 DeckBuffs = _mapper.Map<List<DeckBuffModel>>(await _sender.Send(new DeckBuffAssetsQuery()));
                 Gotcha = _mapper.Map<List<GotchaAssetModel>>(await _sender.Send(new GotchaAssetsQuery()));
+
+
             }
             catch (Exception ex)
             {
                 _logger.Error("Error on Loading Assets:\n {ex}", ex.Message);
             }
+
+           try
+            {
+                string basePath = AppContext.BaseDirectory;
+
+                // Ajusta esto según tu estructura de carpetas:
+                string skillsPath = Path.Combine(basePath, "Assets", "Json", "DigimonSkills.json");
+                string buffsPath = Path.Combine(basePath, "Assets", "Json", "DigimonBuffs.json");
+
+                if (!File.Exists(skillsPath))
+                    throw new FileNotFoundException($"Skill JSON not found at {skillsPath}");
+
+                if (!File.Exists(buffsPath))
+                    throw new FileNotFoundException($"Buff JSON not found at {buffsPath}");
+
+                var skillsJson = await File.ReadAllTextAsync(skillsPath);
+                DigimonSkillsJson = JsonConvert.DeserializeObject<List<DigimonSkillJsonModel>>(skillsJson) ?? new List<DigimonSkillJsonModel>();
+
+                var buffsJson = await File.ReadAllTextAsync(buffsPath);
+                DigimonBuffsJson = JsonConvert.DeserializeObject<List<DigimonBuffJsonModel>>(buffsJson) ?? new List<DigimonBuffJsonModel>();
+
+                _logger.Information($"Loaded {DigimonSkillsJson?.Count} DigimonSkills and {DigimonBuffsJson?.Count} DigimonBuffs from JSON.");
+            }
+            catch (Exception ex)
+            {
+                _logger.Error("Error loading DigimonSkills.json or DigimonBuffs.json: {Message}", ex.Message);
+            }
+
+
 
             try
             {

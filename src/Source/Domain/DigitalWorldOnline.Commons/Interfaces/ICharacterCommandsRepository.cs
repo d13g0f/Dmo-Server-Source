@@ -65,6 +65,8 @@ namespace DigitalWorldOnline.Commons.Interfaces
         Task UpdateItemListBitsAsync(long itemListId, long bits);
 
         Task<long?> GetInventoryBitsByItemListIdAsync(long itemListId);
+        
+        Task<bool> TrySpendBitsAsync(long itemListId, long cost);
 
         Task UpdateItemsAsync(List<ItemModel> items);
 

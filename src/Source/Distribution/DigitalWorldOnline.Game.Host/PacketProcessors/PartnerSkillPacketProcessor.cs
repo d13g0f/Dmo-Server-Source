@@ -23,6 +23,7 @@ using DigitalWorldOnline.Commons.Models;
 using System.Diagnostics.Eventing.Reader;
 using System.Runtime.CompilerServices;
 using static Quartz.Logging.OperationName;
+using DigitalWorldOnline.Game.Managers.Combat;
 
 namespace DigitalWorldOnline.Game.PacketProcessors
 {
@@ -37,11 +38,21 @@ namespace DigitalWorldOnline.Game.PacketProcessors
         private readonly PvpServer _pvpServer;
         private readonly ILogger _logger;
         private readonly ISender _sender;
-        private readonly DigimonSkillManager _digimonSkillManager;
+        private readonly ISkillDamageCalculator _skillDamageCalculator;
+        private readonly IBuffManager _buffManager;
+        private readonly ICombatBroadcaster _combatBroadcaster;
 
-
-        public PartnerSkillPacketProcessor(AssetsLoader assets,MapServer mapServer,DungeonsServer dungeonServer,EventServer eventServer,PvpServer pvpServer,
-            ILogger logger,ISender sender,DigimonSkillManager digimonSkillManager)
+        public PartnerSkillPacketProcessor(
+            AssetsLoader assets,
+            MapServer mapServer,
+            DungeonsServer dungeonServer,
+            EventServer eventServer,
+            PvpServer pvpServer,
+            ILogger logger,
+            ISender sender,
+            ISkillDamageCalculator skillDamageCalculator,
+            IBuffManager buffManager,
+            ICombatBroadcaster combatBroadcaster)
         {
             _assets = assets;
             _mapServer = mapServer;
@@ -50,8 +61,11 @@ namespace DigitalWorldOnline.Game.PacketProcessors
             _pvpServer = pvpServer;
             _logger = logger;
             _sender = sender;
-            _digimonSkillManager = digimonSkillManager;
+            _skillDamageCalculator = skillDamageCalculator;
+            _buffManager = buffManager;
+            _combatBroadcaster = combatBroadcaster;
         }
+
 
         public async Task Process(GameClient client,byte[] packetData)
         {
@@ -181,7 +195,9 @@ namespace DigitalWorldOnline.Game.PacketProcessors
 
                 if (skillType != SkillTypeEnum.Single)
                 {
-                    var finalDmg = client.Tamer.GodMode ? targetMobs.First().CurrentHP : _digimonSkillManager.SkillDamage(client,skill,skillSlot);
+                    var finalDmg = client.Tamer.GodMode 
+                        ? targetMobs.First().CurrentHP 
+                        : _skillDamageCalculator.CalculateDamage(client, skill, skillSlot).FinalDamage;
 
                     targetMobs.ForEach(targetMob =>
                     {
@@ -224,7 +240,8 @@ namespace DigitalWorldOnline.Game.PacketProcessors
                         targetMob.AddTarget(client.Tamer);
                     }
 
-                    var finalDmg = client.Tamer.GodMode ? targetMob.CurrentHP : _digimonSkillManager.SkillDamage(client,skill,skillSlot);
+                  var finalDmg = client.Tamer.GodMode? targetMobs.First().CurrentHP: _skillDamageCalculator.CalculateDamage(client, skill, skillSlot).FinalDamage;
+
 
                     if (finalDmg <= 0) finalDmg = client.Tamer.Partner.AT;
                     if (finalDmg > targetMob.CurrentHP) finalDmg = targetMob.CurrentHP;
