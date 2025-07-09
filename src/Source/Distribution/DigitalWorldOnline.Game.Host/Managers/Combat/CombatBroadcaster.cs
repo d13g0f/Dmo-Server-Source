@@ -15,13 +15,13 @@ namespace DigitalWorldOnline.Game.Managers.Combat
     {
         private readonly MapServer _mapServer;
         private readonly DungeonsServer _dungeonServer;
-        private readonly AssetsLoader _assets; // 📌 Necesitas AssetsLoader
+        private readonly AssetsLoader _assets; 
 
         public CombatBroadcaster(MapServer mapServer, DungeonsServer dungeonServer, AssetsLoader assets)
         {
             _mapServer = mapServer;
             _dungeonServer = dungeonServer;
-            _assets = assets; // ✔️
+            _assets = assets; 
         }
 
         public void BroadcastCombat(GameClient client, DamageResult result, BuffEffect[] effects)
@@ -61,7 +61,7 @@ namespace DigitalWorldOnline.Game.Managers.Combat
                 }
                 else if (e.Target is IMob mob)
                 {
-                    // ✅ Busca el modelo de buff completo
+                    //  Busca el modelo de buff completo
                     var buff = _assets.BuffInfo.FirstOrDefault(x => x.BuffId == e.BuffId);
                     if (buff == null)
                     {

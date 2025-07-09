@@ -31,6 +31,8 @@ namespace DigitalWorldOnline.Game.Managers.Combat
         public DamageResult CalculateDamage(GameClient client, DigimonSkillAssetModel skillAsset, byte skillSlot)
         {
             // 1) ID de la skill
+            // Note: The SkillId comes from client packet, but all stats are validated and read from DigimonSkillsJson.
+
             int skillId = skillAsset.SkillId;
 
             // 2) Busca el JSON real

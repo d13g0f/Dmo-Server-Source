@@ -24,10 +24,11 @@ using System.Diagnostics.Eventing.Reader;
 using System.Runtime.CompilerServices;
 using static Quartz.Logging.OperationName;
 using DigitalWorldOnline.Game.Managers.Combat;
+using GameServer.Logging;
 
 namespace DigitalWorldOnline.Game.PacketProcessors
 {
-    public partial class PartnerSkillPacketProcessor :IGamePacketProcessor
+    public partial class PartnerSkillPacketProcessor : IGamePacketProcessor
     {
         public GameServerPacketEnum Type => GameServerPacketEnum.PartnerSkill;
 
@@ -66,173 +67,165 @@ namespace DigitalWorldOnline.Game.PacketProcessors
             _combatBroadcaster = combatBroadcaster;
         }
 
-
-        public async Task Process(GameClient client,byte[] packetData)
+        public async Task Process(GameClient client, byte[] packetData)
         {
+            await GameLogger.LogInfo("Inicio del procesamiento del paquete PartnerSkill", "skills");
+
             var packet = new GamePacketReader(packetData);
 
             var skillSlot = packet.ReadByte();
             var attackerHandler = packet.ReadInt();
             var targetHandler = packet.ReadInt();
 
-            if (client.Partner == null) await Task.CompletedTask;
+            await GameLogger.LogInfo($"Datos del paquete: SkillSlot={skillSlot}, AttackerHandler={attackerHandler}, TargetHandler={targetHandler}", "skills");
 
-            Func<short,long,bool> broadcastMobs = client.DungeonMap
-                    ? (id,data) => _dungeonServer.IMobsAttacking(id,data)
-                    : client.PvpMap
-                        ? (id,data) => _pvpServer.IMobsAttacking(id,data)
-                        : (id,data) => _mapServer.IMobsAttacking(id,data);
-
-
-            var skill = _assets.DigimonSkillInfo.FirstOrDefault(x => x.Type == client.Partner.CurrentType && x.Slot == skillSlot);
-            Action<long,byte[]> broadcastAction = client.DungeonMap
-                   ? (id,data) => _dungeonServer.BroadcastForTamerViewsAndSelf(id,data)
-                      : (id,data) => _mapServer.BroadcastForTamerViewsAndSelf(id,data);
-
-            if (skill == null || skill.SkillInfo == null)
+            if (client.Partner == null)
             {
-                await Task.CompletedTask;
-            }
-            //if (DateTime.UtcNow < client.Partner.NextHitTime)
-            //{
-            //    return;
-            //}
-            if (client.Tamer.Partner.NextSkillTimeDict.TryGetValue(skillSlot,out DateTime nextSkillTime) && DateTime.UtcNow < nextSkillTime)
-            {
+                await GameLogger.LogWarning("El Partner del cliente es nulo", "skills");
                 return;
             }
-            SkillTypeEnum skillType;
-           
-            var areaOfEffect = skill.SkillInfo.AreaOfEffect;
-            var range = skill.SkillInfo.Range;
-            var targetType = skill.SkillInfo.Target;
 
-            Func<short,int,int,long,IMob> getMobHandler = client.DungeonMap
-                        ? _dungeonServer.GetNearestIMobToTarget                        
-                            : _mapServer.GetNearestIMobToTarget;
+            Func<short, long, bool> broadcastMobs = client.DungeonMap
+                ? (id, data) => _dungeonServer.IMobsAttacking(id, data)
+                : client.PvpMap
+                    ? (id, data) => _pvpServer.IMobsAttacking(id, data)
+                    : (id, data) => _mapServer.IMobsAttacking(id, data);
 
-            Func<short,int,int,long,List<IMob>> getNearbyTargetMob = client.DungeonMap
-            ? _dungeonServer.GetIMobsNearbyTargetMob            
+            var skillAsset = _assets.DigimonSkillInfo.FirstOrDefault(x => x.Type == client.Partner.CurrentType && x.Slot == skillSlot);
+            if (skillAsset == null)
+            {
+                await GameLogger.LogWarning($"No se encontró el asset de habilidad para Type={client.Partner.CurrentType} y Slot={skillSlot}", "skills");
+                return;
+            }
+            await GameLogger.LogInfo($"Habilidad encontrada: SkillId={skillAsset.SkillId}", "skills");
+
+            var jsonSkill = _assets.DigimonSkillsJson.FirstOrDefault(x => x.SkillId == skillAsset.SkillId);
+            if (jsonSkill == null)
+            {
+                await GameLogger.LogWarning($"No se encontró el JSON de habilidad para SkillId={skillAsset.SkillId}", "skills");
+                return;
+            }
+            await GameLogger.LogInfo($"JSON de habilidad cargado: Range={jsonSkill.Range}, Target={jsonSkill.Target}", "skills");
+
+            Action<long, byte[]> broadcastAction = client.DungeonMap
+                ? (id, data) => _dungeonServer.BroadcastForTamerViewsAndSelf(id, data)
+                : (id, data) => _mapServer.BroadcastForTamerViewsAndSelf(id, data);
+
+            if (client.Tamer.Partner.NextSkillTimeDict.TryGetValue(skillSlot, out var nextTime) && DateTime.UtcNow < nextTime)
+            {
+                await GameLogger.LogInfo($"La habilidad en el slot {skillSlot} está en cooldown hasta {nextTime}", "skills");
+                return;
+            }
+            await GameLogger.LogInfo($"Habilidad en slot {skillSlot} lista para usar", "skills");
+
+            SkillTypeEnum GetSkillType(int attackType, int targetType, int areaOfEffect)
+            {
+                if (attackType == 2) return SkillTypeEnum.Implosion;
+                if (areaOfEffect > 0 && (targetType == 17 || targetType == 18)) return SkillTypeEnum.TargetArea;
+                return SkillTypeEnum.Single;
+            }
+
+            var skillType = GetSkillType(jsonSkill.AttackType, jsonSkill.Target, jsonSkill.AreaOfEffect);
+            await GameLogger.LogInfo($"SkillType determinado: {skillType}", "skills");
+
+            var areaOfEffect = jsonSkill.AreaOfEffect;
+            var range = jsonSkill.Range;
+            var targetType = jsonSkill.Target;
+
+            Func<short, int, int, long, IMob> getMobHandler = client.DungeonMap
+                ? _dungeonServer.GetNearestIMobToTarget
+                : _mapServer.GetNearestIMobToTarget;
+
+            Func<short, int, int, long, List<IMob>> getNearbyTargetMob = client.DungeonMap
+                ? _dungeonServer.GetIMobsNearbyTargetMob
                 : _mapServer.GetIMobsNearbyTargetMob;
 
-            Func<Location,int,long,List<IMob>> getNearbyPartnerMob = client.DungeonMap
-            ? _dungeonServer.GetIMobsNearbyPartner
+            Func<Location, int, long, List<IMob>> getNearbyPartnerMob = client.DungeonMap
+                ? _dungeonServer.GetIMobsNearbyPartner
                 : _mapServer.GetIMobsNearbyPartner;
-            if(range < 500)
-            {
-                range = 900;
-            }
+
+            if (range < 500) range = 900;
+
             var targetMobs = new List<IMob>();
-            //if (client.Tamer.Partner.IsAttacking) return;
-            if (areaOfEffect > 0)
+
+            if (skillType == SkillTypeEnum.TargetArea)
             {
-                skillType = SkillTypeEnum.TargetArea;
-
-                var targets = new List<IMob>();
-
                 if (targetType == 17)
                 {
-                    targets = getNearbyPartnerMob(client.Partner.Location,areaOfEffect,client.TamerId);
+                    targetMobs.AddRange(getNearbyPartnerMob(client.Partner.Location, areaOfEffect, client.TamerId));
                 }
                 else if (targetType == 18)
                 {
-                    targets = getNearbyTargetMob(client.Partner.Location.MapId,targetHandler,areaOfEffect,client.TamerId);
+                    targetMobs.AddRange(getNearbyTargetMob(client.Partner.Location.MapId, targetHandler, areaOfEffect, client.TamerId));
                 }
-
-                targetMobs.AddRange(targets);
+                await GameLogger.LogInfo($"Mobs objetivo para AoE: {targetMobs.Count}", "skills");
             }
-            else if (areaOfEffect == 0 && targetType == 80)
+            else if (skillType == SkillTypeEnum.Implosion)
             {
-                skillType = SkillTypeEnum.Implosion;
-
-                var targets = new List<IMob>();
-
-                targets = getNearbyTargetMob(client.Partner.Location.MapId,targetHandler,range,client.TamerId);
-
-                targetMobs.AddRange(targets);
+                targetMobs.AddRange(getNearbyTargetMob(client.Partner.Location.MapId, targetHandler, range, client.TamerId));
+                await GameLogger.LogInfo($"Mobs objetivo para Implosion: {targetMobs.Count}", "skills");
             }
             else
             {
-
-                skillType = SkillTypeEnum.Single;
-
-                var mob = getMobHandler(client.Tamer.Location.MapId,targetHandler,range,client.TamerId);
-
+                var mob = getMobHandler(client.Tamer.Location.MapId, targetHandler, range, client.TamerId);
                 if (mob == null)
-                    await Task.CompletedTask;
-
+                {
+                    await GameLogger.LogWarning("No se encontró mob objetivo para Single", "skills");
+                    return;
+                }
                 targetMobs.Add(mob);
+                await GameLogger.LogInfo($"Mob objetivo único: Handler={mob.GeneralHandler}", "skills");
             }
 
-            if (targetMobs.Any())
+            if (!targetMobs.Any())
             {
-                if (skillType == SkillTypeEnum.Single && !targetMobs.First().Alive)
-                    await Task.CompletedTask;
+                await GameLogger.LogWarning("No se encontraron mobs objetivo", "skills");
+                return;
+            }
 
-                client.Partner.ReceiveDamage(skill.SkillInfo.HPUsage);
-                client.Partner.UseDs(skill.SkillInfo.DSUsage);
+            if (skillType == SkillTypeEnum.Single && !targetMobs.First().Alive)
+            {
+                await GameLogger.LogInfo($"Mob objetivo no vivo: Handler={targetMobs.First().GeneralHandler}", "skills");
+                return;
+            }
 
-                var castingTime = (int)Math.Round(skill.SkillInfo.CastingTime);
+            client.Partner.ReceiveDamage(jsonSkill.HPUsage);
+            client.Partner.UseDs(jsonSkill.DSUsage);
+            await GameLogger.LogInfo($"Partner consumió HP={jsonSkill.HPUsage}, DS={jsonSkill.DSUsage}", "skills");
 
-                if (skillSlot == 0) castingTime = 1500; // FOR NOW
-                if (skillSlot == 1) castingTime = 2000;
-                if (skillSlot == 2) castingTime = 3000;
-                if (skillSlot == 3) castingTime = 3000;
+            var castingTime = (int)Math.Round(jsonSkill.CastingTime);
+            client.Partner.SetEndCasting(castingTime);
+            await GameLogger.LogInfo($"CastingTime: {castingTime}ms", "skills");
 
-                client.Partner.SetEndCasting(castingTime);
+            if (!client.Tamer.InBattle)
+            {
+                client.Tamer.SetHidden(false);
+                broadcastAction(client.TamerId, new SetCombatOnPacket(attackerHandler).Serialize());
+                client.Tamer.StartBattleWithSkill(targetMobs, skillType);
+            }
+            else
+            {
+                client.Tamer.SetHidden(false);
+                client.Tamer.UpdateTargetWithSkill(targetMobs, skillType);
+            }
 
-                if (!client.Tamer.InBattle)
+            if (skillType == SkillTypeEnum.TargetArea)
+            {
+                var rawDamage = client.Tamer.GodMode
+                    ? targetMobs.First().CurrentHP
+                    : _skillDamageCalculator.CalculateDamage(client, skillAsset, skillSlot).FinalDamage;
+
+                int dividedAT = client.Tamer.GodMode ? 0 : client.Partner.AT / targetMobs.Count;
+                int finalDmg = rawDamage + dividedAT;
+
+                foreach (var targetMob in targetMobs)
                 {
-                    client.Tamer.SetHidden(false);
-                    broadcastAction(client.TamerId,new SetCombatOnPacket(attackerHandler).Serialize());
-                    client.Tamer.StartBattleWithSkill(targetMobs,skillType);
-                }
-                else
-                {
-                    client.Tamer.SetHidden(false);
-                    client.Tamer.UpdateTargetWithSkill(targetMobs,skillType);
-                }
-
-                if (skillType != SkillTypeEnum.Single)
-                {
-                    var finalDmg = client.Tamer.GodMode 
-                        ? targetMobs.First().CurrentHP 
-                        : _skillDamageCalculator.CalculateDamage(client, skill, skillSlot).FinalDamage;
-
-                    targetMobs.ForEach(targetMob =>
-                    {
-                        if (finalDmg <= 0) finalDmg = client.Tamer.Partner.AT;
-                        if (finalDmg > targetMob.CurrentHP) finalDmg = targetMob.CurrentHP;
-
-                        if (!targetMob.InBattle)
-                        {
-                            broadcastAction(client.TamerId,new SetCombatOnPacket(targetHandler).Serialize());
-                            targetMob.StartBattle(client.Tamer);
-                        }
-                        else
-                        {
-                            targetMob.AddTarget(client.Tamer);
-                        }
-
-                        var newHp = targetMob.ReceiveDamage(finalDmg,client.TamerId);
-
-                        if (newHp <= 0)
-                        {
-                            targetMob?.Die();
-                        }
-
-                    });
-
-                    broadcastAction(client.TamerId,new CastSkillPacket(skillSlot,attackerHandler,targetHandler).Serialize());
-                    broadcastAction(client.TamerId,new AreaSkillPacket(attackerHandler,client.Partner.HpRate,targetMobs,skillSlot,finalDmg).Serialize());
-                }
-                else
-                {
-                    var targetMob = targetMobs.First();
+                    if (finalDmg <= 0) finalDmg = client.Tamer.Partner.AT;
+                    if (finalDmg > targetMob.CurrentHP) finalDmg = targetMob.CurrentHP;
 
                     if (!targetMob.InBattle)
                     {
-                        broadcastAction(client.TamerId,new SetCombatOnPacket(targetHandler).Serialize());
+                        broadcastAction(client.TamerId, new SetCombatOnPacket(targetHandler).Serialize());
                         targetMob.StartBattle(client.Tamer);
                     }
                     else
@@ -240,67 +233,71 @@ namespace DigitalWorldOnline.Game.PacketProcessors
                         targetMob.AddTarget(client.Tamer);
                     }
 
-                  var finalDmg = client.Tamer.GodMode? targetMobs.First().CurrentHP: _skillDamageCalculator.CalculateDamage(client, skill, skillSlot).FinalDamage;
+                    var newHp = targetMob.ReceiveDamage(finalDmg, client.TamerId);
 
-
-                    if (finalDmg <= 0) finalDmg = client.Tamer.Partner.AT;
-                    if (finalDmg > targetMob.CurrentHP) finalDmg = targetMob.CurrentHP;
-
-                    var newHp = targetMob.ReceiveDamage(finalDmg,client.TamerId);
-
-                    if (newHp > 0)
+                    if (newHp <= 0)
                     {
-                        broadcastAction(client.TamerId,new CastSkillPacket(skillSlot,attackerHandler,targetHandler).Serialize());
-
-                        broadcastAction(client.TamerId,new SkillHitPacket(attackerHandler,targetMob.GeneralHandler,skillSlot,finalDmg,targetMob.CurrentHpRate).Serialize());
-                        client.Tamer.Partner.NextSkillTime = DateTime.UtcNow.AddMilliseconds(castingTime);
-                        //client.Tamer.Partner.SetEndCasting(500);
-
-
-                    }
-                    else
-                    {
-                        broadcastAction(client.TamerId,new KillOnSkillPacket(
-                                attackerHandler,targetMob.GeneralHandler,skillSlot,finalDmg).Serialize());
-
                         targetMob?.Die();
-                        client.Tamer.Partner.NextSkillTime = DateTime.UtcNow.AddMilliseconds(skill.SkillInfo.Cooldown);
-
-
-
                     }
-                    if (!client.Tamer.Partner.NextSkillTimeDict.ContainsKey(skillSlot))
-                    {
-                        client.Tamer.Partner.NextSkillTimeDict[skillSlot] = DateTime.UtcNow.AddMilliseconds(skill.SkillInfo.Cooldown);
-                    }
-                    else
-                    {
-                        client.Tamer.Partner.NextSkillTimeDict[skillSlot] = DateTime.UtcNow.AddMilliseconds(skill.SkillInfo.Cooldown);
-                    }
-
                 }
 
-                if (!broadcastMobs(client.Tamer.Location.MapId,client.TamerId) && client.Tamer.InBattle)
-                {
-                    client.Tamer.StopIBattle();
-                    
-                    await Task.Run(async () =>
-                    {
-                        await Task.Delay(3000);
+                broadcastAction(client.TamerId, new CastSkillPacket(skillSlot, attackerHandler, targetHandler).Serialize());
+                broadcastAction(client.TamerId, new AreaSkillPacket(attackerHandler, client.Partner.HpRate, targetMobs, skillSlot, finalDmg).Serialize());
+            }
+            else
+            {
+                var targetMob = targetMobs.First();
 
-                        broadcastAction(client.TamerId,new SetCombatOffPacket(attackerHandler).Serialize());
-                    });
+                if (!targetMob.InBattle)
+                {
+                    broadcastAction(client.TamerId, new SetCombatOnPacket(targetHandler).Serialize());
+                    targetMob.StartBattle(client.Tamer);
+                }
+                else
+                {
+                    targetMob.AddTarget(client.Tamer);
                 }
 
-                var evolution = client.Tamer.Partner.Evolutions.FirstOrDefault(x => x.Type == client.Tamer.Partner.CurrentType);
+                var finalDmg = client.Tamer.GodMode
+                    ? targetMob.CurrentHP
+                    : _skillDamageCalculator.CalculateDamage(client, skillAsset, skillSlot).FinalDamage;
 
-                if (evolution != null && skill.SkillInfo.Cooldown / 1000 >= 20)
+                if (finalDmg <= 0) finalDmg = client.Tamer.Partner.AT;
+                if (finalDmg > targetMob.CurrentHP) finalDmg = targetMob.CurrentHP;
+
+                var newHp = targetMob.ReceiveDamage(finalDmg, client.TamerId);
+
+                if (newHp > 0)
                 {
-                    evolution.Skills[skillSlot].SetCooldown(skill.SkillInfo.Cooldown / 1000);
-                    await _sender.Send(new UpdateEvolutionCommand(evolution));
+                    broadcastAction(client.TamerId, new CastSkillPacket(skillSlot, attackerHandler, targetHandler).Serialize());
+                    broadcastAction(client.TamerId, new SkillHitPacket(attackerHandler, targetMob.GeneralHandler, skillSlot, finalDmg, targetMob.CurrentHpRate).Serialize());
+                }
+                else
+                {
+                    broadcastAction(client.TamerId, new KillOnSkillPacket(attackerHandler, targetMob.GeneralHandler, skillSlot, finalDmg).Serialize());
+                    targetMob?.Die();
                 }
             }
-            await Task.CompletedTask;
+
+            var cdMs = jsonSkill.CooldownMs;
+            var nextSkillTime = DateTime.UtcNow.AddMilliseconds(cdMs);
+            client.Tamer.Partner.NextSkillTimeDict[skillSlot] = nextSkillTime;
+
+            var evolution = client.Tamer.Partner.Evolutions.FirstOrDefault(x => x.Type == client.Partner.CurrentType);
+            if (evolution != null && cdMs >= 20000)
+            {
+                evolution.Skills[skillSlot].SetCooldown(cdMs / 1000);
+                await _sender.Send(new UpdateEvolutionCommand(evolution));
+            }
+
+            if (!broadcastMobs(client.Tamer.Location.MapId, client.TamerId) && client.Tamer.InBattle)
+            {
+                client.Tamer.StopIBattle();
+                await Task.Delay(3000);
+                broadcastAction(client.TamerId, new SetCombatOffPacket(attackerHandler).Serialize());
+            }
+
+            await GameLogger.LogInfo("Fin del procesamiento del paquete PartnerSkill", "skills");
         }
     }
 }
