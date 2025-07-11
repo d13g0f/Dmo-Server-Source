@@ -20,6 +20,16 @@
 		<PackageReference Include="Serilog.Sinks.RollingFile" Version="3.3.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 	</ItemGroup>
+	
+	
+	  <ItemGroup>
+  <None Update="Assets\Json\DigimonSkills.json">
+    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  </None>
+  <None Update="Assets\Json\DigimonBuffs.json">
+    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  </None>
+</ItemGroup>
 
 	<ItemGroup>
 	  <ProjectReference Include="..\..\Infra\DigitalWorldOnline.Infrastructure\DigitalWorldOnline.Infrastructure.csproj" />
