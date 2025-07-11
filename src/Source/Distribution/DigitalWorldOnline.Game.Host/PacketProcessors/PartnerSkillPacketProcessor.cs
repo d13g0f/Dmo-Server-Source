@@ -235,6 +235,28 @@ namespace DigitalWorldOnline.Game.PacketProcessors
 
                     var newHp = targetMob.ReceiveDamage(finalDmg, client.TamerId);
 
+                    var effects = _buffManager.ApplyBuffs(client, null, skillSlot);
+                    foreach (var effect in effects)
+                    {
+                        if (effect.IsDebuff)
+                        {
+                            broadcastAction(client.TamerId, new AddDotDebuffPacket(
+                                client.Partner.GeneralHandler,
+                                targetMob.GeneralHandler,
+                                (int)effect.BuffId,
+                                targetMob.CurrentHpRate,
+                                0, 0).Serialize());
+                        }
+
+                        broadcastAction(client.TamerId, new AddBuffPacket(
+                            client.Partner.GeneralHandler,
+                            (short)effect.BuffId,
+                            effect.IsDebuff ? 2 : 1,
+                           (short)effect.Duration,
+                            effect.SkillCode).Serialize());
+                    }
+
+
                     if (newHp <= 0)
                     {
                         targetMob?.Die();
@@ -266,6 +288,31 @@ namespace DigitalWorldOnline.Game.PacketProcessors
                 if (finalDmg > targetMob.CurrentHP) finalDmg = targetMob.CurrentHP;
 
                 var newHp = targetMob.ReceiveDamage(finalDmg, client.TamerId);
+
+                var effects = _buffManager.ApplyBuffs(client, null, skillSlot);
+                foreach (var effect in effects)
+                {
+                    if (effect.IsDebuff)
+                    {
+                        broadcastAction(client.TamerId, new AddDotDebuffPacket(
+                            client.Partner.GeneralHandler,
+                            targetMob.GeneralHandler,
+                            (int)effect.BuffId,
+                            targetMob.CurrentHpRate,
+                            0, 0).Serialize());
+                    }
+                    else
+                    {
+                        broadcastAction(client.TamerId, new AddBuffPacket(
+                        client.Partner.GeneralHandler,
+                        (int)effect.BuffId,
+                        (int)effect.SkillCode,
+                        effect.IsDebuff ? (short)2 : (short)1,
+                        effect.Duration
+                    ).Serialize());
+
+                    }
+                }
 
                 if (newHp > 0)
                 {

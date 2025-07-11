@@ -1,3 +1,5 @@
+
+
 namespace DigitalWorldOnline.Game.Models
 {
     /// <summary>
@@ -9,6 +11,7 @@ namespace DigitalWorldOnline.Game.Models
         public int SkillId { get; set; }
         public int Duration { get; set; }
         public bool IsDebuff { get; set; }
+        public int SkillCode { get; set; }
         /// <summary>
         /// Target of this effect: either a ConfigMob (enemy) or the player's Digimon.
         /// </summary>

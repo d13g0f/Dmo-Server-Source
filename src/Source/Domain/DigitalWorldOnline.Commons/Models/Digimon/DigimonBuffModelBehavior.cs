@@ -1,4 +1,6 @@
-﻿namespace DigitalWorldOnline.Commons.Models.Digimon
+﻿using DigitalWorldOnline.Commons.Models.Asset;
+
+namespace DigitalWorldOnline.Commons.Models.Digimon
 {
     public sealed partial class DigimonBuffModel : Buff
     {
@@ -8,6 +10,11 @@
         /// <param name="buffId">Buff id (client reference).</param>
         /// <param name="skillId">Skill id (client reference).</param>
         /// <param name="duration">Buff duration (in seconds).</param>
+        /// 
+        public int TicksElapsed { get; set; }
+        public DateTime StartTime { get; set; }
+        public DigimonBuffJsonModel Definition { get; set; }
+
         public static DigimonBuffModel Create(int buffId, int skillId,int TypeN = 0, int duration = 0,int Cooldown = 0)
         {
             var buff = new DigimonBuffModel();

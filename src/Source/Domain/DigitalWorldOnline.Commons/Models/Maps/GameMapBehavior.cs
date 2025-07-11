@@ -18,6 +18,7 @@ namespace DigitalWorldOnline.Commons.Models.Map
         private readonly int _stopSeeing = 4001;
 
         public List<ConsignedShop> ConsignedShopsToRemove = new();
+        public List<long> TamersToRemove = new();
 
         public void Initialize()
         {
@@ -38,6 +39,8 @@ namespace DigitalWorldOnline.Commons.Models.Map
             MobHandlers = new Dictionary<short, long>();
             DropHandlers = new Dictionary<short, long>();
             ColiseumMobs = new List<int>();
+
+
 
             for (short i = 1; i <= byte.MaxValue; i++)
                 TamerHandlers.Add(i, 0);
@@ -227,6 +230,13 @@ namespace DigitalWorldOnline.Commons.Models.Map
 
             foreach (var tamer in LoadingTamers)
             {
+                if (tamer == null || tamer.Id <= 0)
+                {
+                    // mark as removed
+                    TamersToRemove.Add(tamer?.Id ?? 0);
+                    continue;
+                }
+
                 if (NeedNewHandler(tamer.Id))
                 {
                     SetDigimonHandlers(tamer.Digimons);

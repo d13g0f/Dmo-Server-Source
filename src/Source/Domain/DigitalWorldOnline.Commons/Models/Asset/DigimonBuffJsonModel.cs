@@ -1,22 +1,30 @@
+using DigitalWorldOnline.Commons.Enums;
+
 namespace DigitalWorldOnline.Commons.Models.Asset
 
 {
 
-        public class DigimonBuffJsonModel
-        {
-            public int Id { get; set; }
-            public int BuffId { get; set; }
-            public string Name { get; set; }
-            public int DigimonSkillCode { get; set; }
-            public int SkillCode { get; set; }
-            public int MinLevel { get; set; }
-            public int ConditionLevel { get; set; }
-            public int Class { get; set; }
-            public int Type { get; set; }
-            public int LifeType { get; set; }
-            public int TimeType { get; set; }
-        }
+    public class DigimonBuffJsonModel
+    {
+        public int BuffId { get; set; }
+        public string Name { get; set; }
+        public BuffEffectTypeEnum EffectType { get; set; }
+        public int SkillCode { get; set; }
+        public int Value { get; set; }
+        public int Chance { get; set; }
+        public int DurationMs { get; set; }
+        public int TickIntervalMs { get; set; }
+        public bool Stackable { get; set; }
+        public int MaxStacks { get; set; }
+        public bool Dispellable { get; set; }
+        public bool AreaOfEffect { get; set; }
+        
+    }
 
 
 
 }
+
+
+
+

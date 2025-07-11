@@ -10,6 +10,7 @@ using DigitalWorldOnline.Commons.Models.Map;
 using DigitalWorldOnline.Commons.Models.Map.Dungeons;
 using DigitalWorldOnline.Commons.Models.Summon;
 using DigitalWorldOnline.Commons.Models.TamerShop;
+using GameServer.Logging;
 using System.ComponentModel.Design;
 using System.Diagnostics;
 using System.Threading;
@@ -375,8 +376,22 @@ namespace DigitalWorldOnline.GameHost
                 var totalTime = stopwatch.Elapsed.TotalMilliseconds;
 
                 if (totalTime >= 1000)
+                {
                     // _logger.Information($"RunMap ({map.MapId}): {totalTime}.");
                     await Task.Delay(300);
+                }
+
+                foreach (var tamerId in map.TamersToRemove)
+                {
+                    var client = FindClientByTamerId(tamerId);
+                    if (client != null)
+                    {
+                        RemoveClient(client);
+                        _logger.Warning($"Removed invalid tamerId {tamerId} detected by ManageHandlers.");
+                    }
+                }
+
+                map.TamersToRemove.Clear(); // here we clean the list
             }
             catch (Exception ex)
             {
@@ -384,12 +399,22 @@ namespace DigitalWorldOnline.GameHost
             }
         }
 
+
         /// <summary>
         /// Adds a new gameclient to the target map.
         /// </summary>
         /// <param name="client">The game client to be added.</param>
         public async Task AddClient(GameClient client)
         {
+
+            if (client?.Tamer == null)
+            {
+                _ =GameLogger.LogInfo($"Client sin Tamer detectado (AccountId: {client?.AccountId}). Forzando RemoveClient.");
+                    
+                RemoveClient(client);
+                return;
+            }
+
             if (client.Tamer.TargetTamerIdTP > 0)
             {
                 var map = Maps.FirstOrDefault(x => x.Clients.Exists(y => y.TamerId == client.Tamer.TargetTamerIdTP));

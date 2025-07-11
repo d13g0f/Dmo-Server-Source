@@ -6,6 +6,8 @@ using DigitalWorldOnline.GameHost;
 using DigitalWorldOnline.Commons.Utils;
 using DigitalWorldOnline.Game.Models;
 using DigitalWorldOnline.Commons.Entities;
+using DigitalWorldOnline.Commons.Enums;
+using GameServer.Logging;
 
 namespace DigitalWorldOnline.Game.Managers.Combat
 {
@@ -80,12 +82,29 @@ namespace DigitalWorldOnline.Game.Managers.Combat
                 false
             );
 
-            // 10) Resultado final
+           // 10) Resultado final antes de buffs
             var result = new DamageResult
             {
                 FinalDamage = dmg,
                 SkillName = jsonSkill.Name
             };
+
+            // 🔑 10.1) Aplicar modificador de SkillDmg
+            var skillDmgBuffs = client.Partner.BuffList.Buffs
+                .Where(x => x.Definition?.EffectType == BuffEffectTypeEnum.SkillDmg);
+
+            double bonusPercent = 0;
+            foreach (var buff in skillDmgBuffs)
+            {
+                bonusPercent += buff.Definition.Value;
+            }
+
+            if (bonusPercent > 0)
+            {
+                result.FinalDamage = (int)(result.FinalDamage * (1 + bonusPercent / 100.0));
+                _ = GameLogger.LogInfo($"[SkillDamageCalculator] Buff SkillDmg aplicado +{bonusPercent}%", "buffs");
+            }
+
 
             // 11) Buffs
             var effects = _buffManager.ApplyBuffs(client, result, skillSlot);
