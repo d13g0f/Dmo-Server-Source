@@ -510,3 +510,22 @@ C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Rou
 C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Routine.Host\DigitalWorldOnline.Routine\obj\Debug\net7.0\DigitalWorldOnline.Routine.pdb
 C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Routine.Host\DigitalWorldOnline.Routine\obj\Debug\net7.0\DigitalWorldOnline.Routine.genruntimeconfig.cache
 C:\ServerLauncher\RSource\RSource\src\Source\Distribution\DigitalWorldOnline.Routine.Host\DigitalWorldOnline.Routine\obj\Debug\net7.0\ref\DigitalWorldOnline.Routine.dll
+G:\Digimon Masters Online\dev\Dmo-Server-Source\Build\Routine\Debug\net7.0\DigitalWorldOnline.Routine.exe
+G:\Digimon Masters Online\dev\Dmo-Server-Source\Build\Routine\Debug\net7.0\appsettings.Development.json
+G:\Digimon Masters Online\dev\Dmo-Server-Source\Build\Routine\Debug\net7.0\appsettings.json
+G:\Digimon Masters Online\dev\Dmo-Server-Source\Build\Routine\Debug\net7.0\DigitalWorldOnline.Routine.deps.json
+G:\Digimon Masters Online\dev\Dmo-Server-Source\Build\Routine\Debug\net7.0\DigitalWorldOnline.Routine.runtimeconfig.json
+G:\Digimon Masters Online\dev\Dmo-Server-Source\Build\Routine\Debug\net7.0\DigitalWorldOnline.Routine.dll
+G:\Digimon Masters Online\dev\Dmo-Server-Source\Build\Routine\Debug\net7.0\DigitalWorldOnline.Routine.pdb
+G:\Digimon Masters Online\dev\Dmo-Server-Source\src\Source\Distribution\DigitalWorldOnline.Routine.Host\DigitalWorldOnline.Routine\obj\Debug\net7.0\DigitalWorldOnline.Routine.csproj.AssemblyReference.cache
+G:\Digimon Masters Online\dev\Dmo-Server-Source\src\Source\Distribution\DigitalWorldOnline.Routine.Host\DigitalWorldOnline.Routine\obj\Debug\net7.0\DigitalWorldOnline.Routine.GeneratedMSBuildEditorConfig.editorconfig
+G:\Digimon Masters Online\dev\Dmo-Server-Source\src\Source\Distribution\DigitalWorldOnline.Routine.Host\DigitalWorldOnline.Routine\obj\Debug\net7.0\DigitalWorldOnline.Routine.AssemblyInfoInputs.cache
+G:\Digimon Masters Online\dev\Dmo-Server-Source\src\Source\Distribution\DigitalWorldOnline.Routine.Host\DigitalWorldOnline.Routine\obj\Debug\net7.0\DigitalWorldOnline.Routine.AssemblyInfo.cs
+G:\Digimon Masters Online\dev\Dmo-Server-Source\src\Source\Distribution\DigitalWorldOnline.Routine.Host\DigitalWorldOnline.Routine\obj\Debug\net7.0\DigitalWorldOnline.Routine.csproj.CoreCompileInputs.cache
+G:\Digimon Masters Online\dev\Dmo-Server-Source\src\Source\Distribution\DigitalWorldOnline.Routine.Host\DigitalWorldOnline.Routine\obj\Debug\net7.0\DigitalWorldOnline.Routine.sourcelink.json
+G:\Digimon Masters Online\dev\Dmo-Server-Source\src\Source\Distribution\DigitalWorldOnline.Routine.Host\DigitalWorldOnline.Routine\obj\Debug\net7.0\DigitalW.4A45A644.Up2Date
+G:\Digimon Masters Online\dev\Dmo-Server-Source\src\Source\Distribution\DigitalWorldOnline.Routine.Host\DigitalWorldOnline.Routine\obj\Debug\net7.0\DigitalWorldOnline.Routine.dll
+G:\Digimon Masters Online\dev\Dmo-Server-Source\src\Source\Distribution\DigitalWorldOnline.Routine.Host\DigitalWorldOnline.Routine\obj\Debug\net7.0\refint\DigitalWorldOnline.Routine.dll
+G:\Digimon Masters Online\dev\Dmo-Server-Source\src\Source\Distribution\DigitalWorldOnline.Routine.Host\DigitalWorldOnline.Routine\obj\Debug\net7.0\DigitalWorldOnline.Routine.pdb
+G:\Digimon Masters Online\dev\Dmo-Server-Source\src\Source\Distribution\DigitalWorldOnline.Routine.Host\DigitalWorldOnline.Routine\obj\Debug\net7.0\DigitalWorldOnline.Routine.genruntimeconfig.cache
+G:\Digimon Masters Online\dev\Dmo-Server-Source\src\Source\Distribution\DigitalWorldOnline.Routine.Host\DigitalWorldOnline.Routine\obj\Debug\net7.0\ref\DigitalWorldOnline.Routine.dll

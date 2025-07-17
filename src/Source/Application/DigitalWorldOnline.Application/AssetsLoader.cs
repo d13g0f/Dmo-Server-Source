@@ -13,6 +13,7 @@ using Serilog;
 using DigitalWorldOnline.Models;
 using System.Text.Json.Serialization;
 using Newtonsoft.Json;
+using DigitalWorldOnline.Commons.Models.Digimon;
 
 
 namespace DigitalWorldOnline.Application
@@ -72,6 +73,7 @@ namespace DigitalWorldOnline.Application
         public List<DeckBuffModel> DeckBuffs { get; private set; }
         public List<DigimonSkillJsonModel> DigimonSkillsJson { get; private set; }
         public List<DigimonBuffJsonModel> DigimonBuffsJson { get; private set; }
+        public RootDigicloneConfig DigicloneConfig { get; private set; }
 
 
         public AssetsLoader(ISender sender, IMapper mapper, ILogger logger)
@@ -189,10 +191,10 @@ namespace DigitalWorldOnline.Application
            try
             {
                 string basePath = AppContext.BaseDirectory;
-
                 // Ajusta esto según tu estructura de carpetas:
                 string skillsPath = Path.Combine(basePath, "Assets", "Json", "DigimonSkills.json");
                 string buffsPath = Path.Combine(basePath, "Assets", "Json", "DigimonBuffs.json");
+                string cloneConfigPath = Path.Combine(basePath, "Assets", "Json", "JsonDigiCloneConfig.json");
 
                 if (!File.Exists(skillsPath))
                     throw new FileNotFoundException($"Skill JSON not found at {skillsPath}");
@@ -200,11 +202,19 @@ namespace DigitalWorldOnline.Application
                 if (!File.Exists(buffsPath))
                     throw new FileNotFoundException($"Buff JSON not found at {buffsPath}");
 
+                if (!File.Exists(cloneConfigPath))
+                    throw new FileNotFoundException($"DigicloneConfig JSON not found at {cloneConfigPath}");
+
                 var skillsJson = await File.ReadAllTextAsync(skillsPath);
                 DigimonSkillsJson = JsonConvert.DeserializeObject<List<DigimonSkillJsonModel>>(skillsJson) ?? new List<DigimonSkillJsonModel>();
 
                 var buffsJson = await File.ReadAllTextAsync(buffsPath);
                 DigimonBuffsJson = JsonConvert.DeserializeObject<List<DigimonBuffJsonModel>>(buffsJson) ?? new List<DigimonBuffJsonModel>();
+
+                var cloneConfigJson = await File.ReadAllTextAsync(cloneConfigPath);
+                DigicloneConfig = JsonConvert.DeserializeObject<RootDigicloneConfig>(cloneConfigJson) ?? new RootDigicloneConfig();
+
+                _logger.Information($"Loaded DigicloneConfig with {DigicloneConfig?.Digiclones?.Count} clone sections.");
 
                 _logger.Information($"Loaded {DigimonSkillsJson?.Count} DigimonSkills and {DigimonBuffsJson?.Count} DigimonBuffs from JSON.");
             }

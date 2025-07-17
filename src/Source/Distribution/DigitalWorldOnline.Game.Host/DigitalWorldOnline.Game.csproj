@@ -15,12 +15,13 @@
 		<PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="7.0.0" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.0" />
-		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="Serilog.Extensions.Hosting" Version="5.0.1" />
 		<PackageReference Include="Serilog.Formatting.Compact" Version="1.1.0" />
 		<PackageReference Include="Serilog.Settings.Configuration" Version="3.4.0" />
 		<PackageReference Include="Serilog.Sinks.Console" Version="4.1.0" />
 		<PackageReference Include="Serilog.Sinks.RollingFile" Version="3.3.0" />
+		<PackageReference Include="System.Text.Json" Version="9.0.6" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -38,6 +39,29 @@
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>
+	
+<Target Name="CopyDigimonAssets" AfterTargets="Build">
+  <!-- Ruta base del archivo -->
+  <ItemGroup>
+    <DigimonAssets Include="..\..\Assets\Json\**\*.*" />
+  </ItemGroup>
+
+  <!-- Copiar al output local (opcional, ya lo hace CopyToOutputDirectory si quieres) -->
+  <Copy
+    SourceFiles="@(DigimonAssets)"
+    DestinationFolder="$(OutDir)Assets\Json\%(RecursiveDir)" />
+
+  <!-- Copiar a la carpeta Routina también -->
+  <Copy
+    SourceFiles="@(DigimonAssets)"
+    DestinationFolder="$(SolutionDir)Build\Routine\$(Configuration)\net7.0\Assets\Json\%(RecursiveDir)" />
+
+  <!-- Copiar a la carpeta GameServer también -->
+  <Copy
+    SourceFiles="@(DigimonAssets)"
+    DestinationFolder="$(SolutionDir)Build\GameServer\$(Configuration)\net7.0\Assets\Json\%(RecursiveDir)" />
+</Target>
+
 
 	<ProjectExtensions>
 		<VisualStudio>

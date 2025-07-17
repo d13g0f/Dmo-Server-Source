@@ -1,0 +1,67 @@
+
+
+{
+  "Digiclones": [
+    {
+      "SectionRange": [5501, 5505],
+      "Name": "Normal",
+      "Grades": [
+        { "Grade": "S", "SuccessChance": 15, "RetentionRate": 70, "DowngradeRate": 30, "MinValue": 1, "MaxValue": 3 },
+        { "Grade": "A", "SuccessChance": 18, "RetentionRate": 60, "DowngradeRate": 40, "MinValue": 1, "MaxValue": 3 },
+        { "Grade": "B", "SuccessChance": 25, "RetentionRate": 40, "DowngradeRate": 60, "MinValue": 1, "MaxValue": 2 },
+        { "Grade": "C", "SuccessChance": 50, "RetentionRate": 20, "DowngradeRate": 80, "MinValue": 1, "MaxValue": 2 },
+        { "Grade": "D", "SuccessChance": 90, "RetentionRate": 0, "DowngradeRate": 100, "MinValue": 1, "MaxValue": 1 }
+      ]
+    },
+    {
+      "SectionRange": [5511, 5515],
+      "Name": "Reinforced",
+      "Grades": [
+        { "Grade": "S", "SuccessChance": 15, "RetentionRate": 70, "DowngradeRate": 30, "MinValue": 3, "MaxValue": 3 },
+        { "Grade": "A", "SuccessChance": 18, "RetentionRate": 60, "DowngradeRate": 40, "MinValue": 3, "MaxValue": 3 },
+        { "Grade": "B", "SuccessChance": 25, "RetentionRate": 40, "DowngradeRate": 60, "MinValue": 2, "MaxValue": 2 },
+        { "Grade": "C", "SuccessChance": 50, "RetentionRate": 20, "DowngradeRate": 80, "MinValue": 2, "MaxValue": 2 },
+        { "Grade": "D", "SuccessChance": 90, "RetentionRate": 0, "DowngradeRate": 100, "MinValue": 1, "MaxValue": 1 }
+      ]
+    },
+    {
+      "SectionRange": [5521, 5525],
+      "Name": "Mega Reinforced",
+      "Grades": [
+        { "Grade": "S", "SuccessChance": 100, "RetentionRate": 100, "DowngradeRate": 0, "MinValue": 3, "MaxValue": 3 },
+        { "Grade": "A", "SuccessChance": 100, "RetentionRate": 100, "DowngradeRate": 0, "MinValue": 3, "MaxValue": 3 },
+        { "Grade": "B", "SuccessChance": 100, "RetentionRate": 100, "DowngradeRate": 0, "MinValue": 2, "MaxValue": 2 },
+        { "Grade": "C", "SuccessChance": 100, "RetentionRate": 100, "DowngradeRate": 0, "MinValue": 2, "MaxValue": 2 },
+        { "Grade": "D", "SuccessChance": 100, "RetentionRate": 100, "DowngradeRate": 0, "MinValue": 1, "MaxValue": 1 }
+      ]
+    },
+    {
+      "SectionRange": [5536, 5540],
+      "Name": "Mega",
+      "Grades": [
+        { "Grade": "S", "SuccessChance": 100, "RetentionRate": 100, "DowngradeRate": 0, "MinValue": 1, "MaxValue": 3 },
+        { "Grade": "A", "SuccessChance": 100, "RetentionRate": 100, "DowngradeRate": 0, "MinValue": 1, "MaxValue": 3 },
+        { "Grade": "B", "SuccessChance": 100, "RetentionRate": 100, "DowngradeRate": 0, "MinValue": 1, "MaxValue": 2 },
+        { "Grade": "C", "SuccessChance": 100, "RetentionRate": 100, "DowngradeRate": 0, "MinValue": 1, "MaxValue": 2 },
+        { "Grade": "D", "SuccessChance": 100, "RetentionRate": 100, "DowngradeRate": 0, "MinValue": 1, "MaxValue": 1 }
+      ]
+    }
+  ],
+  "CloneLevels": [
+    { "Level": 1, "AT": 3, "CT": 15, "BL": 2, "EV": 12, "HP": 2 },
+    { "Level": 2, "AT": 6, "CT": 30, "BL": 4, "EV": 24, "HP": 4 },
+    { "Level": 3, "AT": 9, "CT": 45, "BL": 6, "EV": 36, "HP": 6 },
+    { "Level": 4, "AT": 14, "CT": 70, "BL": 9, "EV": 56, "HP": 9 },
+    { "Level": 5, "AT": 19, "CT": 95, "BL": 12, "EV": 76, "HP": 12 },
+    { "Level": 6, "AT": 24, "CT": 120, "BL": 15, "EV": 96, "HP": 15 },
+    { "Level": 7, "AT": 34, "CT": 170, "BL": 21, "EV": 136, "HP": 19 },
+    { "Level": 8, "AT": 44, "CT": 220, "BL": 27, "EV": 176, "HP": 23 },
+    { "Level": 9, "AT": 54, "CT": 270, "BL": 33, "EV": 216, "HP": 27 },
+    { "Level": 10, "AT": 69, "CT": 345, "BL": 42, "EV": 276, "HP": 31 },
+    { "Level": 11, "AT": 84, "CT": 420, "BL": 51, "EV": 336, "HP": 35 },
+    { "Level": 12, "AT": 99, "CT": 495, "BL": 60, "EV": 396, "HP": 39 },
+    { "Level": 13, "AT": 114, "CT": 570, "BL": 69, "EV": 456, "HP": 44 },
+    { "Level": 14, "AT": 129, "CT": 645, "BL": 78, "EV": 516, "HP": 49 },
+    { "Level": 15, "AT": 144, "CT": 720, "BL": 87, "EV": 576, "HP": 54 }
+  ]
+}

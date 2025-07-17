@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "uiaZoKK6sXaKO2s/shxPD9eKrywUCNrMD3F4vlyyLd0=",
+  "Hash": "boqf3KtK1soI4/pWfttZprsarG/FwEth77T169mSpfY=",
   "Source": "DigitalWorldOnline.Admin",
   "BasePath": "_content/DigitalWorldOnline.Admin",
   "Mode": "Default",
@@ -10,390 +10,12 @@
     {
       "Name": "DigitalWorldOnline.Admin\\wwwroot",
       "Source": "DigitalWorldOnline.Admin",
-      "ContentRoot": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
+      "ContentRoot": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
       "BasePath": "_content/DigitalWorldOnline.Admin",
       "Pattern": "**"
     }
   ],
   "Assets": [
-    {
-      "Identity": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\_content1\\MudBlazor\\MudBlazor.min.css",
-      "SourceId": "DigitalWorldOnline.Admin",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
-      "BasePath": "_content/DigitalWorldOnline.Admin",
-      "RelativePath": "_content1/MudBlazor/MudBlazor.min#[.{fingerprint}]?.css",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "Fingerprint": "4zzcyv4eu3",
-      "Integrity": "ID+YQTHdxOAQwL3HkDNmN+gvKpDMbSCI90Hlsl4cfE0=",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\_content1\\MudBlazor\\MudBlazor.min.css"
-    },
-    {
-      "Identity": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\_content1\\MudBlazor\\MudBlazor.min.js",
-      "SourceId": "DigitalWorldOnline.Admin",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
-      "BasePath": "_content/DigitalWorldOnline.Admin",
-      "RelativePath": "_content1/MudBlazor/MudBlazor.min#[.{fingerprint}]?.js",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "Fingerprint": "r28yrlkyxf",
-      "Integrity": "Y4xauMcIt84Bvrj3olTDT2vGwa9ZzAIuG7+BSyVhhn8=",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\_content1\\MudBlazor\\MudBlazor.min.js"
-    },
-    {
-      "Identity": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
-      "SourceId": "DigitalWorldOnline.Admin",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
-      "BasePath": "_content/DigitalWorldOnline.Admin",
-      "RelativePath": "css/bootstrap/bootstrap.min#[.{fingerprint}]?.css",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "Fingerprint": "o2wlpouf80",
-      "Integrity": "YLGeXaapI0/5IgZopewRJcFXomhRMlYYjugPLSyNjTY=",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\css\\bootstrap\\bootstrap.min.css"
-    },
-    {
-      "Identity": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
-      "SourceId": "DigitalWorldOnline.Admin",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
-      "BasePath": "_content/DigitalWorldOnline.Admin",
-      "RelativePath": "css/bootstrap/bootstrap.min.css#[.{fingerprint}]?.map",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "Fingerprint": "kao5znno1s",
-      "Integrity": "xMZ0SaSBYZSHVjFdZTAT/IjRExRIxSriWcJLcA9nkj0=",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\css\\bootstrap\\bootstrap.min.css.map"
-    },
-    {
-      "Identity": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css",
-      "SourceId": "DigitalWorldOnline.Admin",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
-      "BasePath": "_content/DigitalWorldOnline.Admin",
-      "RelativePath": "css/open-iconic/font/css/open-iconic-bootstrap.min#[.{fingerprint}]?.css",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "Fingerprint": "cmapd0fi15",
-      "Integrity": "BJ/G+e+y7bQdrYkS2RBTyNfBHpA9IuGaPmf9htub5MQ=",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css"
-    },
-    {
-      "Identity": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot",
-      "SourceId": "DigitalWorldOnline.Admin",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
-      "BasePath": "_content/DigitalWorldOnline.Admin",
-      "RelativePath": "css/open-iconic/font/fonts/open-iconic#[.{fingerprint}]?.eot",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "Fingerprint": "0uw8dim9nl",
-      "Integrity": "OK3poGPgzKI2NzNgP07XMbJa3Dz6USoUh/chSkSvQpc=",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot"
-    },
-    {
-      "Identity": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf",
-      "SourceId": "DigitalWorldOnline.Admin",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
-      "BasePath": "_content/DigitalWorldOnline.Admin",
-      "RelativePath": "css/open-iconic/font/fonts/open-iconic#[.{fingerprint}]?.otf",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "Fingerprint": "wk8x8xm0ah",
-      "Integrity": "sDUtuZAEzWZyv/U1xl/9D3ehyU69JE+FvAcu5HQ+/a0=",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf"
-    },
-    {
-      "Identity": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg",
-      "SourceId": "DigitalWorldOnline.Admin",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
-      "BasePath": "_content/DigitalWorldOnline.Admin",
-      "RelativePath": "css/open-iconic/font/fonts/open-iconic#[.{fingerprint}]?.svg",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "Fingerprint": "10uzszoped",
-      "Integrity": "oUpLdS+SoLJFwf4bzA3iKD7TCm66oLkTpAQlVJ2s1wc=",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg"
-    },
-    {
-      "Identity": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf",
-      "SourceId": "DigitalWorldOnline.Admin",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
-      "BasePath": "_content/DigitalWorldOnline.Admin",
-      "RelativePath": "css/open-iconic/font/fonts/open-iconic#[.{fingerprint}]?.ttf",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "Fingerprint": "ll5grcv8wv",
-      "Integrity": "p+RP8CV3vRK1YbIkNzq3rPo1jyETPnR07ULb+HVYL8w=",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf"
-    },
-    {
-      "Identity": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff",
-      "SourceId": "DigitalWorldOnline.Admin",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
-      "BasePath": "_content/DigitalWorldOnline.Admin",
-      "RelativePath": "css/open-iconic/font/fonts/open-iconic#[.{fingerprint}]?.woff",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "Fingerprint": "h4d0pazwgy",
-      "Integrity": "cZPqVlRJfSNW0KaQ4+UPOXZ/v/QzXlejRDwUNdZIofI=",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff"
-    },
-    {
-      "Identity": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\FONT-LICENSE",
-      "SourceId": "DigitalWorldOnline.Admin",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
-      "BasePath": "_content/DigitalWorldOnline.Admin",
-      "RelativePath": "css/open-iconic/FONT-LICENSE#[.{fingerprint}]?",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "Fingerprint": "z189sdz1gv",
-      "Integrity": "+Q44zfEaCMmXduni5Td+IgCbk8sSUQwES2nWs+KKQz0=",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\css\\open-iconic\\FONT-LICENSE"
-    },
-    {
-      "Identity": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\ICON-LICENSE",
-      "SourceId": "DigitalWorldOnline.Admin",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
-      "BasePath": "_content/DigitalWorldOnline.Admin",
-      "RelativePath": "css/open-iconic/ICON-LICENSE#[.{fingerprint}]?",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "Fingerprint": "3cg08az021",
-      "Integrity": "s/Is6Ey6jfNAEfXUIOyHrXXX+RcA8hzchYnuOIWUMl4=",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\css\\open-iconic\\ICON-LICENSE"
-    },
-    {
-      "Identity": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\README.md",
-      "SourceId": "DigitalWorldOnline.Admin",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
-      "BasePath": "_content/DigitalWorldOnline.Admin",
-      "RelativePath": "css/open-iconic/README#[.{fingerprint}]?.md",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "Fingerprint": "l5877nzu3a",
-      "Integrity": "9wdNXQFE78LCNHo+Hq2eXMTx+YBf2gjsufVTJc8dAV0=",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\css\\open-iconic\\README.md"
-    },
-    {
-      "Identity": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\site.css",
-      "SourceId": "DigitalWorldOnline.Admin",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
-      "BasePath": "_content/DigitalWorldOnline.Admin",
-      "RelativePath": "css/site#[.{fingerprint}]?.css",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "Fingerprint": "1vtxvcb14m",
-      "Integrity": "k8ttQt8b3auf2TSFFS+FpMy1PeccST9J5ozTv8hxRMs=",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\css\\site.css"
-    },
-    {
-      "Identity": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\favicon.ico",
-      "SourceId": "DigitalWorldOnline.Admin",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
-      "BasePath": "_content/DigitalWorldOnline.Admin",
-      "RelativePath": "favicon#[.{fingerprint}]?.ico",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "Fingerprint": "61n19gt1b8",
-      "Integrity": "Jtxf9L+5ITKRc1gIRl4VbUpGkRNfOBXjYTdhJD4facM=",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\favicon.ico"
-    },
-    {
-      "Identity": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\Images\\dmo_header.png",
-      "SourceId": "DigitalWorldOnline.Admin",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
-      "BasePath": "_content/DigitalWorldOnline.Admin",
-      "RelativePath": "Images/dmo_header#[.{fingerprint}]?.png",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "Fingerprint": "7e25eyq1m0",
-      "Integrity": "oe6PvLVqQ1rXVH26PiWOd7RR8NCrNbWy84doET457LU=",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\Images\\dmo_header.png"
-    },
-    {
-      "Identity": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\Images\\dmo_login_v2.png",
-      "SourceId": "DigitalWorldOnline.Admin",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
-      "BasePath": "_content/DigitalWorldOnline.Admin",
-      "RelativePath": "Images/dmo_login_v2#[.{fingerprint}]?.png",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "Fingerprint": "iev14uswfk",
-      "Integrity": "OtHjN5mdaHw1MYuYlapyCv8PiVA7isUZ7zwslH1QeCI=",
-      "CopyToOutputDirectory": "Always",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\Images\\dmo_login_v2.png"
-    },
-    {
-      "Identity": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\js\\script.js",
-      "SourceId": "DigitalWorldOnline.Admin",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
-      "BasePath": "_content/DigitalWorldOnline.Admin",
-      "RelativePath": "js/script#[.{fingerprint}]?.js",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "Fingerprint": "qlpid94yti",
-      "Integrity": "4vzflePRBPWB54ir4xD8xg4t70z22erx1Y9VbA9qbPo=",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\js\\script.js"
-    },
     {
       "Identity": "C:\\Users\\Diego\\.nuget\\packages\\mudblazor\\6.1.2\\staticwebassets\\MudBlazor.min.css",
       "SourceId": "MudBlazor",
@@ -435,6 +57,384 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "C:\\Users\\Diego\\.nuget\\packages\\mudblazor\\6.1.2\\staticwebassets\\MudBlazor.min.js"
+    },
+    {
+      "Identity": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\_content1\\MudBlazor\\MudBlazor.min.css",
+      "SourceId": "DigitalWorldOnline.Admin",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
+      "BasePath": "_content/DigitalWorldOnline.Admin",
+      "RelativePath": "_content1/MudBlazor/MudBlazor.min#[.{fingerprint}]?.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "4zzcyv4eu3",
+      "Integrity": "ID+YQTHdxOAQwL3HkDNmN+gvKpDMbSCI90Hlsl4cfE0=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\_content1\\MudBlazor\\MudBlazor.min.css"
+    },
+    {
+      "Identity": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\_content1\\MudBlazor\\MudBlazor.min.js",
+      "SourceId": "DigitalWorldOnline.Admin",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
+      "BasePath": "_content/DigitalWorldOnline.Admin",
+      "RelativePath": "_content1/MudBlazor/MudBlazor.min#[.{fingerprint}]?.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "r28yrlkyxf",
+      "Integrity": "Y4xauMcIt84Bvrj3olTDT2vGwa9ZzAIuG7+BSyVhhn8=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\_content1\\MudBlazor\\MudBlazor.min.js"
+    },
+    {
+      "Identity": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
+      "SourceId": "DigitalWorldOnline.Admin",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
+      "BasePath": "_content/DigitalWorldOnline.Admin",
+      "RelativePath": "css/bootstrap/bootstrap.min#[.{fingerprint}]?.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "o2wlpouf80",
+      "Integrity": "YLGeXaapI0/5IgZopewRJcFXomhRMlYYjugPLSyNjTY=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\bootstrap\\bootstrap.min.css"
+    },
+    {
+      "Identity": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
+      "SourceId": "DigitalWorldOnline.Admin",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
+      "BasePath": "_content/DigitalWorldOnline.Admin",
+      "RelativePath": "css/bootstrap/bootstrap.min.css#[.{fingerprint}]?.map",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "kao5znno1s",
+      "Integrity": "xMZ0SaSBYZSHVjFdZTAT/IjRExRIxSriWcJLcA9nkj0=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\bootstrap\\bootstrap.min.css.map"
+    },
+    {
+      "Identity": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css",
+      "SourceId": "DigitalWorldOnline.Admin",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
+      "BasePath": "_content/DigitalWorldOnline.Admin",
+      "RelativePath": "css/open-iconic/font/css/open-iconic-bootstrap.min#[.{fingerprint}]?.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "cmapd0fi15",
+      "Integrity": "BJ/G+e+y7bQdrYkS2RBTyNfBHpA9IuGaPmf9htub5MQ=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css"
+    },
+    {
+      "Identity": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot",
+      "SourceId": "DigitalWorldOnline.Admin",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
+      "BasePath": "_content/DigitalWorldOnline.Admin",
+      "RelativePath": "css/open-iconic/font/fonts/open-iconic#[.{fingerprint}]?.eot",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "0uw8dim9nl",
+      "Integrity": "OK3poGPgzKI2NzNgP07XMbJa3Dz6USoUh/chSkSvQpc=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot"
+    },
+    {
+      "Identity": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf",
+      "SourceId": "DigitalWorldOnline.Admin",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
+      "BasePath": "_content/DigitalWorldOnline.Admin",
+      "RelativePath": "css/open-iconic/font/fonts/open-iconic#[.{fingerprint}]?.otf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "wk8x8xm0ah",
+      "Integrity": "sDUtuZAEzWZyv/U1xl/9D3ehyU69JE+FvAcu5HQ+/a0=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf"
+    },
+    {
+      "Identity": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg",
+      "SourceId": "DigitalWorldOnline.Admin",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
+      "BasePath": "_content/DigitalWorldOnline.Admin",
+      "RelativePath": "css/open-iconic/font/fonts/open-iconic#[.{fingerprint}]?.svg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "10uzszoped",
+      "Integrity": "oUpLdS+SoLJFwf4bzA3iKD7TCm66oLkTpAQlVJ2s1wc=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg"
+    },
+    {
+      "Identity": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf",
+      "SourceId": "DigitalWorldOnline.Admin",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
+      "BasePath": "_content/DigitalWorldOnline.Admin",
+      "RelativePath": "css/open-iconic/font/fonts/open-iconic#[.{fingerprint}]?.ttf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "ll5grcv8wv",
+      "Integrity": "p+RP8CV3vRK1YbIkNzq3rPo1jyETPnR07ULb+HVYL8w=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf"
+    },
+    {
+      "Identity": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff",
+      "SourceId": "DigitalWorldOnline.Admin",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
+      "BasePath": "_content/DigitalWorldOnline.Admin",
+      "RelativePath": "css/open-iconic/font/fonts/open-iconic#[.{fingerprint}]?.woff",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "h4d0pazwgy",
+      "Integrity": "cZPqVlRJfSNW0KaQ4+UPOXZ/v/QzXlejRDwUNdZIofI=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff"
+    },
+    {
+      "Identity": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\FONT-LICENSE",
+      "SourceId": "DigitalWorldOnline.Admin",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
+      "BasePath": "_content/DigitalWorldOnline.Admin",
+      "RelativePath": "css/open-iconic/FONT-LICENSE#[.{fingerprint}]?",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "z189sdz1gv",
+      "Integrity": "+Q44zfEaCMmXduni5Td+IgCbk8sSUQwES2nWs+KKQz0=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\open-iconic\\FONT-LICENSE"
+    },
+    {
+      "Identity": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\ICON-LICENSE",
+      "SourceId": "DigitalWorldOnline.Admin",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
+      "BasePath": "_content/DigitalWorldOnline.Admin",
+      "RelativePath": "css/open-iconic/ICON-LICENSE#[.{fingerprint}]?",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "3cg08az021",
+      "Integrity": "s/Is6Ey6jfNAEfXUIOyHrXXX+RcA8hzchYnuOIWUMl4=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\open-iconic\\ICON-LICENSE"
+    },
+    {
+      "Identity": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\README.md",
+      "SourceId": "DigitalWorldOnline.Admin",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
+      "BasePath": "_content/DigitalWorldOnline.Admin",
+      "RelativePath": "css/open-iconic/README#[.{fingerprint}]?.md",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "l5877nzu3a",
+      "Integrity": "9wdNXQFE78LCNHo+Hq2eXMTx+YBf2gjsufVTJc8dAV0=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\open-iconic\\README.md"
+    },
+    {
+      "Identity": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\site.css",
+      "SourceId": "DigitalWorldOnline.Admin",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
+      "BasePath": "_content/DigitalWorldOnline.Admin",
+      "RelativePath": "css/site#[.{fingerprint}]?.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "1vtxvcb14m",
+      "Integrity": "k8ttQt8b3auf2TSFFS+FpMy1PeccST9J5ozTv8hxRMs=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\site.css"
+    },
+    {
+      "Identity": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\favicon.ico",
+      "SourceId": "DigitalWorldOnline.Admin",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
+      "BasePath": "_content/DigitalWorldOnline.Admin",
+      "RelativePath": "favicon#[.{fingerprint}]?.ico",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "61n19gt1b8",
+      "Integrity": "Jtxf9L+5ITKRc1gIRl4VbUpGkRNfOBXjYTdhJD4facM=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\Images\\dmo_header.png",
+      "SourceId": "DigitalWorldOnline.Admin",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
+      "BasePath": "_content/DigitalWorldOnline.Admin",
+      "RelativePath": "Images/dmo_header#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "7e25eyq1m0",
+      "Integrity": "oe6PvLVqQ1rXVH26PiWOd7RR8NCrNbWy84doET457LU=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Images\\dmo_header.png"
+    },
+    {
+      "Identity": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\Images\\dmo_login_v2.png",
+      "SourceId": "DigitalWorldOnline.Admin",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
+      "BasePath": "_content/DigitalWorldOnline.Admin",
+      "RelativePath": "Images/dmo_login_v2#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "iev14uswfk",
+      "Integrity": "OtHjN5mdaHw1MYuYlapyCv8PiVA7isUZ7zwslH1QeCI=",
+      "CopyToOutputDirectory": "Always",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Images\\dmo_login_v2.png"
+    },
+    {
+      "Identity": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\js\\script.js",
+      "SourceId": "DigitalWorldOnline.Admin",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
+      "BasePath": "_content/DigitalWorldOnline.Admin",
+      "RelativePath": "js/script#[.{fingerprint}]?.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "qlpid94yti",
+      "Integrity": "4vzflePRBPWB54ir4xD8xg4t70z22erx1Y9VbA9qbPo=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\script.js"
     }
   ],
   "Endpoints": [
@@ -514,7 +514,7 @@
     },
     {
       "Route": "_content1/MudBlazor/MudBlazor.min.4zzcyv4eu3.css",
-      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\_content1\\MudBlazor\\MudBlazor.min.css",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\_content1\\MudBlazor\\MudBlazor.min.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -559,7 +559,7 @@
     },
     {
       "Route": "_content1/MudBlazor/MudBlazor.min.css",
-      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\_content1\\MudBlazor\\MudBlazor.min.css",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\_content1\\MudBlazor\\MudBlazor.min.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -596,7 +596,7 @@
     },
     {
       "Route": "_content1/MudBlazor/MudBlazor.min.js",
-      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\_content1\\MudBlazor\\MudBlazor.min.js",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\_content1\\MudBlazor\\MudBlazor.min.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -633,7 +633,7 @@
     },
     {
       "Route": "_content1/MudBlazor/MudBlazor.min.r28yrlkyxf.js",
-      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\_content1\\MudBlazor\\MudBlazor.min.js",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\_content1\\MudBlazor\\MudBlazor.min.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -678,7 +678,7 @@
     },
     {
       "Route": "css/bootstrap/bootstrap.min.css",
-      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -715,7 +715,7 @@
     },
     {
       "Route": "css/bootstrap/bootstrap.min.css.kao5znno1s.map",
-      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -760,7 +760,7 @@
     },
     {
       "Route": "css/bootstrap/bootstrap.min.css.map",
-      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -797,7 +797,7 @@
     },
     {
       "Route": "css/bootstrap/bootstrap.min.o2wlpouf80.css",
-      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -842,7 +842,7 @@
     },
     {
       "Route": "css/open-iconic/font/css/open-iconic-bootstrap.min.cmapd0fi15.css",
-      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -887,7 +887,7 @@
     },
     {
       "Route": "css/open-iconic/font/css/open-iconic-bootstrap.min.css",
-      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -924,7 +924,7 @@
     },
     {
       "Route": "css/open-iconic/font/fonts/open-iconic.0uw8dim9nl.eot",
-      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -969,7 +969,7 @@
     },
     {
       "Route": "css/open-iconic/font/fonts/open-iconic.10uzszoped.svg",
-      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1014,7 +1014,7 @@
     },
     {
       "Route": "css/open-iconic/font/fonts/open-iconic.eot",
-      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1051,7 +1051,7 @@
     },
     {
       "Route": "css/open-iconic/font/fonts/open-iconic.h4d0pazwgy.woff",
-      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1096,7 +1096,7 @@
     },
     {
       "Route": "css/open-iconic/font/fonts/open-iconic.ll5grcv8wv.ttf",
-      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1141,7 +1141,7 @@
     },
     {
       "Route": "css/open-iconic/font/fonts/open-iconic.otf",
-      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1178,7 +1178,7 @@
     },
     {
       "Route": "css/open-iconic/font/fonts/open-iconic.svg",
-      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1215,7 +1215,7 @@
     },
     {
       "Route": "css/open-iconic/font/fonts/open-iconic.ttf",
-      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1252,7 +1252,7 @@
     },
     {
       "Route": "css/open-iconic/font/fonts/open-iconic.wk8x8xm0ah.otf",
-      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1297,7 +1297,7 @@
     },
     {
       "Route": "css/open-iconic/font/fonts/open-iconic.woff",
-      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1334,7 +1334,7 @@
     },
     {
       "Route": "css/open-iconic/FONT-LICENSE",
-      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\FONT-LICENSE",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\FONT-LICENSE",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1371,7 +1371,7 @@
     },
     {
       "Route": "css/open-iconic/FONT-LICENSE.z189sdz1gv",
-      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\FONT-LICENSE",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\FONT-LICENSE",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1416,7 +1416,7 @@
     },
     {
       "Route": "css/open-iconic/ICON-LICENSE",
-      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\ICON-LICENSE",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\ICON-LICENSE",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1453,7 +1453,7 @@
     },
     {
       "Route": "css/open-iconic/ICON-LICENSE.3cg08az021",
-      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\ICON-LICENSE",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\ICON-LICENSE",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1498,7 +1498,7 @@
     },
     {
       "Route": "css/open-iconic/README.l5877nzu3a.md",
-      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\README.md",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\README.md",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1543,7 +1543,7 @@
     },
     {
       "Route": "css/open-iconic/README.md",
-      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\README.md",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\README.md",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1580,7 +1580,7 @@
     },
     {
       "Route": "css/site.1vtxvcb14m.css",
-      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\site.css",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\site.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1625,7 +1625,7 @@
     },
     {
       "Route": "css/site.css",
-      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\site.css",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\site.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1662,7 +1662,7 @@
     },
     {
       "Route": "favicon.61n19gt1b8.ico",
-      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\favicon.ico",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\favicon.ico",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1707,7 +1707,7 @@
     },
     {
       "Route": "favicon.ico",
-      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\favicon.ico",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\favicon.ico",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1744,7 +1744,7 @@
     },
     {
       "Route": "Images/dmo_header.7e25eyq1m0.png",
-      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\Images\\dmo_header.png",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\Images\\dmo_header.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1789,7 +1789,7 @@
     },
     {
       "Route": "Images/dmo_header.png",
-      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\Images\\dmo_header.png",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\Images\\dmo_header.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1826,7 +1826,7 @@
     },
     {
       "Route": "Images/dmo_login_v2.iev14uswfk.png",
-      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\Images\\dmo_login_v2.png",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\Images\\dmo_login_v2.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1871,7 +1871,7 @@
     },
     {
       "Route": "Images/dmo_login_v2.png",
-      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\Images\\dmo_login_v2.png",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\Images\\dmo_login_v2.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1908,7 +1908,7 @@
     },
     {
       "Route": "js/script.js",
-      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\js\\script.js",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\js\\script.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1945,7 +1945,7 @@
     },
     {
       "Route": "js/script.qlpid94yti.js",
-      "AssetFile": "C:\\ServerLauncher\\RSource\\RSource\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\js\\script.js",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\js\\script.js",
       "Selectors": [],
       "ResponseHeaders": [
         {

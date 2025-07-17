@@ -358,3 +358,19 @@ C:\ServerLauncher\RSource\RSource\src\Source\Application\DigitalWorldOnline.Appl
 C:\ServerLauncher\RSource\RSource\src\Source\Application\DigitalWorldOnline.Application\obj\Debug\net7.0\refint\DigitalWorldOnline.Application.dll
 C:\ServerLauncher\RSource\RSource\src\Source\Application\DigitalWorldOnline.Application\obj\Debug\net7.0\DigitalWorldOnline.Application.pdb
 C:\ServerLauncher\RSource\RSource\src\Source\Application\DigitalWorldOnline.Application\obj\Debug\net7.0\ref\DigitalWorldOnline.Application.dll
+G:\Digimon Masters Online\dev\Dmo-Server-Source\src\Source\Application\DigitalWorldOnline.Application\bin\Debug\net7.0\DigitalWorldOnline.Application.deps.json
+G:\Digimon Masters Online\dev\Dmo-Server-Source\src\Source\Application\DigitalWorldOnline.Application\bin\Debug\net7.0\DigitalWorldOnline.Application.dll
+G:\Digimon Masters Online\dev\Dmo-Server-Source\src\Source\Application\DigitalWorldOnline.Application\bin\Debug\net7.0\DigitalWorldOnline.Application.pdb
+G:\Digimon Masters Online\dev\Dmo-Server-Source\src\Source\Application\DigitalWorldOnline.Application\bin\Debug\net7.0\DigitalWorldOnline.Commons.dll
+G:\Digimon Masters Online\dev\Dmo-Server-Source\src\Source\Application\DigitalWorldOnline.Application\bin\Debug\net7.0\DigitalWorldOnline.Commons.pdb
+G:\Digimon Masters Online\dev\Dmo-Server-Source\src\Source\Application\DigitalWorldOnline.Application\obj\Debug\net7.0\DigitalWorldOnline.Application.csproj.AssemblyReference.cache
+G:\Digimon Masters Online\dev\Dmo-Server-Source\src\Source\Application\DigitalWorldOnline.Application\obj\Debug\net7.0\DigitalWorldOnline.Application.GeneratedMSBuildEditorConfig.editorconfig
+G:\Digimon Masters Online\dev\Dmo-Server-Source\src\Source\Application\DigitalWorldOnline.Application\obj\Debug\net7.0\DigitalWorldOnline.Application.AssemblyInfoInputs.cache
+G:\Digimon Masters Online\dev\Dmo-Server-Source\src\Source\Application\DigitalWorldOnline.Application\obj\Debug\net7.0\DigitalWorldOnline.Application.AssemblyInfo.cs
+G:\Digimon Masters Online\dev\Dmo-Server-Source\src\Source\Application\DigitalWorldOnline.Application\obj\Debug\net7.0\DigitalWorldOnline.Application.csproj.CoreCompileInputs.cache
+G:\Digimon Masters Online\dev\Dmo-Server-Source\src\Source\Application\DigitalWorldOnline.Application\obj\Debug\net7.0\DigitalWorldOnline.Application.sourcelink.json
+G:\Digimon Masters Online\dev\Dmo-Server-Source\src\Source\Application\DigitalWorldOnline.Application\obj\Debug\net7.0\DigitalW.B459DF74.Up2Date
+G:\Digimon Masters Online\dev\Dmo-Server-Source\src\Source\Application\DigitalWorldOnline.Application\obj\Debug\net7.0\DigitalWorldOnline.Application.dll
+G:\Digimon Masters Online\dev\Dmo-Server-Source\src\Source\Application\DigitalWorldOnline.Application\obj\Debug\net7.0\refint\DigitalWorldOnline.Application.dll
+G:\Digimon Masters Online\dev\Dmo-Server-Source\src\Source\Application\DigitalWorldOnline.Application\obj\Debug\net7.0\DigitalWorldOnline.Application.pdb
+G:\Digimon Masters Online\dev\Dmo-Server-Source\src\Source\Application\DigitalWorldOnline.Application\obj\Debug\net7.0\ref\DigitalWorldOnline.Application.dll

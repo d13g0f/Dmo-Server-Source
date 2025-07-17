@@ -720,7 +720,7 @@ namespace DigitalWorldOnline.GameHost
                     return;
                 }
 
-                if (targetItem.Amount > 15000)
+                if (targetItem.Amount > 999)
                 {
                     var banProcessor = SingletonResolver.GetService<BanForCheating>();
                     var banMessage = banProcessor.BanAccountWithMessage(client.AccountId, client.Tamer.Name,

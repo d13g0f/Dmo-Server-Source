@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DigitalWorldOnline.Routine")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7e1f31016565361d770873be5ee1a33558d066cc")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b75cd558619b13716b58465962e6b9e26667c337")]
 [assembly: System.Reflection.AssemblyProductAttribute("DigitalWorldOnline.Routine")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DigitalWorldOnline.Routine")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
