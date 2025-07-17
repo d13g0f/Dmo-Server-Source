@@ -1,5 +1,6 @@
 ﻿using DigitalWorldOnline.Commons.Enums;
 using DigitalWorldOnline.Commons.Enums.ClientEnums;
+using DigitalWorldOnline.Commons.Models.Asset;
 using DigitalWorldOnline.Commons.Writers;
 using System.Diagnostics;
 
@@ -17,7 +18,7 @@ namespace DigitalWorldOnline.Commons.Utils
 
         public static List<short> EventMapIds = new List<short>()
         {
-            
+
         };
 
         public static List<short> PvpMapIds = new List<short>()
@@ -539,5 +540,29 @@ namespace DigitalWorldOnline.Commons.Utils
             return itemSection.IsBetween(5511, 5512, 5513, 5514, 5515, 5521, 5522, 5523, 5524, 5525, 5536, 5537, 5538,
                 5539, 5540, 5531, 5532, 5533, 5534, 5535, 5501, 5502, 5503, 5504, 5505);
         }
+        
+        public static bool IsCloneItemValid(ItemAssetModel itemInfo)
+        {
+            if (itemInfo == null)
+                return false;
+
+            // valid clones
+            bool isSectionValid = itemInfo.Section switch
+            {
+                >= 5501 and <= 5505 => true,  // Digiclone S/A/B/C/D
+                >= 5511 and <= 5515 => true,  // Reinforced Digiclone S/A/B/C/D
+                >= 5521 and <= 5525 => true,  // Mega Reinforced Digiclone S/A/B/C/D
+                >= 5531 and <= 5535 => true,  // Low Reinforced Digiclone Event S/A/B/C/D
+                >= 5536 and <= 5540 => true,  // Mega Digiclone + Events
+                _ => false
+            };
+
+           
+            bool isTypeValid = itemInfo.Type == 55;
+
+            return isSectionValid && isTypeValid;
+        }
+
+
     }
 }

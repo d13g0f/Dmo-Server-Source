@@ -310,7 +310,7 @@ namespace DigitalWorldOnline.Commons.Models.Character
             TargetPartners = new List<DigimonModel>();
             TargetMobs = new List<MobConfigModel>();
             TargetSummonMobs = new List<SummonMobModel>();
-            TargetIMobs = new List<IMob>();  // ✅ Fix: Initialize it
+            TargetIMobs = new List<IMob>();  
             TargetEventMobs = new List<EventMobConfigModel>();
             MobsInView = new List<long>();
             RepurchaseList = new List<ItemModel>();

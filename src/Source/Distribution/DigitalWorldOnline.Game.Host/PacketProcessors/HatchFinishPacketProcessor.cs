@@ -17,7 +17,7 @@ using DigitalWorldOnline.Game.Managers;
 using DigitalWorldOnline.GameHost;
 using DigitalWorldOnline.GameHost.EventsServer;
 using MediatR;
-using Serilog;
+using GameServer.Logging;
 
 namespace DigitalWorldOnline.Game.PacketProcessors
 {
@@ -31,13 +31,18 @@ namespace DigitalWorldOnline.Game.PacketProcessors
         private readonly EventServer _eventServer;
         private readonly PvpServer _pvpServer;
         private readonly AssetsLoader _assets;
-        private readonly ILogger _logger;
         private readonly ISender _sender;
         private readonly IMapper _mapper;
 
-        public HatchFinishPacketProcessor(StatusManager statusManager, AssetsLoader assets,
-            MapServer mapServer, DungeonsServer dungeonsServer, EventServer eventServer, PvpServer pvpServer,
-            ILogger logger, ISender sender, IMapper mapper)
+        public HatchFinishPacketProcessor(
+            StatusManager statusManager,
+            AssetsLoader assets,
+            MapServer mapServer,
+            DungeonsServer dungeonsServer,
+            EventServer eventServer,
+            PvpServer pvpServer,
+            ISender sender,
+            IMapper mapper)
         {
             _statusManager = statusManager;
             _assets = assets;
@@ -45,42 +50,41 @@ namespace DigitalWorldOnline.Game.PacketProcessors
             _dungeonServer = dungeonsServer;
             _eventServer = eventServer;
             _pvpServer = pvpServer;
-            _logger = logger;
             _sender = sender;
             _mapper = mapper;
         }
 
         public async Task Process(GameClient client, byte[] packetData)
         {
-            var packet = new GamePacketReader(packetData);
+            // Log de inicio del procesamiento
+            await GameLogger.LogInfo($"Inicio del procesamiento del paquete HatchFinish para TamerId={client.TamerId}", "hatch");
 
+            var packet = new GamePacketReader(packetData);
             packet.Skip(5);
             var digiName = packet.ReadString();
 
-            var hatchInfo = _assets.Hatchs.FirstOrDefault(x => x.ItemId == client.Tamer.Incubator.EggId);
+            // Log de los datos recibidos
+            await GameLogger.LogInfo($"Datos del paquete: DigiName={digiName}, EggId={client.Tamer.Incubator.EggId}, HatchLevel={client.Tamer.Incubator.HatchLevel}", "hatch");
 
+            var hatchInfo = _assets.Hatchs.FirstOrDefault(x => x.ItemId == client.Tamer.Incubator.EggId);
             if (hatchInfo == null)
             {
-                _logger.Warning($"Unknown hatch info for egg {client.Tamer.Incubator.EggId}.");
+                await GameLogger.LogWarning($"No se encontró información del huevo para EggId={client.Tamer.Incubator.EggId}", "hatch");
                 client.Send(new SystemMessagePacket($"Unknown hatch info for egg {client.Tamer.Incubator.EggId}."));
                 return;
             }
-
-
-            /*byte i = 0;
-            while (i < client.Tamer.DigimonSlots)
-            {
-                if (client.Tamer.Digimons.FirstOrDefault(x => x.Slot == i) == null)
-                    break;
-
-                i++;
-            }*/
+            await GameLogger.LogInfo($"HatchInfo encontrado: HatchType={hatchInfo.HatchType}", "hatch");
 
             byte? digimonSlot = (byte)Enumerable.Range(0, client.Tamer.DigimonSlots)
                 .FirstOrDefault(slot => client.Tamer.Digimons.FirstOrDefault(x => x.Slot == slot) == null);
 
             if (digimonSlot == null)
+            {
+                await GameLogger.LogWarning($"No hay slots disponibles para el nuevo Digimon. DigimonSlots={client.Tamer.DigimonSlots}", "hatch");
+                client.Send(new SystemMessagePacket("No available slots for new Digimon."));
                 return;
+            }
+            await GameLogger.LogInfo($"Slot disponible encontrado: Slot={digimonSlot}", "hatch");
 
             var newDigimon = DigimonModel.Create(
                 digiName,
@@ -91,17 +95,26 @@ namespace DigitalWorldOnline.Game.PacketProcessors
                 (byte)digimonSlot
             );
 
+            // Log de creación del Digimon
+            await GameLogger.LogInfo($"Nuevo Digimon creado: Id={newDigimon.Id}, BaseType={newDigimon.BaseType}, HatchGrade={newDigimon.HatchGrade}, Size={newDigimon.Size}", "hatch");
+
             newDigimon.NewLocation(
                 client.Tamer.Location.MapId,
                 client.Tamer.Location.X,
                 client.Tamer.Location.Y
             );
+            await GameLogger.LogInfo($"Ubicación asignada: MapId={client.Tamer.Location.MapId}, X={client.Tamer.Location.X}, Y={client.Tamer.Location.Y}", "hatch");
 
             newDigimon.SetBaseInfo(
-                _statusManager.GetDigimonBaseInfo(
-                    newDigimon.BaseType
-                )
+                _statusManager.GetDigimonBaseInfo(newDigimon.BaseType)
             );
+            if (newDigimon.BaseInfo == null)
+            {
+                await GameLogger.LogError($"No se encontró BaseInfo para Digimon BaseType={newDigimon.BaseType}", "hatch");
+                client.Send(new SystemMessagePacket($"Unknown digimon info for {newDigimon.BaseType}."));
+                return;
+            }
+            await GameLogger.LogInfo($"BaseInfo asignado: BaseType={newDigimon.BaseType}", "hatch");
 
             newDigimon.SetBaseStatus(
                 _statusManager.GetDigimonBaseStatus(
@@ -110,37 +123,61 @@ namespace DigitalWorldOnline.Game.PacketProcessors
                     newDigimon.Size
                 )
             );
-
-            var digimonEvolutionInfo = _assets.EvolutionInfo.First(x => x.Type == newDigimon.BaseType);
-
-            newDigimon.AddEvolutions(digimonEvolutionInfo);
-
-            if (newDigimon.BaseInfo == null || newDigimon.BaseStatus == null || !newDigimon.Evolutions.Any())
+            if (newDigimon.BaseStatus == null)
             {
-                _logger.Warning($"Unknown digimon info for {newDigimon.BaseType}.");
-                client.Send(new SystemMessagePacket($"Unknown digimon info for {newDigimon.BaseType}."));
+                await GameLogger.LogError($"No se encontró BaseStatus para Digimon BaseType={newDigimon.BaseType}, Level={newDigimon.Level}, Size={newDigimon.Size}", "hatch");
+                client.Send(new SystemMessagePacket($"Unknown digimon status for {newDigimon.BaseType}."));
                 return;
             }
+            await GameLogger.LogInfo($"BaseStatus asignado: BaseType={newDigimon.BaseType}, Level={newDigimon.Level}, Size={newDigimon.Size}", "hatch");
+
+            var digimonEvolutionInfo = _assets.EvolutionInfo.First(x => x.Type == newDigimon.BaseType);
+            if (digimonEvolutionInfo == null)
+            {
+                await GameLogger.LogError($"No se encontró EvolutionInfo para Digimon BaseType={newDigimon.BaseType}", "hatch");
+                client.Send(new SystemMessagePacket($"Unknown evolution info for {newDigimon.BaseType}."));
+                return;
+            }
+            await GameLogger.LogInfo($"EvolutionInfo encontrado: Id={digimonEvolutionInfo.Id}", "hatch");
+
+            newDigimon.AddEvolutions(digimonEvolutionInfo);
+            if (!newDigimon.Evolutions.Any())
+            {
+                await GameLogger.LogError($"No se asignaron evoluciones para Digimon BaseType={newDigimon.BaseType}", "hatch");
+                client.Send(new SystemMessagePacket($"No evolutions available for {newDigimon.BaseType}."));
+                return;
+            }
+            await GameLogger.LogInfo($"Evoluciones asignadas: Count={newDigimon.Evolutions.Count}", "hatch");
 
             newDigimon.SetTamer(client.Tamer);
+            await GameLogger.LogInfo($"Tamer asignado: TamerId={client.TamerId}", "hatch");
 
             if (client.Tamer.Incubator.PerfectSize(newDigimon.HatchGrade, newDigimon.Size))
             {
                 client.SendToAll(new NeonMessagePacket(NeonMessageTypeEnum.Scale, client.Tamer.Name,
                     newDigimon.BaseType, newDigimon.Size).Serialize());
-                /*_mapServer.BroadcastGlobal(new NeonMessagePacket(NeonMessageTypeEnum.Scale, client.Tamer.Name, newDigimon.BaseType, newDigimon.Size).Serialize());
-                _dungeonServer.BroadcastGlobal(new NeonMessagePacket(NeonMessageTypeEnum.Scale, client.Tamer.Name, newDigimon.BaseType, newDigimon.Size).Serialize());
-                _eventServer.BroadcastGlobal(new NeonMessagePacket(NeonMessageTypeEnum.Scale, client.Tamer.Name, newDigimon.BaseType, newDigimon.Size).Serialize());
-                _pvpServer.BroadcastGlobal(new NeonMessagePacket(NeonMessageTypeEnum.Scale, client.Tamer.Name, newDigimon.BaseType, newDigimon.Size).Serialize());*/
+                await GameLogger.LogInfo($"PerfectSize detectado: Tamer={client.Tamer.Name}, BaseType={newDigimon.BaseType}, Size={newDigimon.Size}", "hatch");
             }
-            
+
             var digimonInfo = _mapper.Map<DigimonModel>(await _sender.Send(new CreateDigimonCommand(newDigimon)));
+            if (digimonInfo == null)
+            {
+                await GameLogger.LogError($"Fallo al persistir Digimon en la base de datos: BaseType={newDigimon.BaseType}", "hatch");
+                client.Send(new SystemMessagePacket("Failed to create Digimon."));
+                return;
+            }
+            await GameLogger.LogInfo($"Digimon persistido: Id={digimonInfo.Id}, BaseType={digimonInfo.BaseType}", "hatch");
+
             client.Tamer.AddDigimon(digimonInfo);
+            await GameLogger.LogInfo($"Digimon agregado al Tamer: Id={digimonInfo.Id}, Slot={digimonSlot}", "hatch");
+
             client.Tamer.Incubator.RemoveEgg();
             await _sender.Send(new UpdateIncubatorCommand(client.Tamer.Incubator));
+            await GameLogger.LogInfo($"Huevo removido del incubador: TamerId={client.TamerId}", "hatch");
 
             client.Send(new HatchFinishPacket(newDigimon, (ushort)(client.Partner.GeneralHandler + 1000),
                 (byte)digimonSlot));
+            await GameLogger.LogInfo($"Paquete HatchFinish enviado: DigimonId={newDigimon.Id}, Slot={digimonSlot}", "hatch");
 
             if (digimonInfo != null)
             {
@@ -150,45 +187,41 @@ namespace DigitalWorldOnline.Game.PacketProcessors
                 foreach (var digimon in newDigimon.Evolutions)
                 {
                     slot++;
-
                     var evolution = digimonInfo.Evolutions[slot];
 
                     if (evolution != null)
                     {
                         digimon.SetId(evolution.Id);
-
                         var skillSlot = -1;
 
                         foreach (var skill in digimon.Skills)
                         {
                             skillSlot++;
-
                             var dtoSkill = evolution.Skills[skillSlot];
-
                             skill.SetId(dtoSkill.Id);
                         }
                     }
+                    else
+                    {
+                        await GameLogger.LogWarning($"Evolución no encontrada para slot={slot}, DigimonId={newDigimon.Id}", "hatch");
+                    }
                 }
+                await GameLogger.LogInfo($"Evoluciones actualizadas: DigimonId={newDigimon.Id}, EvolutionCount={newDigimon.Evolutions.Count}", "hatch");
             }
 
-            _logger.Verbose(
-                $"Character {client.TamerId} hatched {newDigimon.Id}({newDigimon.BaseType}) with grade {newDigimon.HatchGrade} and size {newDigimon.Size}.");
-
-            // ------------------------------------------------------------------------------------------
+            await GameLogger.LogInfo(
+                $"Tamer {client.TamerId} eclosionó Digimon {newDigimon.Id} (BaseType={newDigimon.BaseType}) con grado {newDigimon.HatchGrade} y tamaño {newDigimon.Size}", "hatch");
 
             var digimonBaseInfo = newDigimon.BaseInfo;
             var digimonEvolutions = newDigimon.Evolutions;
 
-            //_logger.Information($"type: {newDigimon.BaseType}, info: {digimonEvolutionInfo?.Id.ToString()}");
-
             var encyclopediaExists =
                 client.Tamer.Encyclopedia.Exists(x => x.DigimonEvolutionId == digimonEvolutionInfo?.Id);
 
-            // Check if encyclopedia exists
             if (encyclopediaExists)
             {
-                _logger.Debug(
-                    $"type: {newDigimon.BaseType}, info: {digimonEvolutionInfo?.Id.ToString()}, encyclopedia exists");
+                await GameLogger.LogInfo(
+                    $"Enciclopedia existente: BaseType={newDigimon.BaseType}, EvolutionId={digimonEvolutionInfo?.Id}", "hatch");
             }
             else
             {
@@ -205,24 +238,38 @@ namespace DigitalWorldOnline.Game.PacketProcessors
                         {
                             slotLevel = evolutionLine.SlotLevel;
                         }
+                        else
+                        {
+                            _ =GameLogger.LogWarning($"EvolutionLine no encontrada para Type={x.Type}, DigimonId={newDigimon.Id}", "hatch");
+                        }
 
                         encyclopedia.Evolutions.Add(CharacterEncyclopediaEvolutionsModel.Create(encyclopedia.Id, x.Type,
                             slotLevel, Convert.ToBoolean(x.Unlocked)));
                     });
 
                     var encyclopediaAdded = await _sender.Send(new CreateCharacterEncyclopediaCommand(encyclopedia));
-
-                    client.Tamer.Encyclopedia.Add(encyclopediaAdded);
-
-                    _logger.Debug(
-                        $"Tamer encyclopedia count: {client.Tamer.Encyclopedia.Count} and last id is {client.Tamer.Encyclopedia.Last().Id}");
+                    if (encyclopediaAdded == null)
+                    {
+                        await GameLogger.LogError($"Fallo al crear entrada en la enciclopedia: EvolutionId={digimonEvolutionInfo.Id}", "hatch");
+                    }
+                    else
+                    {
+                        client.Tamer.Encyclopedia.Add(encyclopediaAdded);
+                        await GameLogger.LogInfo($"Entrada en la enciclopedia creada: Id={encyclopediaAdded.Id}, EvolutionId={digimonEvolutionInfo.Id}", "hatch");
+                    }
+                }
+                else
+                {
+                    await GameLogger.LogError($"No se pudo crear entrada en la enciclopedia: EvolutionInfo nulo para BaseType={newDigimon.BaseType}", "hatch");
                 }
             }
 
-            _logger.Debug(
-                $"Hatching Leveling status for character {client.Tamer.Name} is: {client.Tamer.LevelingStatus?.Id}");
-            _logger.Debug(
-                $"Hatching Leveling status in digimon for character {newDigimon.Character.Name} is: {newDigimon.Character.LevelingStatus?.Id}");
+            await GameLogger.LogInfo(
+                $"Estado de nivelación del Tamer {client.Tamer.Name}: LevelingStatusId={client.Tamer.LevelingStatus?.Id}", "hatch");
+            await GameLogger.LogInfo(
+                $"Estado de nivelación del Digimon para Tamer {newDigimon.Character.Name}: LevelingStatusId={newDigimon.Character.LevelingStatus?.Id}", "hatch");
+
+            await GameLogger.LogInfo($"Fin del procesamiento del paquete HatchFinish para TamerId={client.TamerId}", "hatch");
         }
     }
 }

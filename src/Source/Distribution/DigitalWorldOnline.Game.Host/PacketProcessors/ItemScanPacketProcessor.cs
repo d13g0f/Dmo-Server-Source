@@ -20,6 +20,7 @@ using Serilog;
 using System.Net.Mime;
 using DigitalWorldOnline.Application.Separar.Queries;
 using DigitalWorldOnline.GameHost.EventsServer;
+using GameServer.Logging;
 
 
 namespace DigitalWorldOnline.Game.PacketProcessors
@@ -54,53 +55,39 @@ namespace DigitalWorldOnline.Game.PacketProcessors
             _logger = logger;
         }
 
-        public async Task Process(GameClient client, byte[] packetData)
+     public async Task Process(GameClient client, byte[] packetData)
+    {
+        var packet = new GamePacketReader(packetData);
+
+        var vipEnabled = packet.ReadByte();
+        var u2 = packet.ReadInt();
+        var npcId = packet.ReadInt();
+        var slotToScan = packet.ReadInt();
+        var amountToScan = packet.ReadShort();
+
+        await client.MoveItemLock.WaitAsync();
+        try
         {
-            var packet = new GamePacketReader(packetData);
-
-            var vipEnabled = packet.ReadByte();
-            var u2 = packet.ReadInt();
-            var npcId = packet.ReadInt();
-            var slotToScan = packet.ReadInt();
-            var amountToScan = packet.ReadShort();
-
             var scannedItem = client.Tamer.Inventory.FindItemBySlot(slotToScan);
             var mapConfig = await _sender.Send(new GameMapConfigByMapIdQuery(client.Tamer.Location.MapId));
 
-            // Verify itemInfo
             if (scannedItem == null || scannedItem.ItemId == 0 || scannedItem.ItemInfo == null)
             {
-                //var banProcessor = SingletonResolver.GetService<BanForCheating>();
-                //var banMessage = banProcessor.BanAccountWithMessage(client.AccountId, client.Tamer.Name, AccountBlockEnum.Short, "[ItemScan] Cheating", client, "You tried to scan an invalid item using a cheat method!!");
-
-                //var chatPacket = new NoticeMessagePacket(banMessage).Serialize();
-                //client.SendToAll(chatPacket);
-
-                client.Disconnect();
-                _logger.Warning($"[DISCONNECTED] :: {client.Tamer.Name} Get Ban!!");
-
+                await GameLogger.LogError($"[ItemScan] {client.Tamer.Name} inconsistency: invalid scanned item in slot {slotToScan}.", "item_scan");
                 return;
             }
 
-            // Verify itemAmount
             if (client.Tamer.Inventory.CountItensById(scannedItem.ItemId) < amountToScan)
             {
-                //var banProcessor = SingletonResolver.GetService<BanForCheating>();
-                //var banMessage = banProcessor.BanAccountWithMessage(client.AccountId, client.Tamer.Name, AccountBlockEnum.Short, "[ItemScan] Cheating", client, "You tried to scan an invalid amount of item using a cheat method !");
-
-                //var chatPacket = new NoticeMessagePacket(banMessage).Serialize();
-                //client.SendToAll(chatPacket);
-
-                client.Disconnect();
-                _logger.Warning($"[DISCONNECTED] :: {client.Tamer.Name} Get Ban!!");
-
+                await GameLogger.LogError($"[ItemScan] {client.Tamer.Name} inconsistency: not enough items to scan. Requested {amountToScan} but has less.", "item_scan");
                 return;
             }
 
             var scanAsset = _assets.ScanDetail.FirstOrDefault(x => x.ItemId == scannedItem.ItemId);
-
             if (scanAsset == null)
             {
+                await GameLogger.LogWarning($"[ItemScan] {client.Tamer.Name} tried to scan item {scannedItem.ItemId} but no scan configuration found.", "item_scan");
+
                 client.Send(
                     UtilitiesFunctions.GroupPackets(
                         new SystemMessagePacket($"No scan configuration for item id {scannedItem.ItemId}.").Serialize(),
@@ -108,7 +95,7 @@ namespace DigitalWorldOnline.Game.PacketProcessors
                         new LoadInventoryPacket(client.Tamer.Inventory, InventoryTypeEnum.Inventory).Serialize()
                     )
                 );
-                _logger.Warning($"No scan configuration for item id {scannedItem.ItemId}");
+
                 return;
             }
 
@@ -121,9 +108,8 @@ namespace DigitalWorldOnline.Game.PacketProcessors
             {
                 if (!scanAsset.Rewards.Any())
                 {
-                    _logger.Warning($"Scan config for item {scanAsset.ItemId} has incorrect rewards configuration.");
-                    client.Send(new SystemMessagePacket(
-                        $"Scan config for item {scanAsset.ItemId} has incorrect rewards configuration."));
+                    await GameLogger.LogWarning($"[ItemScan] Scan config for item {scanAsset.ItemId} has no rewards.", "item_scan");
+                    client.Send(new SystemMessagePacket($"Scan config for item {scanAsset.ItemId} has incorrect rewards configuration."));
                     break;
                 }
 
@@ -132,28 +118,24 @@ namespace DigitalWorldOnline.Game.PacketProcessors
                 {
                     if (cost + scannedItem.ItemInfo.ScanPrice > client.Tamer.Inventory.Bits)
                     {
-                        _logger.Warning($"No more bits after start scanning for tamer {client.TamerId}.");
+                        await GameLogger.LogWarning($"[ItemScan] {client.Tamer.Name} out of bits during scan.", "item_scan");
                         error = true;
                         break;
                     }
 
                     if (possibleReward.Chance >= UtilitiesFunctions.RandomDouble())
                     {
-                        var itemRewardAmount =
-                            UtilitiesFunctions.RandomInt(possibleReward.MinAmount, possibleReward.MaxAmount);
+                        var itemRewardAmount = UtilitiesFunctions.RandomInt(possibleReward.MinAmount, possibleReward.MaxAmount);
 
                         var contentItem = new ItemModel();
                         contentItem.SetItemId(possibleReward.ItemId);
                         contentItem.SetAmount(itemRewardAmount);
-                        contentItem.SetItemInfo(
-                            _assets.ItemInfo.FirstOrDefault(x => x.ItemId == possibleReward.ItemId));
+                        contentItem.SetItemInfo(_assets.ItemInfo.FirstOrDefault(x => x.ItemId == possibleReward.ItemId));
 
                         if (contentItem.ItemInfo == null)
                         {
-                            _logger.Warning(
-                                $"Invalid item info for item {possibleReward.ItemId} in tamer {client.TamerId} scan.");
-                            client.Send(
-                                new SystemMessagePacket($"Invalid item info for item {possibleReward.ItemId}."));
+                            await GameLogger.LogError($"[ItemScan] {client.Tamer.Name} received reward with invalid ItemInfo for {possibleReward.ItemId}.", "item_scan");
+                            client.Send(new SystemMessagePacket($"Invalid item info for item {possibleReward.ItemId}."));
                             error = true;
                             break;
                         }
@@ -161,9 +143,7 @@ namespace DigitalWorldOnline.Game.PacketProcessors
                         if (contentItem.ItemInfo.Section == 5200)
                         {
                             var ChipsetItem = ApplyValuesChipset(contentItem);
-                            //await _sender.Send(new UpdateItemAccessoryStatusCommand(contentItem));
                         }
-
 
                         if (contentItem.IsTemporary)
                             contentItem.SetRemainingTime((uint)contentItem.ItemInfo.UsageTimeMinutes);
@@ -194,46 +174,17 @@ namespace DigitalWorldOnline.Game.PacketProcessors
                         if (client.Tamer.Inventory.AddItem(contentItem))
                         {
                             if (possibleReward.Rare)
-                                client.SendToAll(new NeonMessagePacket(NeonMessageTypeEnum.Item, client.Tamer.Name,
-                                    scanAsset.ItemId,
-                                    possibleReward.ItemId).Serialize());
-                            /*switch (mapConfig?.Type)
                             {
-                                case MapTypeEnum.Dungeon:
-                                    _dungeonsServer.BroadcastForChannel(client.Tamer.Channel,
-                                        new NeonMessagePacket(NeonMessageTypeEnum.Item, client.Tamer.Name,
-                                            scanAsset.ItemId,
-                                            possibleReward.ItemId).Serialize());
-                                    break;
-
-                                case MapTypeEnum.Event:
-                                    _eventServer.BroadcastForChannel(client.Tamer.Channel,
-                                        new NeonMessagePacket(NeonMessageTypeEnum.Item, client.Tamer.Name,
-                                            scanAsset.ItemId,
-                                            possibleReward.ItemId).Serialize());
-                                    break;
-
-                                case MapTypeEnum.Pvp:
-                                    _pvpServer.BroadcastForChannel(client.Tamer.Channel,
-                                        new NeonMessagePacket(NeonMessageTypeEnum.Item, client.Tamer.Name,
-                                            scanAsset.ItemId,
-                                            possibleReward.ItemId).Serialize());
-                                    break;
-
-                                default:
-                                    _mapServer.BroadcastForChannel(client.Tamer.Channel,
-                                        new NeonMessagePacket(NeonMessageTypeEnum.Item, client.Tamer.Name,
-                                            scanAsset.ItemId,
-                                            possibleReward.ItemId).Serialize());
-                                    break;
-                            }*/
+                                client.SendToAll(new NeonMessagePacket(NeonMessageTypeEnum.Item, client.Tamer.Name,
+                                    scanAsset.ItemId, possibleReward.ItemId).Serialize());
+                            }
 
                             cost += scannedItem.ItemInfo.ScanPrice;
                             scannedItens++;
                         }
                         else
                         {
-                            _logger.Warning($"No more space after start scanning for tamer {client.TamerId}.");
+                            await GameLogger.LogWarning($"[ItemScan] {client.Tamer.Name} no more space in inventory while scanning.", "item_scan");
                             error = true;
                             break;
                         }
@@ -254,16 +205,7 @@ namespace DigitalWorldOnline.Game.PacketProcessors
 
             var dropList = string.Join(',', receivedRewards.Select(x => $"{x.Value.ItemId} x{x.Value.Amount}"));
 
-            if (vipEnabled == 1)
-            {
-                _logger.Verbose(
-                    $"Character {client.TamerId} scanned {scannedItem.ItemId} x{scannedItens} with VIP and obtained {dropList}");
-            }
-            else
-            {
-                _logger.Verbose(
-                    $"Character {client.TamerId} scanned {scannedItem.ItemId} x{scannedItens} at {client.TamerLocation} with NPC {npcId} and obtained {dropList}");
-            }
+            await GameLogger.LogInfo($"[ItemScan] {client.Tamer.Name} scanned {scannedItem.ItemId} x{scannedItens} cost {cost} drops: {dropList}", "item_scan");
 
             client.Tamer.Inventory.RemoveBits(cost);
             client.Tamer.Inventory.RemoveOrReduceItem(scannedItem, scannedItens, slotToScan);
@@ -274,38 +216,59 @@ namespace DigitalWorldOnline.Game.PacketProcessors
                 scanQuest.UpdateCondition(0, 1);
                 client.Send(new QuestGoalUpdatePacket(4021, 0, 1));
                 var questToUpdate = client.Tamer.Progress.InProgressQuestData.FirstOrDefault(x => x.QuestId == 4021);
-                _sender.Send(new UpdateCharacterInProgressCommand(questToUpdate));
+                await _sender.Send(new UpdateCharacterInProgressCommand(questToUpdate));
             }
 
             await _sender.Send(new UpdateItemListBitsCommand(client.Tamer.Inventory));
             await _sender.Send(new UpdateItemsCommand(client.Tamer.Inventory));
         }
-
-        private ItemModel? ApplyValuesChipset(ItemModel newItem)
+        finally
         {
-            var ChipsetInfo = _assets.SkillCodeInfo.FirstOrDefault(x => x.SkillCode == newItem.ItemInfo.SkillCode).Apply
-                .FirstOrDefault(x => x.Type > 0);
-            var ChipsetSkill = _assets.SkillInfo.FirstOrDefault(x => x.SkillId == newItem.ItemInfo.SkillCode)
-                .FamilyType;
-            // Definindo o valor mínimo e máximo para o RNG
+            client.MoveItemLock.Release();
+        }
+    }
 
-            Random random = new Random();
-            int ApplyRate = random.Next(newItem.ItemInfo.ApplyValueMin, newItem.ItemInfo.ApplyValueMax);
-            var nValue = ChipsetInfo.Value + (newItem.ItemInfo.TypeN) * ChipsetInfo.AdditionalValue;
+        private ItemModel ApplyValuesChipset(ItemModel newItem)
+        {
+            // Local RNG optimizado
+            var rng = new Random();
 
-            int valorAleatorio = (int)((double)ApplyRate * nValue / 100);
+            var chipsetInfo = _assets.SkillCodeInfo
+                .FirstOrDefault(x => x.SkillCode == newItem.ItemInfo.SkillCode)
+                ?.Apply.FirstOrDefault(x => x.Type > 0);
 
+            if (chipsetInfo == null)
+            {
+                _logger.Warning($"[Chipset] No ChipsetInfo found for SkillCode={newItem.ItemInfo.SkillCode}.");
+                return newItem;
+            }
+
+            var chipsetSkill = _assets.SkillInfo
+                .FirstOrDefault(x => x.SkillId == newItem.ItemInfo.SkillCode)
+                ?.FamilyType ?? 0;
+
+            // RNG entre rangos definidos
+            int applyRate = rng.Next(newItem.ItemInfo.ApplyValueMin, newItem.ItemInfo.ApplyValueMax + 1);
+
+            var nValue = chipsetInfo.Value + (newItem.ItemInfo.TypeN * chipsetInfo.AdditionalValue);
+            int finalValue = (int)((double)applyRate * nValue / 100);
+
+            // Ordena slots para consistencia
             newItem.AccessoryStatus = newItem.AccessoryStatus.OrderBy(x => x.Slot).ToList();
 
-            var possibleStatus = (AccessoryStatusTypeEnum)ChipsetInfo.Attribute;
+            var possibleStatus = (AccessoryStatusTypeEnum)chipsetInfo.Attribute;
 
             newItem.AccessoryStatus[0].SetType(possibleStatus);
-            newItem.AccessoryStatus[0].SetValue((short)valorAleatorio);
+            newItem.AccessoryStatus[0].SetValue((short)finalValue);
 
-            newItem.SetPower((byte)ApplyRate); //TODO: externalizar
-            newItem.SetReroll((byte)100);
-            newItem.SetFamilyType(ChipsetSkill);
+            newItem.SetPower((byte)applyRate);
+            newItem.SetReroll(100);
+            newItem.SetFamilyType(chipsetSkill);
+
+            _logger.Verbose($"[Chipset] Applied: SkillCode={newItem.ItemInfo.SkillCode} Rate={applyRate} Final={finalValue} Status={possibleStatus} FamilyType={chipsetSkill}");
+
             return newItem;
         }
+
     }
 }

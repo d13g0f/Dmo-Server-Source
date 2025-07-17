@@ -5,6 +5,7 @@ using DigitalWorldOnline.Commons.Enums.PacketProcessor;
 using DigitalWorldOnline.Commons.Interfaces;
 using DigitalWorldOnline.Commons.Packets.Items;
 using DigitalWorldOnline.Commons.Utils;
+using GameServer.Logging;
 using MediatR;
 using Serilog;
 
@@ -26,14 +27,14 @@ namespace DigitalWorldOnline.Game.PacketProcessors
         public async Task Process(GameClient client, byte[] packetData)
         {
             var packet = new GamePacketReader(packetData);
-
             var inventoryType = (InventoryTypeEnum)packet.ReadByte();
 
             switch (inventoryType)
             {
                 case InventoryTypeEnum.Inventory:
                     {
-                        client.Tamer.Inventory.newSort(client);
+                        client.Tamer.Inventory.MergeStacks();
+                        client.Tamer.Inventory.Sort();
 
                         await _sender.Send(new UpdateItemsCommand(client.Tamer.Inventory));
 
@@ -42,11 +43,14 @@ namespace DigitalWorldOnline.Game.PacketProcessors
                                 new InventorySortPacket(client.Tamer.Inventory, inventoryType).Serialize(),
                                 new LoadInventoryPacket(client.Tamer.Inventory, inventoryType).Serialize()
                             ));
+
+                        _ = GameLogger.LogInfo($"[Sort] {client.Tamer.Name} merged + sorted Inventory.", "item_sort");
                     }
                     break;
 
                 case InventoryTypeEnum.Warehouse:
                     {
+                        client.Tamer.Warehouse.MergeStacks();
                         client.Tamer.Warehouse.Sort();
 
                         await _sender.Send(new UpdateItemsCommand(client.Tamer.Warehouse));
@@ -56,11 +60,14 @@ namespace DigitalWorldOnline.Game.PacketProcessors
                                 new InventorySortPacket(client.Tamer.Warehouse, inventoryType).Serialize(),
                                 new LoadInventoryPacket(client.Tamer.Warehouse, inventoryType).Serialize()
                             ));
+
+                        _ = GameLogger.LogInfo($"[Sort] {client.Tamer.Name} merged + sorted Warehouse.", "item_sort");
                     }
                     break;
 
                 case InventoryTypeEnum.AccountWarehouse:
                     {
+                        client.Tamer.AccountWarehouse.MergeStacks();
                         client.Tamer.AccountWarehouse.Sort();
 
                         await _sender.Send(new UpdateItemsCommand(client.Tamer.AccountWarehouse));
@@ -70,6 +77,8 @@ namespace DigitalWorldOnline.Game.PacketProcessors
                                 new InventorySortPacket(client.Tamer.AccountWarehouse, inventoryType).Serialize(),
                                 new LoadInventoryPacket(client.Tamer.AccountWarehouse, inventoryType).Serialize()
                             ));
+
+                        _ = GameLogger.LogInfo($"[Sort] {client.Tamer.Name} merged + sorted AccountWarehouse.", "item_sort");
                     }
                     break;
             }

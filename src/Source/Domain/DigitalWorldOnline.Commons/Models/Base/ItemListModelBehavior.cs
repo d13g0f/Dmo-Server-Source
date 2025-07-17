@@ -48,58 +48,47 @@ namespace DigitalWorldOnline.Commons.Models.Base
 
             Items = existingItens;
         }
-
-        public void newSort(GameClient client)
+        public void MergeStacks()
         {
-            var backupItems = new List<ItemModel>(Items);
-            var tempInventory = new List<ItemModel>(Items);
-
-            client.Tamer.Inventory.Items = tempInventory;
-
-            var processedSlots = new HashSet<int>();
-
-            foreach (var item in backupItems)
+            for (int i = 0; i < Items.Count; i++)
             {
-                if (item.ItemId > 0)
+                var slotA = Items[i];
+                if (slotA.ItemId == 0 || slotA.ItemInfo.Overlap <= 1)
+                    continue;
+
+                for (int j = i + 1; j < Items.Count; j++)
                 {
-                    if (processedSlots.Contains(item.ItemId))
-                    {
-                        item.SetItemId();
-                        item.SetAmount();
-
+                    var slotB = Items[j];
+                    if (slotB.ItemId == 0)
                         continue;
+
+                    // compatibility rules : same ItemId + BoundType  (more can be adjusted)
+                    if (slotA.ItemId == slotB.ItemId /* && slotA.BoundType == slotB.BoundType */ )
+                    {
+                        var maxStack = slotA.ItemInfo.Overlap;
+                        var availableSpace = maxStack - slotA.Amount;
+
+                        if (availableSpace <= 0)
+                            continue; // Slot A ya lleno
+
+                        if (slotB.Amount <= availableSpace)
+                        {
+                            // Todo B cabe en A
+                            slotA.Amount += slotB.Amount;
+
+                            // Limpiar B
+                            slotB.ItemId = 0;
+                            slotB.Amount = 0;
+                        }
+                        else
+                        {
+                            // Solo parte de B cabe en A
+                            slotA.Amount = maxStack;
+                            slotB.Amount -= availableSpace;
+                        }
                     }
-
-                    var itemCopy = (ItemModel)item.Clone();
-                    client.Tamer.Inventory.AddItemToReorder(itemCopy);
-
-                    processedSlots.Add(item.ItemId);
                 }
             }
-
-            var orderedItems = client.Tamer.Inventory.Items
-                .Where(x => x.ItemId > 0)
-                .OrderByDescending(x => x.ItemInfo.Type)
-                .ThenByDescending(x => x.ItemId)
-                .ThenByDescending(x => x.Amount)
-                .ToList();
-
-            var emptyItems = backupItems
-                .Where(x => x.ItemId == 0)
-                .ToList();
-
-            orderedItems.AddRange(emptyItems);
-
-            var slot = 0;
-
-            foreach (var orderedItem in orderedItems)
-            {
-                orderedItem.Slot = slot;
-                slot++;
-            }
-
-            Items = orderedItems;
-
         }
 
         // ------------------------------------------------------------
@@ -281,7 +270,7 @@ namespace DigitalWorldOnline.Commons.Models.Base
         {
             if (slot < 0) return null;
 
-            var ItemInfo = Items.First(x => x.Slot == slot);
+            var ItemInfo = Items.FirstOrDefault(x => x.Slot == slot);
 
             return ItemInfo;
         }
@@ -471,87 +460,6 @@ namespace DigitalWorldOnline.Commons.Models.Base
             return true;
         }
 
-        public bool AddItemToReorder(ItemModel newItem)
-        {
-            if (newItem.Amount == 0 || newItem.ItemId == 0)
-                return false;
-
-            var backup = BackupOperation();
-
-            var itemToAdd = (ItemModel)newItem.Clone();
-
-            // FillExistentSlots -------------------------------
-            var targetItems = FindItemsById(itemToAdd.ItemId);
-
-            if (targetItems == null)
-            {
-                return false;
-            }
-            else if (targetItems.Count > 1)
-            {
-                //Console.WriteLine($"\n {targetItems.Count} ItemId {itemToAdd.ItemId} encontrados !!\n");
-
-                var totalAmount = 0;
-
-                for (int i = 0; i < targetItems.Count; i++)
-                {
-                    //var targetItem = targetItems[i];
-
-                    totalAmount += targetItems[i].Amount;
-                }
-
-                var processedTargetSlots = new HashSet<int>();
-
-                foreach (var targetItem in targetItems.Where(x => x.ItemInfo.Overlap > 1))
-                {
-                    //Console.WriteLine($"Verificando ItemId: {targetItem.ItemId} | Amount: {targetItem.Amount} | Slot: {targetItem.Slot}");
-
-                    if (processedTargetSlots.Contains(targetItem.ItemId))
-                    {
-                        //Console.WriteLine($"Slot {targetItem.Slot} já processado, pulando.");
-                        continue;
-                    }
-
-                    if (targetItem.Amount + itemToAdd.Amount > itemToAdd.ItemInfo.Overlap)
-                    {
-                        itemToAdd.ReduceAmount(itemToAdd.ItemInfo.Overlap - targetItem.Amount);
-                        targetItem.SetAmount(itemToAdd.ItemInfo.Overlap);
-                    }
-                    else
-                    {
-                        targetItem.SetAmount(totalAmount);
-                        itemToAdd.SetItemId();
-                        itemToAdd.SetAmount();
-
-                        //Console.WriteLine($"[targetItem] :: ItemId: {targetItem.ItemId} | Amount: {targetItem.Amount} | ItemSlot: {targetItem.Slot}");
-                    }
-
-                    processedTargetSlots.Add(targetItem.ItemId);
-
-                    break;
-                }
-            }
-
-            if (targetItems.Count <= 1)
-            {
-                return false;
-            }
-
-            // AddNewSlots -------------------------------
-            AddNewSlots(itemToAdd);
-
-            if (itemToAdd.Amount > 0)
-            {
-                RevertOperation(backup);
-                return false;
-            }
-
-            CheckEmptyItems();
-
-            newItem.Slot = itemToAdd.Slot;
-
-            return true;
-        }
 
         //TODO: Retornar objeto contendo slots afetados e resultado final
         public bool AddItemTrade(ItemModel newItem)
@@ -701,14 +609,17 @@ namespace DigitalWorldOnline.Commons.Models.Base
 
         public bool MoveItem(short originSlot, short destinationSlot)
         {
+            var originItem = FindItemBySlot(originSlot);
+            var destinationItem = FindItemBySlot(destinationSlot);
+
+            if (originItem == null || destinationItem == null)
+                return false;
+
+            if (originItem.ItemId == 0)
+                return false;
+
             try
             {
-                var originItem = FindItemBySlot(originSlot);
-                var destinationItem = FindItemBySlot(destinationSlot);
-
-                if (originItem.ItemId == 0)
-                    return false;
-
                 if (originItem.ItemId == destinationItem.ItemId)
                 {
                     if (originItem.Amount + destinationItem.Amount > originItem.ItemInfo.Overlap)
@@ -747,14 +658,16 @@ namespace DigitalWorldOnline.Commons.Models.Base
 
                 Items[originSlot] = originItem;
                 Items[destinationSlot] = destinationItem;
+
+                return true;
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"[ERROR] :: {ex.Message}");
+                return false; //now we really checking something
             }
-
-            return true;
         }
+
 
         public void Clear()
         {

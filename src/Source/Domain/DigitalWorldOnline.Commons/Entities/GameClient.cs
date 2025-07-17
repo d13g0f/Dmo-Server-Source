@@ -25,6 +25,8 @@ namespace DigitalWorldOnline.Commons.Entities
 
         public bool blockAchievement { get; set; } = false;
 
+        public readonly SemaphoreSlim MoveItemLock = new SemaphoreSlim(1, 1);
+
         public string HiddenAddress
         {
             get
@@ -312,6 +314,7 @@ namespace DigitalWorldOnline.Commons.Entities
             GameQuit = true;
             SentOnceDataSent = false;
             Handshake = 0;
+            MoveItemLock.Dispose();
         }
 
     }

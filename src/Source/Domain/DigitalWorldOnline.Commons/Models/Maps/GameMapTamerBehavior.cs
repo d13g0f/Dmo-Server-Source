@@ -10,14 +10,14 @@ namespace DigitalWorldOnline.Commons.Models.Map
 
         public List<CharacterModel> Tamers =>
             Clients
-                .Where(x => x.IsConnected)
-                .Select(x => x.Tamer)
+                .Where(x => x.IsConnected && x.Tamer != null)
+                .Select(x => x.Tamer!)
                 .ToList();
 
         public List<CharacterModel> LoadingTamers =>
             Clients
-                .Where(x => x.Tamer.State == CharacterStateEnum.Loading)
-                .Select(x => x.Tamer)
+                .Where(x => x.Tamer != null && x.Tamer.State == CharacterStateEnum.Loading)
+                .Select(x => x.Tamer!)
                 .ToList();
 
         public List<CharacterModel> NearbyTamers(long tamerKey)
@@ -31,10 +31,9 @@ namespace DigitalWorldOnline.Commons.Models.Map
 
         public List<CharacterModel> ConnectedTamers =>
             Clients
-                .Where(x => x.IsConnected && x.Tamer.State == CharacterStateEnum.Ready)
-                .Select(x => x.Tamer)
+                .Where(x => x.IsConnected && x.Tamer != null && x.Tamer.State == CharacterStateEnum.Ready)
+                .Select(x => x.Tamer!)
                 .ToList();
-
         public void SetNoTamers()
         {
             if (WithoutTamers == DateTime.MinValue)

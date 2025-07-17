@@ -230,7 +230,7 @@ namespace DigitalWorldOnline.Commons.Models.Map
 
             foreach (var tamer in LoadingTamers)
             {
-                if (tamer == null || tamer.Id <= 0)
+                if (tamer.Id <= 0)
                 {
                     // mark as removed
                     TamersToRemove.Add(tamer?.Id ?? 0);

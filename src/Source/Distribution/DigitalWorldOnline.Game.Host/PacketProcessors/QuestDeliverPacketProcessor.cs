@@ -20,6 +20,7 @@ using DigitalWorldOnline.GameHost;
 using DigitalWorldOnline.GameHost.EventsServer;
 using MediatR;
 using Serilog;
+using GameServer.Logging;
 
 namespace DigitalWorldOnline.Game.PacketProcessors
 {
@@ -197,59 +198,63 @@ namespace DigitalWorldOnline.Game.PacketProcessors
             UpdateQuestComplete(client, questId);
         }
 
-        private void DeliverItems(GameClient client, short questId, QuestAssetModel questInfo)
+       private void DeliverItems(GameClient client, short questId, QuestAssetModel questInfo)
         {
             foreach (var questGoal in questInfo.QuestGoals.Where(x => x.GoalType == QuestGoalTypeEnum.LootItem))
             {
+                int totalItemCount = 0;
+
+                for (int itemSlot = 0; itemSlot < client.Tamer.Inventory.Size; itemSlot++)
+                {
+                    var targetItem = client.Tamer.Inventory.FindItemBySlotCheck(itemSlot);
+
+                    if (targetItem == null || targetItem.ItemId == 0)
+                        continue;
+
+                    if (targetItem.ItemId == questGoal.GoalId)
+                        totalItemCount += targetItem.Amount;
+                }
+
+                //  track item check
+                _ = GameLogger.LogInfo(
+                    $"DeliverItems CHECK: Tamer={client.Tamer.Name} Quest={questId} GoalItemId={questGoal.GoalId} RequiredAmount={questGoal.GoalAmount} TotalFound={totalItemCount}",
+                    "quest/DeliverItems");
+
+                if (totalItemCount < questGoal.GoalAmount)
+                {
+                    // No more ban, just log
+                    _ = GameLogger.LogWarning(
+                        $"DeliverItems MISMATCH: Tamer={client.Tamer.Name} does NOT meet quest requirement. GoalId={questGoal.GoalId} Required={questGoal.GoalAmount} Found={totalItemCount}",
+                        "quest/DeliverItems");
+
+                    client.Send(new SystemMessagePacket(
+                        $"Could not deliver quest goal item {questGoal.GoalId}: you need {questGoal.GoalAmount} but system counted {totalItemCount}. Please relog or contact GM."));
+
+                    continue; // No ban, no crash, solo skip
+                }
+
+                // Si pasa validación, seguir entregando
                 var item = new ItemModel();
                 item.SetItemId(questGoal.GoalId);
                 item.SetAmount(questGoal.GoalAmount);
                 item.SetItemInfo(_assets.ItemInfo.FirstOrDefault(x => x.ItemId == item.ItemId));
-                WhyRYouGae(client, questGoal.GoalId, questGoal.GoalAmount);
 
                 if (item.ItemInfo == null)
                 {
-                    _logger.Error($"Item information not found for item {item.ItemId}.");
+                    _logger.Error($"DeliverItems ERROR: Item information not found for item {item.ItemId}.");
                     client.Send(new SystemMessagePacket($"Item information not found for item {item.ItemId}."));
-                }
-                else
-                {
-                    _logger.Verbose(
-                        $"Character {client.TamerId} delivered quest {questId} goal item {questGoal.GoalId} x{questGoal.GoalAmount}.");
-                    client.Tamer.Inventory.RemoveOrReduceItem(item, questGoal.GoalAmount);
-                }
-            }
-        }
-        private void WhyRYouGae(GameClient client, int goalId, int goalAmount)
-        {
-            int totalItemCount = 0;
-
-            for (int itemSlot = 0; itemSlot < client.Tamer.Inventory.Size; itemSlot++)
-            {
-                var targetItem = client.Tamer.Inventory.FindItemBySlotCheck(itemSlot);
-                if (targetItem == null || targetItem.ItemId == 0)
-                {
                     continue;
                 }
 
-                if (targetItem.ItemId == goalId)
-                {
-                    totalItemCount += targetItem.Amount;
-                }
-            }
+                _ = GameLogger.LogInfo(
+                    $"DeliverItems SUCCESS: Tamer={client.Tamer.Name} Quest={questId} delivered {questGoal.GoalId} x{questGoal.GoalAmount}",
+                    "quest/DeliverItems");
 
-            if (totalItemCount < goalAmount)
-            {
-                var banProcessor = SingletonResolver.GetService<BanForCheating>();
-                var banMessage = banProcessor.BanAccountWithMessage(client.AccountId, client.Tamer.Name,
-                    AccountBlockEnum.Permanent, "Hatch without materials cheats", client,
-                    "Create a ticket if you're Innocent.");
-
-                var chatPacket = new NoticeMessagePacket(banMessage).Serialize();
-                client.SendToAll(chatPacket);
-                return;
+                client.Tamer.Inventory.RemoveOrReduceItem(item, questGoal.GoalAmount);
             }
         }
+
+
 
         private void ReturnSupplies(GameClient client, short questId, QuestAssetModel questInfo)
         {
