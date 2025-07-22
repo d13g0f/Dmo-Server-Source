@@ -34,45 +34,40 @@ namespace DigitalWorldOnline.GameHost.EventsServer
 
             var stopwatch = new Stopwatch();
             stopwatch.Start();
+        foreach (var tamer in map.ConnectedTamers)
+        {
+            var client = map.Clients.FirstOrDefault(x => x.TamerId == tamer.Id);
 
-            foreach (var tamer in map.ConnectedTamers)
+            if (client == null || !client.IsConnected || client.Partner == null)
+                continue;
+
+            CheckLocationDebuff(client);
+            //MapBuff(client);
+
+            GetInViewMobs(map, tamer);
+            GetInViewMobs(map, tamer, true);
+
+            ShowOrHideTamer(map, tamer);
+            ShowOrHideConsignedShop(map, tamer);
+
+            PartnerCombatManager.AutoAttackMob(client, map);
+
+            if (tamer.TargetPartner != null && client.PvpMap)
             {
-                var client = map.Clients.FirstOrDefault(x => x.TamerId == tamer.Id);
+                _logger.Information($"Digimon Target found");
 
-                if (client == null || !client.IsConnected || client.Partner == null)
-                    continue;
-
-                CheckLocationDebuff(client);
-                //MapBuff(client);
-
-                GetInViewMobs(map, tamer);
-                GetInViewMobs(map, tamer, true);
-
-                ShowOrHideTamer(map, tamer);
-                ShowOrHideConsignedShop(map, tamer);
-
-                if (tamer.TargetMobs.Count > 0)
-                    PartnerAutoAttackMob(tamer);
-
-                if (tamer.TargetSummonMobs.Count > 0)
-                    PartnerAutoAttackSummon(tamer);
-
-                if (tamer.TargetPartner != null && client.PvpMap)
+                if (tamer.Partner.Level <= 25 || tamer.TargetPartner.Level <= 25)
                 {
-                    _logger.Information($"Digimon Target found");
-
-                    if (tamer.Partner.Level <= 25 || tamer.TargetPartner.Level <= 25)
-                    {
-                        _logger.Information($"You cant attack noobs !!");
-                    }
-                    else
-                    {
-                        _logger.Information($"Calling PartnerAutoAttackPlayer");
-                        PartnerAutoAttackPlayer(tamer);
-                    }
+                    _logger.Information($"You cant attack noobs !!");
                 }
-                    
-                CheckTimeReward(client);
+                else
+                {
+                    _logger.Information($"Calling PartnerAutoAttackPlayer");
+                    PartnerAutoAttackPlayer(tamer);
+                }
+            }
+                            
+                     CheckTimeReward(client);
 
                 tamer.AutoRegen();
                 tamer.ActiveEvolutionReduction();
@@ -859,228 +854,6 @@ namespace DigitalWorldOnline.GameHost.EventsServer
             bool StopAttackPlayer = tamer.TargetPartner == null || !tamer.TargetPartner.Alive || tamer.Partner.HP < 1;
 
             if (StopAttackPlayer) tamer.Partner?.StopAutoAttack();
-        }
-
-        public void PartnerAutoAttackMob(CharacterModel tamer)
-        {
-            if (!tamer.Partner.AutoAttack)
-                return;
-
-            if (!tamer.Partner.IsAttacking && tamer.TargetMob != null && tamer.TargetMob.Alive & tamer.Partner.Alive)
-            {
-                tamer.Partner.SetEndAttacking(tamer.Partner.AS);
-                tamer.SetHidden(false);
-
-                if (!tamer.InBattle)
-                {
-                    //_logger.Information($"Character {tamer.Id} engaged {tamer.TargetMob.Id} - {tamer.TargetMob.Name}.");
-                    BroadcastForTamerViewsAndSelf(tamer.Id,
-                        new SetCombatOnPacket(tamer.Partner.GeneralHandler).Serialize());
-                    tamer.StartBattle(tamer.TargetMob);
-                    tamer.Partner.StartAutoAttack();
-                }
-
-                if (!tamer.TargetMob.InBattle)
-                {
-                  //  _logger.Information($"Mob {tamer.TargetMob.Name} engaged battle with {tamer.Partner.Name}.");
-                    BroadcastForTamerViewsAndSelf(tamer.Id,
-                        new SetCombatOnPacket(tamer.TargetMob.GeneralHandler).Serialize());
-                    tamer.TargetMob.StartBattle(tamer);
-                    //tamer.Partner.StartAutoAttack();
-                }
-
-                var missed = false;
-
-                if (!tamer.GodMode)
-                {
-                    missed = tamer.CanMissHit();
-                }
-
-                if (missed)
-                {
-                    _logger.Verbose(
-                        $"Partner {tamer.Partner.Id} missed hit on {tamer.TargetMob.Id} - {tamer.TargetMob.Name}.");
-                    BroadcastForTamerViewsAndSelf(tamer.Id,
-                        new MissHitPacket(tamer.Partner.GeneralHandler, tamer.TargetMob.GeneralHandler).Serialize());
-                }
-                else
-                {
-                    #region Hit Damage
-
-                    var critBonusMultiplier = 0.00;
-                    var blocked = false;
-                    var finalDmg = tamer.GodMode
-                        ? tamer.TargetMob.CurrentHP
-                        : CalculateDamageMob(tamer, out critBonusMultiplier, out blocked);
-
-                    #endregion
-
-                    if (finalDmg <= 0) finalDmg = 1;
-                    if (finalDmg > tamer.TargetMob.CurrentHP) finalDmg = tamer.TargetMob.CurrentHP;
-
-                    var newHp = tamer.TargetMob.ReceiveDamage(finalDmg, tamer.Id);
-
-                    var hitType = blocked ? 2 : critBonusMultiplier > 0 ? 1 : 0;
-
-                    if (newHp > 0)
-                    {
-                        _logger.Verbose(
-                            $"Partner {tamer.Partner.Id} inflicted {finalDmg} to mob {tamer.TargetMob?.Id} - {tamer.TargetMob?.Name}({tamer.TargetMob?.Type}).");
-
-                        BroadcastForTamerViewsAndSelf(
-                            tamer.Id,
-                            new HitPacket(
-                                tamer.Partner.GeneralHandler,
-                                tamer.TargetMob.GeneralHandler,
-                                finalDmg,
-                                tamer.TargetMob.HPValue,
-                                newHp,
-                                hitType).Serialize());
-                    }
-                    else
-                    {
-                        _logger.Verbose(
-                            $"Partner {tamer.Partner.Id} killed mob {tamer.TargetMob?.Id} - {tamer.TargetMob?.Name}({tamer.TargetMob?.Type}) with {finalDmg} damage.");
-
-                        BroadcastForTamerViewsAndSelf(
-                            tamer.Id,
-                            new KillOnHitPacket(
-                                tamer.Partner.GeneralHandler,
-                                tamer.TargetMob.GeneralHandler,
-                                finalDmg,
-                                hitType).Serialize());
-
-                        tamer.TargetMob?.Die();
-
-                        if (!MobsAttacking(tamer.Location.MapId, tamer.Id))
-                        {
-                            tamer.StopBattle();
-
-                            BroadcastForTamerViewsAndSelf(
-                                tamer.Id,
-                                new SetCombatOffPacket(tamer.Partner.GeneralHandler).Serialize());
-                        }
-                    }
-                }
-
-                tamer.Partner.UpdateLastHitTime();
-            }
-
-            bool StopAttackMob = tamer.TargetMob == null || tamer.TargetMob.Dead;
-
-            if (StopAttackMob) tamer.Partner?.StopAutoAttack();
-        }
-
-        public void PartnerAutoAttackSummon(CharacterModel tamer)
-        {
-            if (!tamer.Partner.AutoAttack)
-                return;
-
-            if (!tamer.Partner.IsAttacking && tamer.TargetSummonMob != null &&
-                tamer.TargetSummonMob.Alive & tamer.Partner.Alive)
-            {
-                tamer.Partner.SetEndAttacking(tamer.Partner.AS);
-                tamer.SetHidden(false);
-
-                if (!tamer.InBattle)
-                {
-                    _logger.Verbose(
-                        $"Character {tamer.Id} engaged {tamer.TargetSummonMob.Id} - {tamer.TargetSummonMob.Name}.");
-                    BroadcastForTamerViewsAndSelf(tamer.Id,
-                        new SetCombatOnPacket(tamer.Partner.GeneralHandler).Serialize());
-                    tamer.StartBattle(tamer.TargetMob);
-                    tamer.Partner.StartAutoAttack();
-                }
-
-                if (!tamer.TargetSummonMob.InBattle)
-                {
-                    BroadcastForTamerViewsAndSelf(tamer.Id,
-                        new SetCombatOnPacket(tamer.TargetSummonMob.GeneralHandler).Serialize());
-                    tamer.TargetSummonMob.StartBattle(tamer);
-                    tamer.Partner.StartAutoAttack();
-                }
-
-                var missed = false;
-
-                if (!tamer.GodMode)
-                {
-                    missed = tamer.CanMissHit(true);
-                }
-
-                if (missed)
-                {
-                    _logger.Verbose(
-                        $"Partner {tamer.Partner.Id} missed hit on {tamer.TargetSummonMob.Id} - {tamer.TargetSummonMob.Name}.");
-                    BroadcastForTamerViewsAndSelf(tamer.Id,
-                        new MissHitPacket(tamer.Partner.GeneralHandler, tamer.TargetSummonMob.GeneralHandler)
-                            .Serialize());
-                }
-                else
-                {
-                    #region Hit Damage
-
-                    var critBonusMultiplier = 0.00;
-                    var blocked = false;
-                    var finalDmg = tamer.GodMode
-                        ? tamer.TargetSummonMob.CurrentHP
-                        : CalculateDamageSummon(tamer, out critBonusMultiplier, out blocked);
-
-                    #endregion
-
-                    if (finalDmg <= 0) finalDmg = 1;
-                    if (finalDmg > tamer.TargetSummonMob.CurrentHP) finalDmg = tamer.TargetSummonMob.CurrentHP;
-
-                    var newHp = tamer.TargetSummonMob.ReceiveDamage(finalDmg, tamer.Id);
-
-                    var hitType = blocked ? 2 : critBonusMultiplier > 0 ? 1 : 0;
-
-                    if (newHp > 0)
-                    {
-                        _logger.Verbose(
-                            $"Partner {tamer.Partner.Id} inflicted {finalDmg} to mob {tamer.TargetSummonMob?.Id} - {tamer.TargetSummonMob?.Name}({tamer.TargetSummonMob?.Type}).");
-
-                        BroadcastForTamerViewsAndSelf(
-                            tamer.Id,
-                            new HitPacket(
-                                tamer.Partner.GeneralHandler,
-                                tamer.TargetSummonMob.GeneralHandler,
-                                finalDmg,
-                                tamer.TargetSummonMob.HPValue,
-                                newHp,
-                                hitType).Serialize());
-                    }
-                    else
-                    {
-                        _logger.Verbose(
-                            $"Partner {tamer.Partner.Id} killed mob {tamer.TargetSummonMob?.Id} - {tamer.TargetSummonMob?.Name}({tamer.TargetSummonMob?.Type}) with {finalDmg} damage.");
-
-                        BroadcastForTamerViewsAndSelf(
-                            tamer.Id,
-                            new KillOnHitPacket(
-                                tamer.Partner.GeneralHandler,
-                                tamer.TargetSummonMob.GeneralHandler,
-                                finalDmg,
-                                hitType).Serialize());
-
-                        tamer.TargetSummonMob?.Die();
-
-                        if (!MobsAttacking(tamer.Location.MapId, tamer.Id))
-                        {
-                            tamer.StopBattle(true);
-
-                            BroadcastForTamerViewsAndSelf(
-                                tamer.Id,
-                                new SetCombatOffPacket(tamer.Partner.GeneralHandler).Serialize());
-                        }
-                    }
-                }
-
-                tamer.Partner.UpdateLastHitTime();
-            }
-
-            bool StopAttackSummon = tamer.TargetSummonMob == null || tamer.TargetSummonMob.Dead;
-
-            if (StopAttackSummon) tamer.Partner?.StopAutoAttack();
         }
 
         // -----------------------------------------------------------------------------------------------------------------------

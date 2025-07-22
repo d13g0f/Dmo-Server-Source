@@ -116,65 +116,70 @@ namespace DigitalWorldOnline.Game
         /// <param name="gameClientEvent">Game client who disconnected</param>
         private async void OnDisconnectEvent(object sender, GameClientEvent gameClientEvent)
         {
-            if (gameClientEvent.Client.TamerId > 0)
+            var client = gameClientEvent.Client;
+
+            if (client.TamerId <= 0)
             {
-                _logger.Information(
-                    $"Received disconnection event for {gameClientEvent.Client.Tamer.Name} {gameClientEvent.Client.TamerId} {gameClientEvent.Client.HiddenAddress}.");
-
-                _logger.Debug(
-                    $"Source disconnected: {gameClientEvent.Client.ClientAddress}. Account: {gameClientEvent.Client.AccountId}.");
-
-                if (gameClientEvent.Client.DungeonMap)
-                {
-                    _logger.Information(
-                        $"Removing the tamer {gameClientEvent.Client.Tamer.Name} . {gameClientEvent.Client.HiddenAddress}.");
-                    _dungeonsServer.RemoveClient(gameClientEvent.Client);
-                }
-                else if (gameClientEvent.Client.EventMap)
-                {
-                    _logger.Information(
-                        $"Removing the tamer {gameClientEvent.Client.Tamer.Name} . {gameClientEvent.Client.HiddenAddress}.");
-                    _eventServer.RemoveClient(gameClientEvent.Client);
-                }
-                else if (gameClientEvent.Client.PvpMap)
-                {
-                    _logger.Information(
-                        $"Removing the tamer {gameClientEvent.Client.Tamer.Name} . {gameClientEvent.Client.HiddenAddress}.");
-                    _pvpServer.RemoveClient(gameClientEvent.Client);
-                }
-                else
-                {
-                    _logger.Information(
-                        $"Removing the tamer {gameClientEvent.Client.Tamer.Name} {gameClientEvent.Client.TamerId}. {gameClientEvent.Client.HiddenAddress}.");
-                    _mapServer.RemoveClient(gameClientEvent.Client);
-                }
-
-                if (gameClientEvent.Client.GameQuit)
-                {
-                    gameClientEvent.Client.Tamer.UpdateState(CharacterStateEnum.Disconnected);
-                    _logger.Information(
-                        $"Updating character {gameClientEvent.Client.Tamer.Name} {gameClientEvent.Client.TamerId} state upon disconnect...");
-                    await _sender.Send(new UpdateCharacterStateCommand(gameClientEvent.Client.TamerId,
-                        CharacterStateEnum.Disconnected));
-
-                    CharacterFriendsNotification(gameClientEvent);
-                    CharacterGuildNotification(gameClientEvent);
-                    await PartyNotification(gameClientEvent);
-                    CharacterTargetTraderNotification(gameClientEvent);
-
-                    if (gameClientEvent.Client.DungeonMap)
-                    {
-                        await DungeonWarpGate(gameClientEvent);
-                    }
-                }
-
-                //  Cleaning up the client state
-                gameClientEvent.Client.ResetState();
-                gameClientEvent.Client.SetGameQuit(false);
-                await GameLogger.LogInfo(
-                    $"Client cleanup: AccountId={gameClientEvent.Client.AccountId}, TamerId={gameClientEvent.Client.TamerId} | IP: {gameClientEvent.Client.ClientAddress}",
-                    "session/disconnects");
+                _logger.Warning($"[Disconnect] Cliente sin TamerId válido. IP={client.ClientAddress} AccountId={client.AccountId}");
+                return;
             }
+
+            _logger.Information($"[Disconnect] Recibido evento de desconexión: Tamer={client.Tamer?.Name} TamerId={client.TamerId} IP={client.HiddenAddress} AccountId={client.AccountId}");
+
+            _logger.Debug($"[Disconnect] Detalle conexión: RemoteEndPoint={client.ClientAddress} Handshake={client.Handshake} ServerId={client.ServerId}");
+
+            if (client.DungeonMap)
+            {
+                _logger.Information($"[Disconnect] Cliente estaba en DungeonMap. Removiendo del servidor de Dungeon. MapId={client.Tamer?.Location.MapId} Channel={client.Tamer?.Channel}");
+                _dungeonsServer.RemoveClient(client);
+            }
+            else if (client.EventMap)
+            {
+                _logger.Information($"[Disconnect] Cliente estaba en EventMap. Removiendo del servidor de Event. MapId={client.Tamer?.Location.MapId} Channel={client.Tamer?.Channel}");
+                _eventServer.RemoveClient(client);
+            }
+            else if (client.PvpMap)
+            {
+                _logger.Information($"[Disconnect] Cliente estaba en PvpMap. Removiendo del servidor de PvP. MapId={client.Tamer?.Location.MapId} Channel={client.Tamer?.Channel}");
+                _pvpServer.RemoveClient(client);
+            }
+            else
+            {
+                _logger.Information($"[Disconnect] Cliente estaba en Map normal. Removiendo del servidor de Map. MapId={client.Tamer?.Location.MapId} Channel={client.Tamer?.Channel}");
+                _mapServer.RemoveClient(client);
+            }
+
+            if (client.GameQuit)
+            {
+                _logger.Information($"[Disconnect] Flag GameQuit=true. Actualizando estado a Disconnected para Tamer={client.Tamer?.Name} TamerId={client.TamerId}");
+                client.Tamer.UpdateState(CharacterStateEnum.Disconnected);
+
+                await _sender.Send(new UpdateCharacterStateCommand(client.TamerId, CharacterStateEnum.Disconnected));
+
+                _logger.Information($"[Disconnect] Notificando Friends, Guild, Party, Trader para TamerId={client.TamerId}");
+                CharacterFriendsNotification(gameClientEvent);
+                CharacterGuildNotification(gameClientEvent);
+                await PartyNotification(gameClientEvent);
+                CharacterTargetTraderNotification(gameClientEvent);
+
+                if (client.DungeonMap)
+                {
+                    _logger.Information($"[Disconnect] Cliente estaba en DungeonMap. Ejecutando DungeonWarpGate para TamerId={client.TamerId}");
+                    await DungeonWarpGate(gameClientEvent);
+                }
+            }
+            else
+            {
+                _logger.Information($"[Disconnect] GameQuit=false. No se actualiza estado ni se notifican redes sociales para TamerId={client.TamerId}");
+            }
+
+            _logger.Information($"[Disconnect] Limpiando estado interno del cliente TamerId={client.TamerId} AccountId={client.AccountId}");
+            client.ResetState();
+            client.SetGameQuit(false);
+
+            await GameLogger.LogInfo(
+                $"[Disconnect] Cleanup completo: AccountId={client.AccountId}, TamerId={client.TamerId}, IP={client.ClientAddress}",
+                "session/disconnects");
         }
 
 
@@ -714,17 +719,20 @@ namespace DigitalWorldOnline.Game
                                         var lockedEncyclopediaCount = digimon.Character.Encyclopedia.First(x => x.DigimonEvolutionId == digimonEvolutionInfo?.Id)
                                             .Evolutions.Count(x => x.IsUnlocked == false);
 
-                                        if (lockedEncyclopediaCount <= 0)
-                                        {
-                                            digimon.Character.Encyclopedia
-                                                .First(x => x.DigimonEvolutionId == digimonEvolutionInfo?.Id).SetRewardAllowed();
-                                            digimon.Character.Encyclopedia
-                                                .First(x => x.DigimonEvolutionId == digimonEvolutionInfo?.Id).SetRewardReceived(false);
+                                    if (lockedEncyclopediaCount <= 0)
+                                    {
+                                        var encyclopediaEntry = digimon.Character.Encyclopedia.First(x => x.DigimonEvolutionId == digimonEvolutionInfo?.Id);
 
-                                            await _sender.Send(new UpdateCharacterEncyclopediaCommand(
-                                                digimon.Character.Encyclopedia.First(x =>
-                                                    x.DigimonEvolutionId == digimonEvolutionInfo?.Id)));
+                                        // If the encyclopedia entry is not already marked as rewarded, mark it as allowed and not received
+                                        if (!encyclopediaEntry.IsRewardReceived)
+                                        {
+                                            encyclopediaEntry.SetRewardAllowed(true);
+                                            encyclopediaEntry.SetRewardReceived(false);
+
+                                            await _sender.Send(new UpdateCharacterEncyclopediaCommand(encyclopediaEntry));
                                         }
+                                    }
+
                                     }
                                 }
                                 catch (Exception e)

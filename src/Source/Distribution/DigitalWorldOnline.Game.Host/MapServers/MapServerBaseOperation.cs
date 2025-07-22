@@ -274,15 +274,15 @@ namespace DigitalWorldOnline.GameHost
             {
                 var map = Maps.FirstOrDefault(x =>
                     x.Clients.Exists(gameClient => gameClient.TamerId == client.Tamer.TargetTamerIdTP));
+
                 client.SetLoading();
 
                 client.Tamer.MobsInView.Clear();
-                map.AddClient(client);
+                map?.AddClient(client);
                 client.Tamer.Revive();
             }
             else
             {
-                //var map = Maps.FirstOrDefault(x => x.Initialized && x.MapId == client.Tamer.Location.MapId);
                 var map = Maps.FirstOrDefault(x =>
                     x.Initialized && x.MapId == client.Tamer.Location.MapId && x.Channel == client.Tamer.Channel);
 
@@ -306,7 +306,7 @@ namespace DigitalWorldOnline.GameHost
                             await Task.Delay(2500);
 
                             map = Maps.FirstOrDefault(x => x.Initialized && x.MapId == client.Tamer.Location.MapId &&
-                                                           x.Channel == client.Tamer.Channel);
+                                                        x.Channel == client.Tamer.Channel);
 
                             _loadChannel = client.Tamer.Channel;
                             _logger.Warning($"Waiting map {client.Tamer.Location.MapId} CH {_loadChannel} initialization.");
@@ -317,7 +317,6 @@ namespace DigitalWorldOnline.GameHost
                             if (stopWatch.ElapsedMilliseconds >= timeLimit)
                             {
                                 _logger.Warning($"The map instance {client.Tamer.Location.MapId} CH {_loadChannel} has not been started, aborting process...");
-                                //stopWatch.Stop();
                                 break;
                             }
                         }
@@ -325,7 +324,9 @@ namespace DigitalWorldOnline.GameHost
                         if (map == null)
                         {
                             _loadChannel = client.Tamer.Channel;
-                            client.Disconnect();
+
+                            
+                            await SafeWarp(client, 3, 19993, 15116);
                         }
                         else
                         {
@@ -337,6 +338,66 @@ namespace DigitalWorldOnline.GameHost
                 }
             }
         }
+
+
+       public async Task SafeWarp(GameClient client, short fallbackMapId, int fallbackX, int fallbackY)
+        {
+            try
+            {
+                _logger.Warning($"[SafeWarp] Activado para TamerId={client.TamerId} -> MapaDestino={fallbackMapId} X={fallbackX} Y={fallbackY}");
+
+                client.SetDungeonId(0);
+                client.SetPartyId(0);
+
+                if (client.Tamer == null)
+                {
+                    _logger.Warning("[SafeWarp] Fallback fallido: Tamer es null. Forzando desconexión.");
+                    client.Disconnect();
+                    return;
+                }
+
+                client.Tamer.Location.SetMapId(fallbackMapId);
+                client.Tamer.Location.SetX(fallbackX);
+                client.Tamer.Location.SetY(fallbackY);
+
+                _logger.Warning($"[SafeWarp] Nueva ubicación seteada -> MapId={client.Tamer.Location.MapId} Ch={client.Tamer.Channel}");
+
+                var map = Maps.FirstOrDefault(x =>
+                    x.Initialized && x.MapId == fallbackMapId && x.Channel == client.Tamer.Channel);
+
+                if (map == null)
+                {
+                    _loadChannel = client.Tamer.Channel;
+                    await SearchNewMaps(client);
+
+                    map = Maps.FirstOrDefault(x =>
+                        x.Initialized && x.MapId == fallbackMapId && x.Channel == client.Tamer.Channel);
+
+                    if (map == null)
+                    {
+                        _logger.Warning($"[SafeWarp] FallbackMap {fallbackMapId} Ch {client.Tamer.Channel} sigue sin existir -> Desconectando...");
+                        client.Disconnect();
+                        return;
+                    }
+                }
+
+                client.Tamer.MobsInView.Clear();
+
+                map.AddClient(client);
+                client.Tamer.Revive();
+
+                _logger.Warning($"[SafeWarp] TamerId={client.TamerId} insertado con éxito en MapId={fallbackMapId} Ch={client.Tamer.Channel}");
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"[SafeWarp] Excepción: {ex.Message} {ex.StackTrace}");
+                client.Disconnect();
+            }
+        }
+
+
+
+
 
         /// <summary>
         /// Removes the gameclient from the target map.

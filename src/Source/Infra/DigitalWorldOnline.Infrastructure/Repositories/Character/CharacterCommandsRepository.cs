@@ -1612,69 +1612,49 @@ namespace DigitalWorldOnline.Infrastructure.Repositories.Character
 
 
 
-
-
-
-        public async Task UpdateCharacterEncyclopediaAsync(CharacterEncyclopediaModel characterEncyclopedia)
+      public async Task UpdateCharacterEncyclopediaAsync(CharacterEncyclopediaModel characterEncyclopedia)
+    {
+        try
         {
-            _logger.Information($"[UpdateCharacterEncyclopediaAsync] Inicio para EncyclopediaId: {characterEncyclopedia.Id}, Evolutions: {characterEncyclopedia.Evolutions?.Count ?? 0}");
-
             var dto = await _context.CharacterEncyclopedia
                 .AsNoTracking()
                 .Include(x => x.Evolutions)
                 .SingleOrDefaultAsync(x => x.Id == characterEncyclopedia.Id);
 
-            _logger.Information($"[UpdateCharacterEncyclopediaAsync] DTO {(dto == null ? "no encontrado" : $"encontrado para Id: {dto.Id}, Evolutions existentes: {dto.Evolutions?.Count ?? 0}")}");
-
-            try
+            if (dto == null)
             {
-                _logger.Information($"[UpdateCharacterEncyclopediaAsync] Registrando propiedades de {characterEncyclopedia.Evolutions?.Count ?? 0} evoluciones");
-                foreach (var evolution in characterEncyclopedia.Evolutions ?? new List<CharacterEncyclopediaEvolutionsModel>())
-                {
-                    foreach (PropertyInfo prop in evolution.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance))
-                    {
-                        var propValue = prop.GetValue(evolution, null);
-                        _logger.Information($"[UpdateCharacterEncyclopediaAsync] Evolution {evolution.DigimonBaseType}, Prop: {prop.Name}, Value: {propValue}");
-                    }
-                }
-
-                var evolutions = _mapper.Map<List<CharacterEncyclopediaEvolutionsDTO>>(characterEncyclopedia.Evolutions);
-                _logger.Information($"[UpdateCharacterEncyclopediaAsync] Mapeadas {evolutions?.Count ?? 0} evoluciones para actualizar");
-
-                if (dto != null)
-                {
-                    _logger.Information($"[UpdateCharacterEncyclopediaAsync] Actualizando propiedades de la enciclopedia");
-                    dto.Level = characterEncyclopedia.Level;
-                    dto.Size = characterEncyclopedia.Size;
-                    dto.EnchantAT = characterEncyclopedia.EnchantAT;
-                    dto.EnchantBL = characterEncyclopedia.EnchantBL;
-                    dto.EnchantCT = characterEncyclopedia.EnchantCT;
-                    dto.EnchantEV = characterEncyclopedia.EnchantEV;
-                    dto.EnchantHP = characterEncyclopedia.EnchantHP;
-                    dto.IsRewardAllowed = characterEncyclopedia.IsRewardAllowed;
-                    dto.IsRewardReceived = characterEncyclopedia.IsRewardReceived;
-                    dto.CreateDate = DateTime.Now;
-                    dto.Evolutions = evolutions;
-
-                    _logger.Information($"[UpdateCharacterEncyclopediaAsync] Marcando DTO para actualización con {evolutions?.Count ?? 0} evoluciones");
-                    _context.Update(dto);
-
-                    _logger.Information($"[UpdateCharacterEncyclopediaAsync] Guardando cambios en la base de datos");
-                    await _context.SaveChangesAsync();
-                    _logger.Information($"[UpdateCharacterEncyclopediaAsync] Cambios guardados exitosamente para EncyclopediaId: {dto.Id}");
-                }
-                else
-                {
-                    _logger.Warning($"[UpdateCharacterEncyclopediaAsync] No se encontró enciclopedia para Id: {characterEncyclopedia.Id}, no se actualizó");
-                }
+                _logger.Information($"[UpdateCharacterEncyclopediaAsync] EncyclopediaId={characterEncyclopedia.Id} not found.");
+                return;
             }
-            catch (Exception e)
-            {
-                _logger.Error($"[UpdateCharacterEncyclopediaAsync] Error: {e.Message}, StackTrace: {e.StackTrace}");
-                _logger.Error($"[UpdateCharacterEncyclopediaAsync] InnerException: {e.InnerException?.Message}");
-                throw;
-            }
+
+            //  Mapea solo campos de negocio => DTO
+            dto.Level = characterEncyclopedia.Level;
+            dto.Size = characterEncyclopedia.Size;
+            dto.EnchantAT = characterEncyclopedia.EnchantAT;
+            dto.EnchantBL = characterEncyclopedia.EnchantBL;
+            dto.EnchantCT = characterEncyclopedia.EnchantCT;
+            dto.EnchantEV = characterEncyclopedia.EnchantEV;
+            dto.EnchantHP = characterEncyclopedia.EnchantHP;
+            dto.IsRewardAllowed = characterEncyclopedia.IsRewardAllowed;
+            dto.IsRewardReceived = characterEncyclopedia.IsRewardReceived;
+            dto.CreateDate = DateTime.Now;
+
+            //  Mapea evoluciones hijas si existen
+            var evolutions = _mapper.Map<List<CharacterEncyclopediaEvolutionsDTO>>(characterEncyclopedia.Evolutions);
+            dto.Evolutions = evolutions;
+
+            _context.Update(dto);
+            await _context.SaveChangesAsync();
         }
+        catch (Exception ex)
+        {
+              _logger.Information($"[UpdateCharacterEncyclopediaAsync] Exception: {ex.Message} | StackTrace: {ex.StackTrace}");
+            if (ex.InnerException != null)
+             _logger.Information($"[UpdateCharacterEncyclopediaAsync] InnerException: {ex.InnerException.Message}");
+            throw;
+        }
+    }
+
 
         public async Task UpdateCharacterEncyclopediaEvolutionsAsync(CharacterEncyclopediaEvolutionsModel characterEncyclopediaEvolution)
         {

@@ -9,9 +9,9 @@ using DigitalWorldOnline.Commons.Packets.Chat;
 using DigitalWorldOnline.Commons.Packets.GameServer;
 using DigitalWorldOnline.Commons.Packets.Items;
 using DigitalWorldOnline.Commons.Writers;
+using GameServer.Logging;
 using MediatR;
 using Serilog;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace DigitalWorldOnline.Game.PacketProcessors
 {
@@ -23,7 +23,10 @@ namespace DigitalWorldOnline.Game.PacketProcessors
         private readonly ISender _sender;
         private readonly ILogger _logger;
 
-        public EncyclopediaGetRewardPacketProcessor(AssetsLoader assets, ISender sender, ILogger logger)
+        public EncyclopediaGetRewardPacketProcessor(
+            AssetsLoader assets,
+            ISender sender,
+            ILogger logger)
         {
             _assets = assets;
             _sender = sender;
@@ -33,75 +36,79 @@ namespace DigitalWorldOnline.Game.PacketProcessors
         public async Task Process(GameClient client, byte[] packetData)
         {
             var packet = new GamePacketReader(packetData);
-
-            // Get digimon id
             var digimonId = packet.ReadUInt();
 
-            // _logger.Information($"digimon Id {digimonId}");
+            _ =GameLogger.LogInfo($"[Encyclopedia] Trying to get reward for DigimonId: {digimonId}", "DeckBuffReward");
+
+           
             var evoInfo = _assets.EvolutionInfo.FirstOrDefault(x => x.Type == digimonId);
             if (evoInfo == null)
             {
-                // _logger.Information($"Evo info not found for digimon {digimonId}");
-                client.Send(new SystemMessagePacket($"Failed to receive reward."));
+               _ =GameLogger.LogInfo($"[Encyclopedia] EvolutionInfo not found for DigimonId: {digimonId}", "DeckBuffReward");
+                client.Send(new SystemMessagePacket("Failed to receive reward."));
                 return;
             }
 
+            
             var encyclopedia = client.Tamer.Encyclopedia.FirstOrDefault(x => x.DigimonEvolutionId == evoInfo.Id);
-
             if (encyclopedia == null)
             {
-                // _logger.Information($"Failed to send encyclopedia reward to tamer {client.TamerId}, Player does not have this opened.");
-                client.Send(new SystemMessagePacket($"Failed to receive reward."));
+               _ =GameLogger.LogInfo($"[Encyclopedia] No encyclopedia record for DigimonId: {digimonId}", "DeckBuffReward");
+                client.Send(new SystemMessagePacket("Failed to receive reward."));
                 return;
             }
 
+            // check flags
             if (encyclopedia.IsRewardReceived)
             {
-                // _logger.Information($"Tamer {client.TamerId}, Already received the reward.");
-                client.Send(new SystemMessagePacket($"You have already received the reward."));
+               _ =GameLogger.LogInfo($"[Encyclopedia] Reward already received for DigimonId: {digimonId}", "DeckBuffReward");
+                client.Send(new SystemMessagePacket("You have already received the reward."));
                 return;
             }
 
             if (!encyclopedia.IsRewardAllowed)
             {
-                // _logger.Information($"Tamer {client.TamerId}, Is not allowed to take the item.");
-                client.Send(new SystemMessagePacket($"Failed to receive reward."));
+               _ =GameLogger.LogInfo($"[Encyclopedia] Reward not allowed yet for DigimonId: {digimonId}", "DeckBuffReward");
+                client.Send(new SystemMessagePacket("Failed to receive reward."));
                 return;
             }
 
-            var itemId = 97206;
-            var newItem = new ItemModel();
-            newItem.SetItemInfo(_assets.ItemInfo.FirstOrDefault(x => x.ItemId == itemId));
-
-            if (newItem.ItemInfo == null)
+            
+            var itemId = 6546; // TODO: make parameter?
+            var itemInfo = _assets.ItemInfo.FirstOrDefault(x => x.ItemId == itemId);
+            if (itemInfo == null)
             {
-                // _logger.Information($"Failed to send encyclopedia reward to tamer {client.TamerId}.");
-                client.Send(new SystemMessagePacket($"Failed to receive reward."));
+                _ =GameLogger.LogError($"[Encyclopedia] ItemInfo not found for ItemId: {itemId}", "DeckBuffReward");
+                client.Send(new SystemMessagePacket("Failed to receive reward."));
                 return;
             }
 
-            newItem.ItemId = itemId;
-            newItem.Amount = 10;
+            var newItem = new ItemModel
+            {
+                ItemId = itemId,
+                Amount = 1
+            };
+            newItem.SetItemInfo(itemInfo);
 
             if (newItem.IsTemporary)
-                newItem.SetRemainingTime((uint)newItem.ItemInfo.UsageTimeMinutes);
+                newItem.SetRemainingTime((uint)itemInfo.UsageTimeMinutes);
 
-            var itemClone = (ItemModel)newItem.Clone();
+            
             if (client.Tamer.Inventory.AddItem(newItem))
             {
                 encyclopedia.SetRewardAllowed(false);
-                encyclopedia.SetRewardReceived();
-                // _logger.Information($"Encyclopedia reward allowed: {encyclopedia.IsRewardAllowed.ToString()} | reward received: {encyclopedia.IsRewardReceived.ToString()} | id: {encyclopedia.Id.GetHashCode()}");
+                encyclopedia.SetRewardReceived(true);
+
+               _ =GameLogger.LogInfo($"[Encyclopedia] Reward granted for DigimonId: {digimonId}, ItemId: {itemId}", "DeckBuffReward");
+
                 client.Send(new EncyclopediaReceiveRewardItemPacket(newItem, (int)digimonId));
+
                 await _sender.Send(new UpdateItemsCommand(client.Tamer.Inventory));
-                // _logger.Information($"Passed item update packet on encyclopedia get reward {digimonId}");
                 await _sender.Send(new UpdateCharacterEncyclopediaCommand(encyclopedia));
-                
-                // _logger.Information($"Passed encyclopedia update packet on encyclopedia get reward {digimonId}");
             }
             else
             {
-                // _logger.Information($"failed item pick packet on encyclopedia get reward {digimonId}");
+                _ =GameLogger.LogInfo($"[Encyclopedia] Inventory full. Reward could not be granted for DigimonId: {digimonId}", "DeckBuffReward");
                 client.Send(new PickItemFailPacket(PickItemFailReasonEnum.InventoryFull));
             }
         }

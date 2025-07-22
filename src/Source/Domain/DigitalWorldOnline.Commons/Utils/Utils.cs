@@ -423,6 +423,11 @@ namespace DigitalWorldOnline.Commons.Utils
         /// </summary>
         public static double RandomDouble() => _random.NextDouble() * 100;
 
+        public static double RandomZeroToOne() => _random.NextDouble();
+
+
+
+
         public static bool IsBetween(this int baseValue, params int[] range)
         {
             return range.Contains(baseValue);

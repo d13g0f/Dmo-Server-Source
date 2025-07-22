@@ -11,7 +11,7 @@ using System.Threading;
 
 namespace DigitalWorldOnline.Commons.Models.Config
 {
-    public sealed partial class MobConfigModel :  IMob
+    public sealed partial class MobConfigModel : IMob
     {
         private const int HandlerRange = 65538;
         private int _targetHandler;
@@ -434,7 +434,15 @@ namespace DigitalWorldOnline.Commons.Models.Config
             TargetTamers.RemoveAll(x => x.GeneralHandler == _targetHandler);
 
             if (TargetTamers.Count > 0)
+            {
                 _targetHandler = TargetTamers.First().GeneralHandler;
+            }
+            else
+            {
+                _targetHandler = 0;    
+                InBattle = false;
+
+            }
         }
 
         public void SetAwaitingKillSpawn(bool awaitingKillSpawn = true) => AwaitingKillSpawn = awaitingKillSpawn;
@@ -578,6 +586,37 @@ namespace DigitalWorldOnline.Commons.Models.Config
             DeathTime = deathTime;
             ResurrectionTime = resurrectionTime;
         }
+        
+
+        public void CheckTargetsRange()
+        {
+            for (int i = TargetTamers.Count - 1; i >= 0; i--)
+            {
+                var tamer = TargetTamers[i];
+                if (tamer == null)
+                {
+                    TargetTamers.RemoveAt(i);
+                    continue;
+                }
+
+                double distance = UtilitiesFunctions.CalculateDistance(
+                    CurrentLocation.X,
+                    tamer.Location.X,
+                    CurrentLocation.Y,
+                    tamer.Location.Y);
+
+                if (distance > HuntRange)
+                {
+                    TargetTamers.RemoveAt(i);
+                }
+            }
+
+            if (TargetTamers.Count == 0 && InBattle)
+            {
+                GiveUp();
+            }
+        }
+
 
     }
 }

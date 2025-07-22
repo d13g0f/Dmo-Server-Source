@@ -210,90 +210,84 @@ namespace DigitalWorldOnline.Commons.Models.Map
 
         // ---------------------------------------------------------------------------------------
 
+
         public void AttackTarget(MobConfigModel mob, List<NpcColiseumAssetModel> npcAsset)
         {
-
             #region Hit Damage
-            /*
-            var baseDamage = mob.ATValue - mob.Target.DE;
+            // Registrar valores de entrada
+         
 
-            if (baseDamage <= 0) baseDamage = 1;
+            // Daño base
+            double baseDamage = mob.ATValue - mob.Target.DE + UtilitiesFunctions.RandomInt(1, 15);
+            if (baseDamage < 0) baseDamage = 0;
 
-            // ----------------------------------------------------------
-
-            var critBonusMultiplier = 0.00;
-            double critChance = mob.CTValue / 100;
-            
-            if (critChance >= UtilitiesFunctions.RandomInt(100))
+            // Bloqueo
+            double enemyBlockChance = mob.Target.BL;
+            bool blocked = enemyBlockChance >= UtilitiesFunctions.RandomDouble();
+            if (blocked)
             {
-                var critDamageMultiplier = 0.01;
-                critBonusMultiplier = baseDamage * critDamageMultiplier;
+                baseDamage /= 2; // Bloqueo reduce daño a la mitad
+
             }
 
-            // ----------------------------------------------------------
+            // Cálculo de crítico
+            double critBonusMultiplier = 1.0;
+            double criticalChance = Math.Min(mob.CTValue / 100.0, 2.0); // Cap a 200%
+            double attributePenalty = mob.Attribute.HasAttributeAdvantage(mob.Target.BaseInfo.Attribute) ? 0.1 :
+                                     mob.Target.BaseInfo.Attribute.HasAttributeAdvantage(mob.Attribute) ? -0.25 : 0.0;
+            double criticalResistance = 0.0; // Resistencia crítica del objetivo
+            double effectiveCriticalChance = Math.Max(0.0, criticalChance + attributePenalty - criticalResistance);
+            bool isCritical = effectiveCriticalChance >= UtilitiesFunctions.RandomDouble();
 
-            var blocked = mob.Target.BL >= UtilitiesFunctions.RandomDouble();
+           double criticalDamageBonus = mob.CDValue / 100.0; // CD como porcentaje
+           double excessCdBonus = Math.Max(0.0, (mob.CDValue - 100.0) * 0.005); // +0.5% por cada 1% sobre 100
+            if (isCritical)
+            {
+                blocked = false; // Crítico anula bloqueo
+                critBonusMultiplier = 1.0 + criticalDamageBonus + excessCdBonus;
+                baseDamage *= critBonusMultiplier;
+              
+            }
+            else
+            {
+               Console.WriteLine($"No critical hit: effectiveCriticalChance={effectiveCriticalChance:F4}");
+            }
 
-            // Level Diference
-            var levelBonusMultiplier = mob.Level > mob.Target.Level ? (0.01f * (mob.Level - mob.Target.Level)) : 0;
+            // Bonificaciones
+            double levelBonus = mob.Level > mob.Target.Level ? baseDamage * 0.01 * (mob.Level - mob.Target.Level) : 0;
+            double attributeBonus = baseDamage * (mob.Attribute.HasAttributeAdvantage(mob.Target.BaseInfo.Attribute) ? 0.25 :
+                                                  mob.Target.BaseInfo.Attribute.HasAttributeAdvantage(mob.Attribute) ? -0.25 : 0.0);
+            double elementBonus = baseDamage * (mob.Element.HasElementAdvantage(mob.Target.BaseInfo.Element) ? 0.25 :
+                                               mob.Target.BaseInfo.Element.HasElementAdvantage(mob.Element) ? -0.25 : 0.0);
 
-            // Attribute
-            var attributeMultiplier = 0.00;
-            if (mob.Attribute.HasAttributeAdvantage(mob.Target.BaseInfo.Attribute))
-                attributeMultiplier = 0.25;
-            else if (mob.Target.BaseInfo.Attribute.HasAttributeAdvantage(mob.Attribute))
-                attributeMultiplier = -0.25;
+            
 
-            // Element
-            var elementMultiplier = 0.00;
-            if (mob.Element.HasElementAdvantage(mob.Target.BaseInfo.Element))
-                elementMultiplier = 0.25;
-            else if (mob.Target.BaseInfo.Element.HasElementAdvantage(mob.Element))
-                elementMultiplier = -0.25;
-
-            baseDamage /= blocked ? 2 : 1;
-
-            var finalDmg = (int)Math.Floor(baseDamage + critBonusMultiplier +
-                (baseDamage * levelBonusMultiplier) + (baseDamage * attributeMultiplier) + (baseDamage * elementMultiplier));
-            */
-            #endregion
-
-            #region New Hit Damage
-
-            var critBonusMultiplier = 0.00;
-            var blocked = false;
-
-            var finalDmg = CalculateMobDamage(mob, out critBonusMultiplier, out blocked);
-
-            #endregion
-
+            // Daño final
+            int finalDmg = (int)Math.Floor(baseDamage + levelBonus + attributeBonus + elementBonus);
             if (finalDmg <= 0) finalDmg = 1;
+      
+            #endregion
 
             var previousHp = mob.Target.CurrentHp;
             var newHp = mob.Target.ReceiveDamage(finalDmg);
 
-            var hitType = blocked ? 2 : critBonusMultiplier > 0 ? 1 : 0;
+            var hitType = blocked ? 2 : critBonusMultiplier > 1.0 ? 1 : 0;
 
             if (newHp > 0)
             {
                 BroadcastForTargetTamers(mob.TamersViewing, new HitPacket(mob.GeneralHandler, mob.TargetHandler, finalDmg, previousHp, newHp, hitType).Serialize());
-                //BroadcastForTargetTamers(mob.TamersViewing, new UpdateCurrentHPRatePacket(mob.TargetHandler, mob.Target.HpRate).Finalize());
             }
             else
             {
                 BroadcastForTargetTamers(mob.TamersViewing, new KillOnHitPacket(mob.GeneralHandler, mob.TargetHandler, finalDmg, hitType).Serialize());
                 BroadcastForTargetTamers(mob.TamersViewing, new SetCombatOffPacket(mob.TargetHandler).Serialize());
 
-                if (mob.TargetTamer != null)
+                if (mob.TargetTamer != null && ColiseumMobs.Contains((int)mob.Id))
                 {
-                    if (ColiseumMobs.Contains((int)mob.Id))
+                    var npcInfo = npcAsset.FirstOrDefault(x => x.NpcId == ColiseumMobs.First());
+                    if (npcInfo != null)
                     {
-                        var npcInfo = npcAsset.FirstOrDefault(x => x.NpcId == ColiseumMobs.First());
-
-                        if (npcInfo != null)
-                        {
-                            mob.TargetTamer.Points.ReductionAmount(npcInfo.MobInfo[mob.TargetTamer.Points.CurrentStage - 1].LosePoints); 
-                        }
+                        mob.TargetTamer.Points.ReductionAmount(npcInfo.MobInfo[mob.TargetTamer.Points.CurrentStage - 1].LosePoints);
                     }
                 }
 
@@ -308,51 +302,69 @@ namespace DigitalWorldOnline.Commons.Models.Map
         public void AttackTarget(SummonMobModel mob)
         {
             #region Hit Damage
-            var baseDamage = mob.ATValue - mob.Target.DE + UtilitiesFunctions.RandomInt(1, 15);
+            // Registrar valores de entrada
+       
+            // Daño base
+            double baseDamage = mob.ATValue - mob.Target.DE + UtilitiesFunctions.RandomInt(1, 15);
             if (baseDamage < 0) baseDamage = 0;
+         
+            // Bloqueo
+            double enemyBlockChance = mob.Target.BL;
+            bool blocked = enemyBlockChance >= UtilitiesFunctions.RandomDouble();
+            if (blocked)
+            {
+                baseDamage /= 2; // Bloqueo reduce daño a la mitad
+        
+            }
 
-            var critBonusMultiplier = 0.00;
-            double critChance = mob.CTValue / 100;
-            if (critChance >= UtilitiesFunctions.RandomInt(100))
-                critBonusMultiplier = 0.01; //TODO: externalizar no portal
+            // Cálculo de crítico
+            double critBonusMultiplier = 1.0;
+            double criticalChance = Math.Min(mob.CTValue / 100.0, 2.0); // Cap a 200%
+            double attributePenalty = mob.Attribute.HasAttributeAdvantage(mob.Target.BaseInfo.Attribute) ? 0.1 :
+                                     mob.Target.BaseInfo.Attribute.HasAttributeAdvantage(mob.Attribute) ? -0.25 : 0.0;
+            double criticalResistance = 0.0; // Resistencia crítica del objetivo
+            double effectiveCriticalChance = Math.Max(0.0, criticalChance + attributePenalty - criticalResistance);
+            bool isCritical = effectiveCriticalChance >= UtilitiesFunctions.RandomDouble();
 
-            var blocked = mob.Target.BL >= UtilitiesFunctions.RandomDouble();
+            double criticalDamageBonus = mob.CDValue / 100.0; // CD como porcentaje
+            double excessCdBonus = Math.Max(0.0, (mob.CDValue - 100.0) * 0.005); // +0.5% por cada 1% sobre 100
+            if (isCritical)
+            {
+                blocked = false; // Crítico anula bloqueo
+                critBonusMultiplier = 1.0 + criticalDamageBonus + excessCdBonus;
+                baseDamage *= critBonusMultiplier;
+                
+            }
+            else
+            {
+                Console.WriteLine($"No critical hit: effectiveCriticalChance={effectiveCriticalChance:F4}");
+            }
 
-            var levelBonusMultiplier = mob.Level > mob.Target.Level ?
-                (0.01f * (mob.Level - mob.Target.Level)) : 0; //TODO: externalizar no portal
+            // Bonificaciones
+            double levelBonus = mob.Level > mob.Target.Level ? baseDamage * 0.01 * (mob.Level - mob.Target.Level) : 0;
+            double attributeBonus = baseDamage * (mob.Attribute.HasAttributeAdvantage(mob.Target.BaseInfo.Attribute) ? 0.25 :
+                                                  mob.Target.BaseInfo.Attribute.HasAttributeAdvantage(mob.Attribute) ? -0.25 : 0.0);
+            double elementBonus = baseDamage * (mob.Element.HasElementAdvantage(mob.Target.BaseInfo.Element) ? 0.25 :
+                                               mob.Target.BaseInfo.Element.HasElementAdvantage(mob.Element) ? -0.25 : 0.0);
 
-            var attributeMultiplier = 0.00;
-            if (mob.Attribute.HasAttributeAdvantage(mob.Target.BaseInfo.Attribute))
-                attributeMultiplier = 0.25;
-            else if (mob.Target.BaseInfo.Attribute.HasAttributeAdvantage(mob.Attribute))
-                attributeMultiplier = -0.25;
+            Console.WriteLine( "AttackManager",
+                $"Bonuses: levelBonus={levelBonus:F2}, attributeBonus={attributeBonus:F2}, elementBonus={elementBonus:F2}");
 
-            var elementMultiplier = 0.00;
-            if (mob.Element.HasElementAdvantage(mob.Target.BaseInfo.Element))
-                elementMultiplier = 0.25;
-            else if (mob.Target.BaseInfo.Element.HasElementAdvantage(mob.Element))
-                elementMultiplier = -0.25;
-
-            baseDamage /= blocked ? 2 : 1;
-
-            var finalDmg = (int)Math.Floor(baseDamage +
-                (baseDamage * critBonusMultiplier) +
-                (baseDamage * levelBonusMultiplier) +
-                (baseDamage * attributeMultiplier) +
-                (baseDamage * elementMultiplier));
-            #endregion
-
+            // Daño final
+            int finalDmg = (int)Math.Floor(baseDamage + levelBonus + attributeBonus + elementBonus);
             if (finalDmg <= 0) finalDmg = 1;
+            Console.WriteLine( "AttackManager",
+                $"Final damage: finalDmg={finalDmg}, blocked={blocked}, isCritical={isCritical}");
+            #endregion
 
             var previousHp = mob.Target.CurrentHp;
             var newHp = mob.Target.ReceiveDamage(finalDmg);
 
-            var hitType = blocked ? 2 : critBonusMultiplier > 0 ? 1 : 0;
+            var hitType = blocked ? 2 : critBonusMultiplier > 1.0 ? 1 : 0;
 
             if (newHp > 0)
             {
                 BroadcastForTargetTamers(mob.TamersViewing, new HitPacket(mob.GeneralHandler, mob.TargetHandler, finalDmg, previousHp, newHp, hitType).Serialize());
-                //BroadcastForTargetTamers(mob.TamersViewing, new UpdateCurrentHPRatePacket(mob.TargetHandler, mob.Target.HpRate).Finalize());
             }
             else
             {
@@ -370,51 +382,76 @@ namespace DigitalWorldOnline.Commons.Models.Map
         public void AttackTarget(EventMobConfigModel mob)
         {
             #region Hit Damage
-            var baseDamage = mob.ATValue - mob.Target.DE + UtilitiesFunctions.RandomInt(1, 15);
+            // Registrar valores de entrada
+            Console.WriteLine( "AttackManager",
+                $"Input: MobType=EventMobConfigModel, AT={mob.ATValue}, CT={mob.CTValue}, CD={mob.CDValue}, TargetDE={mob.Target.DE}, TargetBL={mob.Target.BL}, TargetLevel={mob.Target.Level}");
+
+            // Daño base
+            double baseDamage = mob.ATValue - mob.Target.DE + UtilitiesFunctions.RandomInt(1, 15);
             if (baseDamage < 0) baseDamage = 0;
+            Console.WriteLine( "AttackManager",
+                $"Base damage: baseDamage={baseDamage:F2}, RandomBonus={UtilitiesFunctions.RandomInt(1, 15)}");
 
-            var critBonusMultiplier = 0.00;
-            double critChance = mob.CTValue / 100;
-            if (critChance >= UtilitiesFunctions.RandomInt(100))
-                critBonusMultiplier = 0.01; //TODO: externalizar no portal
+            // Bloqueo
+            double enemyBlockChance = mob.Target.BL;
+            bool blocked = enemyBlockChance >= UtilitiesFunctions.RandomDouble();
+            if (blocked)
+            {
+                baseDamage /= 2; // Bloqueo reduce daño a la mitad
+                Console.WriteLine( "AttackManager",
+                    $"Blocked: baseDamage halved to {baseDamage:F2}");
+            }
 
-            var blocked = mob.Target.BL >= UtilitiesFunctions.RandomDouble();
+            // Cálculo de crítico
+            double critBonusMultiplier = 1.0;
+            double criticalChance = Math.Min(mob.CTValue / 100.0, 2.0); // Cap a 200%
+            double attributePenalty = mob.Attribute.HasAttributeAdvantage(mob.Target.BaseInfo.Attribute) ? 0.1 :
+                                     mob.Target.BaseInfo.Attribute.HasAttributeAdvantage(mob.Attribute) ? -0.25 : 0.0;
+            double criticalResistance = 0.0; // Resistencia crítica del objetivo
+            double effectiveCriticalChance = Math.Max(0.0, criticalChance + attributePenalty - criticalResistance);
+            bool isCritical = effectiveCriticalChance >= UtilitiesFunctions.RandomDouble();
 
-            var levelBonusMultiplier = mob.Level > mob.Target.Level ?
-                (0.01f * (mob.Level - mob.Target.Level)) : 0; //TODO: externalizar no portal
+           double criticalDamageBonus = mob.CDValue / 100.0; // CD como porcentaje
+           double excessCdBonus = Math.Max(0.0, (mob.CDValue - 100.0) * 0.005); // +0.5% por cada 1% sobre 100
+            if (isCritical)
+            {
+                blocked = false; // Crítico anula bloqueo
+                critBonusMultiplier = 1.0 + criticalDamageBonus + excessCdBonus;
+                baseDamage *= critBonusMultiplier;
+                Console.WriteLine( "AttackManager",
+                    $"Critical hit: effectiveCriticalChance={effectiveCriticalChance:F4}, critBonusMultiplier={critBonusMultiplier:F2}, baseDamage={baseDamage:F2}");
+            }
+            else
+            {
+                Console.WriteLine( "AttackManager",
+                    $"No critical hit: effectiveCriticalChance={effectiveCriticalChance:F4}");
+            }
 
-            var attributeMultiplier = 0.00;
-            if (mob.Attribute.HasAttributeAdvantage(mob.Target.BaseInfo.Attribute))
-                attributeMultiplier = 0.25;
-            else if (mob.Target.BaseInfo.Attribute.HasAttributeAdvantage(mob.Attribute))
-                attributeMultiplier = -0.25;
+            // Bonificaciones
+            double levelBonus = mob.Level > mob.Target.Level ? baseDamage * 0.01 * (mob.Level - mob.Target.Level) : 0;
+            double attributeBonus = baseDamage * (mob.Attribute.HasAttributeAdvantage(mob.Target.BaseInfo.Attribute) ? 0.25 :
+                                                  mob.Target.BaseInfo.Attribute.HasAttributeAdvantage(mob.Attribute) ? -0.25 : 0.0);
+            double elementBonus = baseDamage * (mob.Element.HasElementAdvantage(mob.Target.BaseInfo.Element) ? 0.25 :
+                                               mob.Target.BaseInfo.Element.HasElementAdvantage(mob.Element) ? -0.25 : 0.0);
 
-            var elementMultiplier = 0.00;
-            if (mob.Element.HasElementAdvantage(mob.Target.BaseInfo.Element))
-                elementMultiplier = 0.25;
-            else if (mob.Target.BaseInfo.Element.HasElementAdvantage(mob.Element))
-                elementMultiplier = -0.25;
+            Console.WriteLine("AttackManager",
+                $"Bonuses: levelBonus={levelBonus:F2}, attributeBonus={attributeBonus:F2}, elementBonus={elementBonus:F2}");
 
-            baseDamage /= blocked ? 2 : 1;
-
-            var finalDmg = (int)Math.Floor(baseDamage +
-                (baseDamage * critBonusMultiplier) +
-                (baseDamage * levelBonusMultiplier) +
-                (baseDamage * attributeMultiplier) +
-                (baseDamage * elementMultiplier));
-            #endregion
-
+            // Daño final
+            int finalDmg = (int)Math.Floor(baseDamage + levelBonus + attributeBonus + elementBonus);
             if (finalDmg <= 0) finalDmg = 1;
+            Console.WriteLine("AttackManager",
+                $"Final damage: finalDmg={finalDmg}, blocked={blocked}, isCritical={isCritical}");
+            #endregion
 
             var previousHp = mob.Target.CurrentHp;
             var newHp = mob.Target.ReceiveDamage(finalDmg);
 
-            var hitType = blocked ? 2 : critBonusMultiplier > 0 ? 1 : 0;
+            var hitType = blocked ? 2 : critBonusMultiplier > 1.0 ? 1 : 0;
 
             if (newHp > 0)
             {
                 BroadcastForTargetTamers(mob.TamersViewing, new HitPacket(mob.GeneralHandler, mob.TargetHandler, finalDmg, previousHp, newHp, hitType).Serialize());
-                //BroadcastForTargetTamers(mob.TamersViewing, new UpdateCurrentHPRatePacket(mob.TargetHandler, mob.Target.HpRate).Finalize());
             }
             else
             {
@@ -428,6 +465,8 @@ namespace DigitalWorldOnline.Commons.Models.Map
             mob.UpdateLastHit();
             mob.UpdateLastHitTry();
         }
+    
+
         
         // ---------------------------------------------------------------------------------------
 
@@ -818,7 +857,8 @@ namespace DigitalWorldOnline.Commons.Models.Map
                     if (targetClient == null || targetClient.Tamer.Hidden || targetClient.Tamer.Dead || targetClient.Tamer.Riding)
                         continue;
 
-                    var diff = UtilitiesFunctions.CalculateDistance(targetClient.Tamer.Partner.Location.X,
+                    var diff = UtilitiesFunctions.CalculateDistance(
+                        targetClient.Tamer.Partner.Location.X,
                         mob.CurrentLocation.X,
                         targetClient.Tamer.Partner.Location.Y,
                         mob.CurrentLocation.Y);
@@ -832,60 +872,109 @@ namespace DigitalWorldOnline.Commons.Models.Map
                         mob.StartBattle(targetClient.Tamer);
                         targetClient.Tamer.StartBattle(mob);
 
-                        /* if (!targetClient.Tamer.GodMode)
-                            AttackTarget(mob, npcAsset); */
+                        // IMPORTANTE: usar versión correcta
+                        if (diff <= mob.ARValue)
+                        {
+                            if (!targetClient.Tamer.GodMode)
+                                AttackTarget(mob, npcAsset);
+                        }
+                        else
+                        {
+                            ChaseTarget(mob);
+                        }
 
                         break;
                     }
                 }
             }
         }
-        public void AttackNearbyTamer(SummonMobModel mob, List<long> nearbyTamers, List<NpcColiseumAssetModel> npcAsset)
-        {
-            if (mob.ReactionType == DigimonReactionTypeEnum.Agressive && !mob.Dead && !mob.InBattle && DateTime.Now > mob.AgressiveCheckTime && nearbyTamers.Any())
+
+            public void AttackNearbyTamer(SummonMobModel mob, List<long> nearbyTamers, List<NpcColiseumAssetModel> npcAsset)
             {
-                foreach (var tamerId in nearbyTamers)
+                Console.WriteLine($"[SummonMob] Checking: MobId={mob.Id} Dead={mob.Dead} InBattle={mob.InBattle} ReactionType={mob.ReactionType} AggroTime={mob.AgressiveCheckTime} Now={DateTime.Now} NearbyTamers={nearbyTamers.Count}");
+
+                if (mob.ReactionType == DigimonReactionTypeEnum.Agressive && !mob.Dead && !mob.InBattle && DateTime.Now > mob.AgressiveCheckTime && nearbyTamers.Any())
                 {
-                    var targetClient = Clients.FirstOrDefault(x => x.TamerId == tamerId);
-                    if (targetClient == null || targetClient.Tamer.Hidden || targetClient.Tamer.Dead || targetClient.Tamer.Riding)
-                        continue;
-
-                    var diff = UtilitiesFunctions.CalculateDistance(targetClient.Tamer.Partner.Location.X,
-                        mob.CurrentLocation.X,
-                        targetClient.Tamer.Partner.Location.Y,
-                        mob.CurrentLocation.Y);
-
-                    if (diff <= mob.ViewRange)
+                    foreach (var tamerId in nearbyTamers)
                     {
-                        BroadcastForTargetTamers(mob.TamersViewing, new MobTinklePacket(mob.GeneralHandler).Serialize());
-                        BroadcastForTargetTamers(mob.TamersViewing, new SetCombatOnPacket(mob.GeneralHandler).Serialize());
-                        BroadcastForTargetTamers(mob.TamersViewing, new SetCombatOnPacket(targetClient.Partner.GeneralHandler).Serialize());
+                        var targetClient = Clients.FirstOrDefault(x => x.TamerId == tamerId);
+                        if (targetClient == null || targetClient.Tamer.Hidden || targetClient.Tamer.Dead || targetClient.Tamer.Riding)
+                        {
+                            Console.WriteLine($"[SummonMob] REJECT: TamerId={tamerId} Null={targetClient == null} Hidden={targetClient?.Tamer.Hidden} Dead={targetClient?.Tamer.Dead} Riding={targetClient?.Tamer.Riding}");
+                            continue;
+                        }
 
-                        mob.StartBattle(targetClient.Tamer);
-                        targetClient.Tamer.StartBattle(mob);
+                        var diff = UtilitiesFunctions.CalculateDistance(
+                            targetClient.Tamer.Partner.Location.X,
+                            mob.CurrentLocation.X,
+                            targetClient.Tamer.Partner.Location.Y,
+                            mob.CurrentLocation.Y);
 
-                        break;
+                        Console.WriteLine($"[SummonMob] Diff: TamerId={tamerId} Distance={diff} ViewRange={mob.ViewRange} ARValue={mob.ARValue}");
+
+                        if (diff <= mob.ViewRange)
+                        {
+                            Console.WriteLine($"[SummonMob] START BATTLE: MobId={mob.Id} TamerId={tamerId}");
+                            BroadcastForTargetTamers(mob.TamersViewing, new MobTinklePacket(mob.GeneralHandler).Serialize());
+                            BroadcastForTargetTamers(mob.TamersViewing, new SetCombatOnPacket(mob.GeneralHandler).Serialize());
+                            BroadcastForTargetTamers(mob.TamersViewing, new SetCombatOnPacket(targetClient.Partner.GeneralHandler).Serialize());
+
+                            mob.StartBattle(targetClient.Tamer);
+                            targetClient.Tamer.StartBattle(mob);
+
+                            if (diff <= mob.ARValue)
+                            {
+                                Console.WriteLine($"[SummonMob] ATTACK: MobId={mob.Id} TamerId={tamerId}");
+                                if (!targetClient.Tamer.GodMode)
+                                    AttackTarget(mob);
+                            }
+                            else
+                            {
+                                Console.WriteLine($"[SummonMob] CHASE: MobId={mob.Id} TamerId={tamerId}");
+                                ChaseTarget(mob);
+                            }
+
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine($"[SummonMob] OUT OF RANGE: MobId={mob.Id} TamerId={tamerId} Diff={diff}");
+                        }
                     }
                 }
+                else
+                {
+                    Console.WriteLine($"[SummonMob] FAIL CONDITIONS: MobId={mob.Id}");
+                }
             }
-        }
+
+
         public void AttackNearbyTamer(EventMobConfigModel mob, List<long> nearbyTamers, List<NpcColiseumAssetModel> npcAsset)
         {
+            Console.WriteLine($"[EventMob] Checking: MobId={mob.Id} Dead={mob.Dead} InBattle={mob.InBattle} ReactionType={mob.ReactionType} AggroTime={mob.AgressiveCheckTime} Now={DateTime.Now} NearbyTamers={nearbyTamers.Count}");
+
             if (mob.ReactionType == DigimonReactionTypeEnum.Agressive && !mob.Dead && !mob.InBattle && DateTime.Now > mob.AgressiveCheckTime && nearbyTamers.Any())
             {
                 foreach (var tamerId in nearbyTamers)
                 {
                     var targetClient = Clients.FirstOrDefault(x => x.TamerId == tamerId);
                     if (targetClient == null || targetClient.Tamer.Hidden || targetClient.Tamer.Dead || targetClient.Tamer.Riding)
+                    {
+                        Console.WriteLine($"[EventMob] REJECT: TamerId={tamerId} Null={targetClient == null} Hidden={targetClient?.Tamer.Hidden} Dead={targetClient?.Tamer.Dead} Riding={targetClient?.Tamer.Riding}");
                         continue;
+                    }
 
-                    var diff = UtilitiesFunctions.CalculateDistance(targetClient.Tamer.Partner.Location.X,
+                    var diff = UtilitiesFunctions.CalculateDistance(
+                        targetClient.Tamer.Partner.Location.X,
                         mob.CurrentLocation.X,
                         targetClient.Tamer.Partner.Location.Y,
                         mob.CurrentLocation.Y);
 
+                    Console.WriteLine($"[EventMob] Diff: TamerId={tamerId} Distance={diff} ViewRange={mob.ViewRange} ARValue={mob.ARValue}");
+
                     if (diff <= mob.ViewRange)
                     {
+                        Console.WriteLine($"[EventMob] START BATTLE: MobId={mob.Id} TamerId={tamerId}");
                         BroadcastForTargetTamers(mob.TamersViewing, new MobTinklePacket(mob.GeneralHandler).Serialize());
                         BroadcastForTargetTamers(mob.TamersViewing, new SetCombatOnPacket(mob.GeneralHandler).Serialize());
                         BroadcastForTargetTamers(mob.TamersViewing, new SetCombatOnPacket(targetClient.Partner.GeneralHandler).Serialize());
@@ -893,11 +982,32 @@ namespace DigitalWorldOnline.Commons.Models.Map
                         mob.StartBattle(targetClient.Tamer);
                         targetClient.Tamer.StartBattle(mob);
 
+                        if (diff <= mob.ARValue)
+                        {
+                            Console.WriteLine($"[EventMob] ATTACK: MobId={mob.Id} TamerId={tamerId}");
+                            if (!targetClient.Tamer.GodMode)
+                                AttackTarget(mob);
+                        }
+                        else
+                        {
+                            Console.WriteLine($"[EventMob] CHASE: MobId={mob.Id} TamerId={tamerId}");
+                            ChaseTarget(mob);
+                        }
+
                         break;
+                    }
+                    else
+                    {
+                        Console.WriteLine($"[EventMob] OUT OF RANGE: MobId={mob.Id} TamerId={tamerId} Diff={diff}");
                     }
                 }
             }
+            else
+            {
+                Console.WriteLine($"[EventMob] FAIL CONDITIONS: MobId={mob.Id}");
+            }
         }
+
 
         #region Handler
         private bool NeedNewHandler(MobConfigModel mob)

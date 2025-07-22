@@ -87,7 +87,7 @@ namespace DigitalWorldOnline.GameHost
                     continue;
 
                 MobsOperation(map, mob);
-
+                mob.CheckTargetsRange();
                 mob.SetNextAction();
             }
 
@@ -143,7 +143,7 @@ namespace DigitalWorldOnline.GameHost
                     continue;
 
                 MobsOperation(map, mob);
-
+                mob.CheckTargetsRange();
                 mob.SetNextAction();
             }
 

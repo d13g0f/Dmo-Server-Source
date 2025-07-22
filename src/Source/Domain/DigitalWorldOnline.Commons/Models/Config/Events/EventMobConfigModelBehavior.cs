@@ -426,8 +426,17 @@ namespace DigitalWorldOnline.Commons.Models.Config.Events
             TargetTamers.RemoveAll(x => x.GeneralHandler == _targetHandler);
 
             if (TargetTamers.Count > 0)
+            {
                 _targetHandler = TargetTamers.First().GeneralHandler;
+            }
+            else
+            {
+                _targetHandler = 0;    
+                InBattle = false;
+
+            }
         }
+
 
         public void SetAwaitingKillSpawn(bool awaitingKillSpawn = true) => AwaitingKillSpawn = awaitingKillSpawn;
 

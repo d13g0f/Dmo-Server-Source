@@ -46,7 +46,7 @@ namespace DigitalWorldOnline.GameHost
 
                 client.Send(new LoadInventoryPacket(client.Tamer.Inventory, InventoryTypeEnum.Inventory));
 
-                //WhyRYouGae(client);
+               
                 CheckLocationDebuff(client);
 
                 GetInViewMobs(map, tamer);
@@ -57,7 +57,7 @@ namespace DigitalWorldOnline.GameHost
                 ShowOrHideTamer(map, tamer);
 
                 if (tamer.TargetIMobs.Count > 0)
-                    PartnerAutoAttackMob(client);
+                  PartnerCombatManager.AutoAttackMob(client, map);
 
                 tamer.AutoRegen();
                 tamer.ActiveEvolutionReduction();
@@ -611,10 +611,10 @@ namespace DigitalWorldOnline.GameHost
                         targetClient.Send(new SetCombatOnPacket(tamerToShow.GeneralHandler));
                         targetClient.Send(new SetCombatOnPacket(tamerToShow.Partner.GeneralHandler));
                     }
-#if DEBUG
+                    #if DEBUG
                     var serialized = SerializeShowTamer(tamerToShow);
                     //File.WriteAllText($"Shows\\Show{tamerToShow.Id}To{tamerToSeeId}_{DateTime.Now:dd_MM_yy_HH_mm_ss}.temp", serialized);
-#endif
+            #endif
                 }
             }
         }
@@ -698,147 +698,7 @@ namespace DigitalWorldOnline.GameHost
             return sb.ToString();
         }
 
-        // -----------------------------------------------------------------------------------------------------------------------
-        private void WhyRYouGae(GameClient client)
-        {
-            for (int itemSlot = 0; itemSlot < client.Tamer.Inventory.Size; itemSlot++)
-            {
-                var targetItem = client.Tamer.Inventory.FindItemBySlotCheck(itemSlot);
-                if (targetItem == null || targetItem.ItemId == 0)
-                {
-                    //Console.WriteLine($"Found empty slot at {itemSlot}");
-                    continue;
-                }
-
-                //Console.WriteLine($"Found item in slot {itemSlot}: {targetItem.ItemId}");
-
-                var targetItemTrue = _assets.ItemInfo.FirstOrDefault(x => x.ItemId == targetItem.ItemId);
-                if (targetItemTrue == null)
-                {
-                    _logger.Warning($"Item with ID {targetItem.ItemId} does not exist in assets.");
-                    client.Send(new SystemMessagePacket("Invalid item data."));
-                    return;
-                }
-
-                if (targetItem.Amount > 999)
-                {
-                    var banProcessor = SingletonResolver.GetService<BanForCheating>();
-                    var banMessage = banProcessor.BanAccountWithMessage(client.AccountId, client.Tamer.Name,
-                        AccountBlockEnum.Permanent, "Items over the limits", client,
-                        "Create a ticket if you're Innocent.");
-
-                    var chatPacket = new NoticeMessagePacket(banMessage).Serialize();
-                    client.SendToAll(chatPacket);
-                    return;
-                }
-            }
-
-        }
-        public void PartnerAutoAttackMob(GameClient client)
-        {
-            var selectedMob = client.Tamer.TargetIMob;
-
-            if (!client.Tamer.Partner.AutoAttack)
-                return;
-
-            if (!client.Tamer.Partner.IsAttacking && selectedMob != null && selectedMob.Alive & client.Tamer.Partner.Alive)
-            {
-                client.Tamer.Partner.SetEndAttacking(client.Tamer.Partner.AS);
-                client.Tamer.SetHidden(false);
-
-                if (!client.Tamer.InBattle)
-                {
-                    _logger.Verbose($"Character {client.Tamer.Id} engaged {selectedMob.Id} - {selectedMob.Name}.");
-                    BroadcastForTamerViewsAndSelf(client.Tamer.Id,
-                          new SetCombatOnPacket(client.Tamer.Partner.GeneralHandler).Serialize());
-                    client.Tamer.StartBattle(selectedMob);
-                    client.Tamer.Partner.StartAutoAttack();
-                }
-
-                if (!selectedMob.InBattle)
-                {
-                    BroadcastForTamerViewsAndSelf(client.Tamer.Id,
-                    new SetCombatOnPacket(selectedMob.GeneralHandler).Serialize());
-                    selectedMob.StartBattle(client.Tamer);
-                    client.Tamer.Partner.StartAutoAttack();
-                }
-
-                var missed = false;
-
-                {
-                    missed = client.Tamer.CanMissHit();
-
-                }
-
-                if (missed)
-                {
-                    _logger.Verbose(
-                        $"Partner {client.Tamer.Partner.Id} missed hit on {selectedMob.Id} - {selectedMob.Name}.");
-                    BroadcastForTamerViewsAndSelf(client.Tamer.Id,
-                        new MissHitPacket(client.Tamer.Partner.GeneralHandler,selectedMob.GeneralHandler).Serialize());
-                }
-                else
-                {
-                    #region Hit Damage
-
-                    var critBonusMultiplier = 0.00;
-                    var blocked = false;
-                    var finalDmg = client.Tamer.GodMode
-                        ? selectedMob.CurrentHP
-                        : AttackManager.CalculateDamage(client,out critBonusMultiplier,out blocked);
-
-                    #endregion
-
-                    if (finalDmg <= 0) finalDmg = 1;
-                    if (finalDmg > selectedMob.CurrentHP) finalDmg = selectedMob.CurrentHP;
-
-                    var newHp = selectedMob.ReceiveDamage(finalDmg,client.Tamer.Id);
-
-                    var hitType = blocked ? 2 : critBonusMultiplier > 0 ? 1 : 0;
-
-                    if (newHp > 0)
-                    {
-                        BroadcastForTamerViewsAndSelf(
-                            client.Tamer.Id,
-                            new HitPacket(
-                                client.Tamer.Partner.GeneralHandler,
-                                selectedMob.GeneralHandler,
-                                finalDmg,
-                                selectedMob.HPValue,
-                                newHp,
-                                hitType).Serialize());
-                    }
-                    else
-                    {
-
-                        BroadcastForTamerViewsAndSelf(
-                            client.Tamer.Id,
-                            new KillOnHitPacket(
-                                client.Tamer.Partner.GeneralHandler,
-                                selectedMob.GeneralHandler,
-                                finalDmg,
-                                hitType).Serialize());
-
-                        selectedMob.Die();
-
-                        if (!MobsAttacking(client.Tamer.Location.MapId,client.Tamer.Id))
-                        {
-                            client.Tamer.StopBattle();
-
-                            BroadcastForTamerViewsAndSelf(
-                                client.Tamer.Id,
-                                new SetCombatOffPacket(client.Tamer.Partner.GeneralHandler).Serialize());
-                        }
-                    }
-                }
-
-                client.Tamer.Partner.UpdateLastHitTime();
-            }
-
-            bool StopAttackMob = selectedMob == null || selectedMob.Dead;
-
-            if (StopAttackMob) client.Tamer.Partner?.StopAutoAttack();
-        }
+       
         // -----------------------------------------------------------------------------------------------------------------------
 
         private ReceiveExpResult ReceiveBonusTamerExp(CharacterModel tamer, long totalTamerExp)

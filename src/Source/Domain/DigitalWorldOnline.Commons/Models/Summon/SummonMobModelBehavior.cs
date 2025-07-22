@@ -17,7 +17,7 @@ namespace DigitalWorldOnline.Commons.Models.Summon
     {
         private const int HandlerRange = 65538;
         private int _targetHandler;
-      
+
         private bool _giveUp;
 
         #region Target
@@ -30,7 +30,7 @@ namespace DigitalWorldOnline.Commons.Models.Summon
         public bool CanAct => DateTime.Now > LastActionTime;
 
         public bool CanHeal => DateTime.Now > LastHealTime;
-        
+
         public int RemainingMinutes
         {
             get
@@ -279,7 +279,7 @@ namespace DigitalWorldOnline.Commons.Models.Summon
         public void UpdateLastSkill() => LastSkillTime = DateTime.Now;
 
         public void UpdateLastSkillTry() => LastSkillTryTime = DateTime.Now;
-        
+
         public void UpdateLastHeal() => LastHealTime = DateTime.Now.AddMilliseconds(0);
 
         public void UpdateCurrentAction(MobActionEnum action) => CurrentAction = action;
@@ -441,7 +441,15 @@ namespace DigitalWorldOnline.Commons.Models.Summon
             TargetTamers.RemoveAll(x => x.GeneralHandler == _targetHandler);
 
             if (TargetTamers.Count > 0)
+            {
                 _targetHandler = TargetTamers.First().GeneralHandler;
+            }
+            else
+            {
+                _targetHandler = 0;    
+                InBattle = false;
+
+            }
         }
 
         public void SetAwaitingKillSpawn(bool awaitingKillSpawn = true) => AwaitingKillSpawn = awaitingKillSpawn;
@@ -583,5 +591,35 @@ namespace DigitalWorldOnline.Commons.Models.Summon
 
             _giveUp = true;
         }
+        
+        public void CheckTargetsRange()
+        {
+            for (int i = TargetTamers.Count - 1; i >= 0; i--)
+            {
+                var tamer = TargetTamers[i];
+                if (tamer == null)
+                {
+                    TargetTamers.RemoveAt(i);
+                    continue;
+                }
+
+                double distance = UtilitiesFunctions.CalculateDistance(
+                    CurrentLocation.X,
+                    tamer.Location.X,
+                    CurrentLocation.Y,
+                    tamer.Location.Y);
+
+                if (distance > HuntRange)
+                {
+                    TargetTamers.RemoveAt(i);
+                }
+            }
+
+            if (TargetTamers.Count == 0 && InBattle)
+            {
+                GiveUp();
+            }
+        }
+        
     }
 }

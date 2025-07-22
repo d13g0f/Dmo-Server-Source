@@ -247,7 +247,7 @@ namespace DigitalWorldOnline.GameHost
                         }
                         else
                         {
-                            // map.AttackNearbyTamer(mob, mob.TamersViewing, _assets.NpcColiseum); // comment ?
+                           map.AttackNearbyTamer(mob, mob.TamersViewing, _assets.NpcColiseum); // comment ?
                         }
                     }
                     break;
@@ -1774,7 +1774,8 @@ namespace DigitalWorldOnline.GameHost
                                     break;
                                 }
 
-                                map.AttackTarget(mob);
+                                 map.AttackTarget(mob);
+
                             }
                             else
                             {

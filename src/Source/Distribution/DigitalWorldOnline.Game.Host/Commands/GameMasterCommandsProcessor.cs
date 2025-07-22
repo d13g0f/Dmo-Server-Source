@@ -3169,7 +3169,7 @@ namespace DigitalWorldOnline.Game
                 case "on":
                     if (!AttackManager.IsBattle)
                     {
-                        AttackManager.SetBattleStatus(true);
+                        AttackManager.StartBattle();
                         client.Send(new NoticeMessagePacket($"Battle log is now active!"));
                     }
                     else
@@ -3181,7 +3181,7 @@ namespace DigitalWorldOnline.Game
                 case "off":
                     if (AttackManager.IsBattle)
                     {
-                        AttackManager.SetBattleStatus(false);
+                        AttackManager.EndBattle();
                         client.Send(new NoticeMessagePacket($"Battle log is now inactive!"));
                     }
                     else
@@ -3189,11 +3189,8 @@ namespace DigitalWorldOnline.Game
                         client.Send(new NoticeMessagePacket($"Battle log is already inactive..."));
                     }
                     break;
-
-                default:
-                    client.Send(new SystemMessagePacket($"Invalid command. Use !battlelog (on/off)"));
-                    break;
             }
+
         }
 
         private async Task PlayersCommand(GameClient client, string[] command)

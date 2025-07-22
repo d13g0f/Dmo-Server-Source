@@ -27,6 +27,22 @@ namespace DigitalWorldOnline.Commons.Entities
 
         public readonly SemaphoreSlim MoveItemLock = new SemaphoreSlim(1, 1);
 
+        public long DungeonId { get; private set; }
+        public long PartyId { get; private set; }
+
+        public void SetPartyId(long partyId)
+        {
+            PartyId = partyId;
+        }
+
+        public void SetDungeonId(long dungeonId)
+        {
+            DungeonId = dungeonId;
+        }
+
+
+
+
         public string HiddenAddress
         {
             get

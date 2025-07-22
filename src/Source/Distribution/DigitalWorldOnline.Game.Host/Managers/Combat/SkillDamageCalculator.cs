@@ -14,103 +14,93 @@ namespace DigitalWorldOnline.Game.Managers.Combat
     public class SkillDamageCalculator : ISkillDamageCalculator
     {
         private readonly AssetsLoader _assets;
-        private readonly AttackManager _attackManager;
         private readonly IBuffManager _buffManager;
         private readonly ICombatBroadcaster _broadcaster;
 
         public SkillDamageCalculator(
             AssetsLoader assets,
-            AttackManager attackManager,
             IBuffManager buffManager,
             ICombatBroadcaster broadcaster)
         {
             _assets = assets;
-            _attackManager = attackManager;
             _buffManager = buffManager;
             _broadcaster = broadcaster;
         }
 
         public DamageResult CalculateDamage(GameClient client, DigimonSkillAssetModel skillAsset, byte skillSlot)
         {
-            // 1) ID de la skill
-            // Note: The SkillId comes from client packet, but all stats are validated and read from DigimonSkillsJson.
+            var partner = client.Tamer.Partner;
+            var target = client.Tamer.TargetIMob;
 
-            int skillId = skillAsset.SkillId;
-
-            // 2) Busca el JSON real
-            var jsonSkill = _assets.DigimonSkillsJson.FirstOrDefault(x => x.SkillId == skillId);
+            // 1️⃣ Buscar JSON real
+            var jsonSkill = _assets.DigimonSkillsJson
+                .FirstOrDefault(x => x.SkillId == skillAsset.SkillId);
             if (jsonSkill == null)
-                throw new InvalidOperationException($"Skill ID {skillId} not found in DigimonSkillsJson");
+                throw new InvalidOperationException($"Skill ID {skillAsset.SkillId} not found in DigimonSkillsJson");
 
-            // 3) Nivel real de la skill
-            int skillLevel = client.Partner.Evolutions
-                .First(x => x.Type == client.Partner.CurrentType)
+            // 2️⃣ Nivel real de la skill
+            int skillLevel = partner.Evolutions
+                .First(x => x.Type == partner.CurrentType)
                 .Skills[skillSlot].CurrentLevel;
 
             if (skillLevel < 1) skillLevel = 1;
             if (skillLevel > jsonSkill.MaxLevel) skillLevel = jsonSkill.MaxLevel;
 
-            // 4) Daño base escalado
+            // 3️⃣ Daño base escalado + clones
             double baseDamage = jsonSkill.BaseDamage + (skillLevel * jsonSkill.DamagePerLevel);
+            double cloneFactor = 1 + 0.43 / (144.0 / partner.Digiclone.ATValue);
+            double cloneScaled = baseDamage * cloneFactor;
 
-            // 5) Factor clone
-            double cloneFactor = 1 + 0.43 / (144.0 / client.Partner.Digiclone.ATValue);
-            double f1 = Math.Floor(baseDamage * cloneFactor);
+            // 4️⃣ Skill Factor (SCD)
+            double scdBonus = partner.SCD / 10000.0;
+            double scdScaled = cloneScaled * scdBonus;
 
-            // 6) Factor SCD
-            double skillFactor = client.Partner.SCD / 100.0;
-            double added = Math.Floor(f1 * skillFactor / 100.0);
+            // 5️⃣ AT y SKD
+            double rawBase = cloneScaled + scdScaled + partner.AT + partner.SKD;
 
-            // 7) AT y SKD
-            double rawBase = f1 + added + client.Partner.AT + client.Partner.SKD;
+            // 6️⃣ Clone ATLevel Bonus (si aplica)
+            double cloneBonus = partner.Digiclone.ATLevel > 0 ? rawBase * 0.301 : 0.0;
 
-            int cloneBonus = client.Partner.Digiclone.ATLevel > 0 ? (int)(rawBase * 0.301) : 0;
+            double totalBeforeBonuses = rawBase + cloneBonus;
 
-            // 8) Bonos atributo y elemento
-            int attrBonus = (int)Math.Floor(f1 * AttackManager.GetAttributeDamage(client));
-            int elemBonus = (int)Math.Floor(f1 * AttackManager.GetElementDamage(client));
+            // 7️⃣ Bonos atributo y elemento (sobre total base)
+            double attributeBonus = totalBeforeBonuses * AttackManager.GetAttributeBonus(client);
+            double elementBonus = totalBeforeBonuses * AttackManager.GetElementBonus(client);
 
-            // 9) Defensa sin normalizar: se normaliza adentro del Core
-            int defense = (int)client.Tamer.TargetIMob.DEValue;
+            // 8️⃣ Defensa (sin cap)
+            double damageAfterDef = totalBeforeBonuses + attributeBonus + elementBonus - target.DEValue;
+            if (damageAfterDef < 0) damageAfterDef = 0;
 
-            int dmg = DamageCoreCalculator.Calculate(
-                rawBase + cloneBonus,
-                attrBonus,
-                elemBonus,
-                0,
-                defense,
-                false
-            );
+            // 9️⃣ Buff SkillDmg
+            var skillDmgBuffs = partner.BuffList.Buffs
+                .Where(x => x.Definition?.EffectType == BuffEffectTypeEnum.SkillDmg);
 
-           // 10) Resultado final antes de buffs
+            double skillDmgBonus = 0;
+            foreach (var buff in skillDmgBuffs)
+                skillDmgBonus += buff.Definition.Value;
+
+            if (skillDmgBonus > 0)
+            {
+                damageAfterDef *= 1.0 + (skillDmgBonus / 100.0);
+                _ = GameLogger.LogInfo($"[SkillDamageCalculator] Buff SkillDmg +{skillDmgBonus}%", "buffs");
+            }
+
+            // 🔑 Log principal
+            _ = GameLogger.LogInfo($"[SkillDamageCalculator] Final: base={baseDamage:F2}, clone={cloneScaled:F2}, scd={scdScaled:F2}, rawBase={rawBase:F2}, cloneBonus={cloneBonus:F2}, attr={attributeBonus:F2}, elem={elementBonus:F2}, def={target.DEValue}, FinalDamage={damageAfterDef:F2}",
+                "SkillDamageCalculator");
+
+            // 10️⃣ Resultado
             var result = new DamageResult
             {
-                FinalDamage = dmg,
+                FinalDamage = (int)Math.Floor(damageAfterDef),
                 SkillName = jsonSkill.Name
             };
 
-            // 🔑 10.1) Aplicar modificador de SkillDmg
-            var skillDmgBuffs = client.Partner.BuffList.Buffs
-                .Where(x => x.Definition?.EffectType == BuffEffectTypeEnum.SkillDmg);
-
-            double bonusPercent = 0;
-            foreach (var buff in skillDmgBuffs)
-            {
-                bonusPercent += buff.Definition.Value;
-            }
-
-            if (bonusPercent > 0)
-            {
-                result.FinalDamage = (int)(result.FinalDamage * (1 + bonusPercent / 100.0));
-                _ = GameLogger.LogInfo($"[SkillDamageCalculator] Buff SkillDmg aplicado +{bonusPercent}%", "buffs");
-            }
-
-
-            // 11) Buffs
+            // 11️⃣ Buffs adicionales
             var effects = _buffManager.ApplyBuffs(client, result, skillSlot);
             result.Buffs = effects;
 
-            // 12) Broadcast
+            // 12️⃣ Broadcast
             _broadcaster.BroadcastCombat(client, result, effects);
 
             return result;
