@@ -28,35 +28,44 @@ namespace DigitalWorldOnline.Game.PacketProcessors
             _logger = logger;
         }
 
-        public async Task Process(GameClient client, byte[] packetData)
+       public async Task Process(GameClient client, byte[] packetData)
         {
-            if (client.Tamer.Incubator.BackupDiskId > 0)
+            var incubator = client.Tamer.Incubator;
+
+            if (incubator.BackupDiskId <= 0)
             {
-                var newItem = new ItemModel();
-                newItem.SetItemInfo(_assets.ItemInfo.FirstOrDefault(x => x.ItemId == client.Tamer.Incubator.BackupDiskId));
-                newItem.SetItemId(client.Tamer.Incubator.BackupDiskId);
-                newItem.SetAmount(1);
-
-                var cloneItem = (ItemModel)newItem.Clone();
-
-                if (client.Tamer.Inventory.AddItem(cloneItem))
-                {
-                    _logger.Verbose($"Character {client.TamerId} removed backup {client.Tamer.Incubator.BackupDiskId} from incubator to inventory.");
-                    await _sender.Send(new UpdateItemsCommand(client.Tamer.Inventory));
-                }
-                else
-                {
-                    _logger.Warning($"Inventory full for incubator recovery of item {client.Tamer.Incubator.BackupDiskId}.");
-                    client.Send(new SystemMessagePacket($"Inventory full for incubator recovery of item {client.Tamer.Incubator.BackupDiskId}."));
-                    return;
-                }
+                _logger.Verbose($"Character {client.TamerId} tried to remove backup, but incubator is empty.");
+                return;
             }
-            else
-                _logger.Verbose($"Character {client.TamerId} removed backup {client.Tamer.Incubator.BackupDiskId} from incubator.");
 
-            client.Tamer.Incubator.RemoveBackupDisk();
+            var itemInfo = _assets.ItemInfo.FirstOrDefault(x => x.ItemId == incubator.BackupDiskId);
+            if (itemInfo == null)
+            {
+                _logger.Warning($"BackupDiskId {incubator.BackupDiskId} not found in Assets.");
+                return;
+            }
 
-            await _sender.Send(new UpdateIncubatorCommand(client.Tamer.Incubator));
+            var item = new ItemModel();
+            item.SetItemInfo(itemInfo);
+            item.SetItemId(incubator.BackupDiskId);
+            item.SetAmount(1);
+
+            var cloneItem = (ItemModel)item.Clone();
+
+            if (!client.Tamer.Inventory.AddItem(cloneItem))
+            {
+                _logger.Warning($"Inventory full for incubator recovery of item {incubator.BackupDiskId}.");
+                client.Send(new SystemMessagePacket($"Inventory full for incubator recovery of item {incubator.BackupDiskId}."));
+                return;
+            }
+
+            _logger.Verbose($"Character {client.TamerId} removed backup {incubator.BackupDiskId} from incubator to inventory.");
+
+            incubator.RemoveBackupDisk();
+
+            await _sender.Send(new UpdateItemsCommand(client.Tamer.Inventory));
+            await _sender.Send(new UpdateIncubatorCommand(incubator));
         }
+
     }
 }

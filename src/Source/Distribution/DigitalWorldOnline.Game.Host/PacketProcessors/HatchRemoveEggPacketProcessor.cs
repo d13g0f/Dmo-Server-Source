@@ -7,6 +7,7 @@ using DigitalWorldOnline.Commons.Interfaces;
 using DigitalWorldOnline.Commons.Models.Base;
 using DigitalWorldOnline.Commons.Packets.Chat;
 using DigitalWorldOnline.Commons.Packets.Items;
+using GameServer.Logging;
 using MediatR;
 using Serilog;
 
@@ -30,34 +31,60 @@ namespace DigitalWorldOnline.Game.PacketProcessors
             _logger = logger;
         }
 
+        // Processes the packet to remove an egg from the incubator.
+        // Includes explicit validations to ensure safe removal and prevent duplication.
+      
         public async Task Process(GameClient client, byte[] packetData)
         {
-            if (client.Tamer.Incubator.NotDevelopedEgg)
+            _ = GameLogger.LogInfo("Hatch", $"[RemoveEgg] Iniciado por TamerId: {client.TamerId}. EggId={client.Tamer.Incubator.EggId}, IsBusy={client.Tamer.Incubator.IsBusy}");
+
+            // Check if there is an undeveloped egg to remove
+            if (!client.Tamer.Incubator.NotDevelopedEgg)
             {
-                var newItem = new ItemModel();
-                newItem.SetItemInfo(_assets.ItemInfo.FirstOrDefault(x => x.ItemId == client.Tamer.Incubator.EggId));
-                newItem.SetItemId(client.Tamer.Incubator.EggId);
-                newItem.SetAmount(1);
-
-                var cloneItem = (ItemModel)newItem.Clone();
-
-                if (client.Tamer.Inventory.AddItem(cloneItem))
-                {
-                    _logger.Verbose($"Character {client.TamerId} removed egg {client.Tamer.Incubator.EggId} from incubator to inventory.");
-                    await _sender.Send(new UpdateItemsCommand(client.Tamer.Inventory));
-                }
-                else
-                {
-                    _logger.Warning($"Inventory full for incubator recovery of item {client.Tamer.Incubator.EggId}.");
-                    client.Send(new SystemMessagePacket($"Inventory full for incubator recovery of item {client.Tamer.Incubator.EggId}."));
-                    return;
-                }
+                _ = GameLogger.LogInfo("Hatch", $"[RemoveEgg] No hay huevo sin desarrollar para TamerId: {client.TamerId}. Nada que remover.");
+                client.Tamer.Incubator.RemoveEgg();
+                await _sender.Send(new UpdateIncubatorCommand(client.Tamer.Incubator));
+                return;
             }
-            else
-                _logger.Verbose($"Character {client.TamerId} removed egg {client.Tamer.Incubator.EggId} from incubator.");
 
+            // Validate egg ID
+            if (client.Tamer.Incubator.EggId <= 0)
+            {
+                _ = GameLogger.LogWarning("Hatch", $"[RemoveEgg] EggId inválido: {client.Tamer.Incubator.EggId} para TamerId: {client.TamerId}.");
+                client.Send(new SystemMessagePacket("No valid egg to remove."));
+                return;
+            }
+
+            // Validate item info existence
+            var itemInfo = _assets.ItemInfo.FirstOrDefault(x => x.ItemId == client.Tamer.Incubator.EggId);
+            if (itemInfo == null)
+            {
+                _ = GameLogger.LogWarning("Hatch", $"[RemoveEgg] ItemInfo no encontrado para EggId: {client.Tamer.Incubator.EggId} para TamerId: {client.TamerId}.");
+                client.Send(new SystemMessagePacket("Item not found. Cannot return to inventory."));
+                return;
+            }
+
+            // Create and clone item to return to inventory
+            var newItem = new ItemModel();
+            newItem.SetItemInfo(itemInfo);
+            newItem.SetItemId(client.Tamer.Incubator.EggId);
+            newItem.SetAmount(1);
+            var cloneItem = (ItemModel)newItem.Clone();
+
+            // Attempt to add item to inventory
+            if (!client.Tamer.Inventory.AddItem(cloneItem))
+            {
+                _ = GameLogger.LogWarning("Hatch", $"[RemoveEgg] Inventario lleno: No se pudo devolver huevo {client.Tamer.Incubator.EggId} para TamerId: {client.TamerId}.");
+                client.Send(new SystemMessagePacket("Inventory is full. Cannot return egg."));
+                return;
+            }
+
+            // Log successful inventory addition and clear incubator
+            _ = GameLogger.LogInfo("Hatch", $"[RemoveEgg] TamerId: {client.TamerId} removió huevo {client.Tamer.Incubator.EggId} de la incubadora y lo añadió al inventario.");
             client.Tamer.Incubator.RemoveEgg();
 
+            // Update game state
+            await _sender.Send(new UpdateItemsCommand(client.Tamer.Inventory));
             await _sender.Send(new UpdateIncubatorCommand(client.Tamer.Incubator));
         }
     }
