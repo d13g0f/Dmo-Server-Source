@@ -213,7 +213,7 @@ namespace DigitalWorldOnline.Game.PacketProcessors
             {
                 var rawDamage = client.Tamer.GodMode
                     ? targetMobs.First().CurrentHP
-                    : _skillDamageCalculator.CalculateDamage(client, skillAsset, skillSlot).FinalDamage;
+                    : _skillDamageCalculator.CalculateDamage(client, skillAsset, skillSlot).Damage;
 
                 int dividedAT = client.Tamer.GodMode ? 0 : client.Partner.AT / targetMobs.Count;
                 int finalDmg = rawDamage + dividedAT;
@@ -282,7 +282,7 @@ namespace DigitalWorldOnline.Game.PacketProcessors
 
                 var finalDmg = client.Tamer.GodMode
                     ? targetMob.CurrentHP
-                    : _skillDamageCalculator.CalculateDamage(client, skillAsset, skillSlot).FinalDamage;
+                    : _skillDamageCalculator.CalculateDamage(client, skillAsset, skillSlot).Damage;
 
                 if (finalDmg <= 0) finalDmg = client.Tamer.Partner.AT;
                 if (finalDmg > targetMob.CurrentHP) finalDmg = targetMob.CurrentHP;
@@ -339,8 +339,7 @@ namespace DigitalWorldOnline.Game.PacketProcessors
 
             if (!broadcastMobs(client.Tamer.Location.MapId, client.TamerId) && client.Tamer.InBattle)
             {
-                client.Tamer.StopIBattle();
-                await Task.Delay(3000);
+                client.Tamer.StopBattle();
                 broadcastAction(client.TamerId, new SetCombatOffPacket(attackerHandler).Serialize());
             }
 

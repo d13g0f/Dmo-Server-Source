@@ -2,7 +2,6 @@
 using DigitalWorldOnline.Commons.Entities;
 using DigitalWorldOnline.Commons.Enums.ClientEnums;
 using DigitalWorldOnline.Commons.Packets.Chat;
-using DigitalWorldOnline.Commons.Packets.GameServer;
 using DigitalWorldOnline.Commons.Utils;
 using DigitalWorldOnline.GameHost;
 using GameServer.Logging;
@@ -10,8 +9,7 @@ using GameServer.Logging;
 namespace DigitalWorldOnline.Game.Managers
 {
     /// <summary>
-    /// Manager para ejecutar ataques melee y controlar el estado de combate.
-    /// Toda la fórmula de daño está contenida aquí.
+    /// Manager para calcular daño melee y devolver flags claros.
     /// </summary>
     public class AttackManager
     {
@@ -30,58 +28,68 @@ namespace DigitalWorldOnline.Game.Managers
         }
 
         /// <summary>
-        /// Calcula y aplica el daño de ataque melee.
-        /// Incluye hit, evasión, bloqueo, crítico, bonus de atributo/elemento/nivel y defensa.
+        /// Calcula daño, evasión, bloqueo y crítico.
+        /// Retorna DamageResult con flags claros.
         /// </summary>
-        /// <param name="client">Jugador atacante.</param>
-        /// <param name="critBonusMultiplier">Salida: multiplicador de daño crítico aplicado.</param>
-        /// <param name="blocked">Salida: si el ataque fue bloqueado.</param>
-        /// <returns>Daño final aplicado.</returns>
-        public static int CalculateDamage(GameClient client, out double critBonusMultiplier, out bool blocked)
+        public static DamageResult CalculateDamage(GameClient client)
         {
             var partner = client.Tamer.Partner;
             var targetMob = client.Tamer.TargetIMob;
 
-            // INPUT LOG
             _ = GameLogger.LogInfo(
                 $"Input: AT={partner.AT}, CC={partner.CC}, CD={partner.CD}, HT={partner.HT}, EV={targetMob.EVValue}, BL={targetMob.BLValue}, DE={targetMob.DEValue}, AttackerLevel={partner.Level}, TargetLevel={targetMob.Level}",
                 "AttackManager");
 
-            // 1️⃣ HIT & EVASION
-            double hitChance = GetHitChance(partner.HT, targetMob.EVValue, partner.Level, targetMob.Level);
+            // HIT / MISS
+            
+            var hitResult = GetHitChance(partner.HT, targetMob.EVValue, partner.Level, targetMob.Level);
+            double hitChance = hitResult.hitChance;
             double hitRoll = UtilitiesFunctions.RandomZeroToOne();
-            if (hitChance < hitRoll)
+            bool isMiss = hitChance < hitRoll;
+
+            _ = GameLogger.LogInfo(
+                $"HIT FORMULA → baseHit={hitResult.baseHit:F4}, levelFactor={hitResult.levelFactor:F4}, +20% extra aplicado, finalHitChance={hitChance:F4}",
+                "AttackManager");
+
+
+
+            if (isMiss)
             {
                 _ = GameLogger.LogInfo($"MISS → hitChance={hitChance:F4}, roll={hitRoll:F4}", "AttackManager");
-                critBonusMultiplier = 1.0;
-                blocked = false;
-                return 0;
+                return new DamageResult
+                {
+                    Damage = 0,
+                    IsCritical = false,
+                    IsBlocked = false,
+                    IsMiss = true
+                };
             }
+
             _ = GameLogger.LogInfo($"HIT → hitChance={hitChance:F4}, roll={hitRoll:F4}", "AttackManager");
 
-            // 2️⃣ BASE DAMAGE con factor aleatorio 0-8%
+            // BASE DAMAGE + RNG
             double baseDamage = partner.AT;
             double randomBonus = UtilitiesFunctions.RandomZeroToOne() * 0.08;
             baseDamage *= 1.0 + randomBonus;
 
             _ = GameLogger.LogInfo($"BaseDamage con randomBonus={randomBonus:F4}: {baseDamage:F2}", "AttackManager");
 
-            // 3️⃣ BLOQUEO → flag para aplicar luego
-            double enemyBlockChance = targetMob.BLValue / 10000.0; // Escalado a 0-1 si viene en base 0-10000
-            blocked = enemyBlockChance >= UtilitiesFunctions.RandomZeroToOne();
+            // BLOQUEO
+            double enemyBlockChance = targetMob.BLValue / 10000.0;
+            bool blocked = enemyBlockChance >= UtilitiesFunctions.RandomZeroToOne();
             _ = GameLogger.LogInfo($"Block check: BlockChance={enemyBlockChance:F4} → Blocked={blocked}", "AttackManager");
 
-            // 4️⃣ CRÍTICO → afecta solo baseDamage
-            double criticalChance = Math.Min(partner.CC / 10000.0, 1.0); // 0-1
+            // CRÍTICO
+            double criticalChance = Math.Min(partner.CC / 10000.0, 1.0);
             double attributePenalty = partner.BaseInfo.Attribute.HasAttributeAdvantage(targetMob.Attribute) ? 0.1 :
                                       targetMob.Attribute.HasAttributeAdvantage(partner.BaseInfo.Attribute) ? -0.25 : 0.0;
             double criticalResistance = targetMob.Level > partner.Level ? 0.01 * (targetMob.Level - partner.Level) : 0.0;
             double effectiveCritChance = Math.Max(0.0, criticalChance + attributePenalty - criticalResistance);
             bool isCritical = effectiveCritChance >= UtilitiesFunctions.RandomZeroToOne();
 
-            double criticalBase = 0.7; // 70% extra base
-            double excessCdBonus = Math.Max(0.0, ((partner.CD / 10000.0) - 1.0) * 0.1); // Cada 10% sobre 100% suma 1%
-            critBonusMultiplier = isCritical ? (1.0 + criticalBase + excessCdBonus) : 1.0;
+            double criticalBase = 0.7;
+            double excessCdBonus = Math.Max(0.0, ((partner.CD / 10000.0) - 1.0) * 0.1);
+            double critBonusMultiplier = isCritical ? (1.0 + criticalBase + excessCdBonus) : 1.0;
 
             if (isCritical)
             {
@@ -93,7 +101,7 @@ namespace DigitalWorldOnline.Game.Managers
                 _ = GameLogger.LogInfo($"No CRITICAL → critChance={effectiveCritChance:F4}", "AttackManager");
             }
 
-            // 5️⃣ BONIFICADORES (atributo, elemento, nivel)
+            // BONIFICADORES
             double attributeBonus = baseDamage * GetAttributeBonus(client);
             double elementBonus = baseDamage * GetElementBonus(client);
             double levelBonus = GetLevelBonus(partner.Level, targetMob.Level, baseDamage);
@@ -102,15 +110,14 @@ namespace DigitalWorldOnline.Game.Managers
                 $"Bonuses: attributeBonus={attributeBonus:F2}, elementBonus={elementBonus:F2}, levelBonus={levelBonus:F2}",
                 "AttackManager");
 
-            // 6️⃣ DEFENSA
+            // DEFENSA
             double totalDamage = baseDamage + attributeBonus + elementBonus + levelBonus;
             totalDamage -= targetMob.DEValue;
             if (totalDamage < 0) totalDamage = 0;
 
-            // 7️⃣ BLOQUEO → aplicar reducción final si blockeó
             if (blocked)
             {
-                totalDamage *= 0.5; // Bloqueo absorbe 50% del daño final
+                totalDamage *= 0.5;
                 _ = GameLogger.LogInfo($"BLOCKED → Damage halved: {totalDamage:F2}", "AttackManager");
             }
 
@@ -121,20 +128,34 @@ namespace DigitalWorldOnline.Game.Managers
                 SendDebugMessages(client, attributeBonus, elementBonus, totalDamage, targetMob.DEValue, isCritical, blocked);
             }
 
-            return (int)Math.Floor(totalDamage);
+            return new DamageResult
+            {
+                Damage = (int)Math.Floor(totalDamage),
+                IsCritical = isCritical,
+                IsBlocked = blocked,
+                IsMiss = false
+            };
         }
 
-        private static double GetHitChance(double hit, double evasion, int atkLvl, int defLvl)
+        private static (double hitChance, double baseHit, double levelFactor) GetHitChance(double hit, double evasion, int atkLvl, int defLvl)
         {
             double baseHit = hit / (hit + evasion);
-            double levelAdj = (atkLvl - defLvl) * 0.01; // 1% por nivel de diferencia
-            return Math.Max(0.0, Math.Min(baseHit + levelAdj, 1.0));
+            double levelFactor = 1.0 + ((atkLvl - defLvl) * 0.03);
+            double hitChance = baseHit * levelFactor;
+
+            hitChance += 0.3;   // +30% extra hit chance
+
+            hitChance = Math.Max(0.0, Math.Min(hitChance, 1.0));
+
+            return (hitChance, baseHit, levelFactor);
         }
+
+
 
         private static double GetLevelBonus(int attackerLevel, int targetLevel, double baseDamage)
         {
             if (attackerLevel <= targetLevel) return 0.0;
-            return baseDamage * 0.01 * Math.Min(attackerLevel - targetLevel, 10); // Máximo 10%
+            return baseDamage * 0.01 * Math.Min(attackerLevel - targetLevel, 10);
         }
 
         public static double GetAttributeBonus(GameClient client)
@@ -142,8 +163,12 @@ namespace DigitalWorldOnline.Game.Managers
             var partner = client.Tamer.Partner;
             var targetAttr = client.Tamer.TargetIMob.Attribute;
 
+            _ = GameLogger.LogInfo(
+                $"Checking Attribute Advantage: {partner.BaseInfo.Attribute} vs {targetAttr} => {partner.BaseInfo.Attribute.HasAttributeAdvantage(targetAttr)}",
+                "AttackManager");
+
             if (partner.BaseInfo.Attribute.HasAttributeAdvantage(targetAttr))
-                return Math.Min(partner.GetAttributeExperience() / 10000.0, 0.25);
+                return Math.Min(partner.GetAttributeExperience() / 10000.0, 0.50);
 
             if (targetAttr.HasAttributeAdvantage(partner.BaseInfo.Attribute))
                 return -0.25;
@@ -151,13 +176,14 @@ namespace DigitalWorldOnline.Game.Managers
             return 0.0;
         }
 
+
         public static double GetElementBonus(GameClient client)
         {
             var partner = client.Tamer.Partner;
             var targetElement = client.Tamer.TargetIMob.Element;
 
             if (partner.BaseInfo.Element.HasElementAdvantage(targetElement))
-                return Math.Min(partner.GetElementExperience() / 10000.0, 0.25);
+                return Math.Min(partner.GetElementExperience() / 10000.0, 0.50);
 
             if (targetElement.HasElementAdvantage(partner.BaseInfo.Element))
                 return -0.25;

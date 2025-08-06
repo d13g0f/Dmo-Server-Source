@@ -16764,7 +16764,7 @@
     "UnlockLevel": 46,
     "IconId": 1144,
     "BuffCode": 51,
-    "AreaOfEffect": 1000
+    "AreaOfEffect": 1500
   },
   {
     "SkillId": 6107911,
@@ -18374,7 +18374,7 @@
     "UnlockLevel": 41,
     "IconId": 4213,
     "BuffCode": 51,
-    "AreaOfEffect": 1000
+    "AreaOfEffect": 1500
   },
   {
     "SkillId": 6300921,
@@ -19340,7 +19340,7 @@
     "UnlockLevel": 80,
     "IconId": 5166,
     "BuffCode": 51,
-    "AreaOfEffect": 1000
+    "AreaOfEffect": 2300
   },
   {
     "SkillId": 7100071,
@@ -21686,7 +21686,7 @@
     "UnlockLevel": 1,
     "IconId": 4033,
     "BuffCode": 17,
-    "AreaOfEffect": 1000
+    "AreaOfEffect": 1500
   },
   {
     "SkillId": 7103711,
@@ -22116,14 +22116,14 @@
     "HPUsage": 0,
     "DSUsage": 880,
     "Target": 18,
-    "AttackType": 0,
+    "AttackType": 1,
     "Range": 1800,
     "CastingTime": 4,
     "CooldownMs": 22000,
     "UnlockLevel": 73,
     "IconId": 3116,
     "BuffCode": 51,
-    "AreaOfEffect": 0
+    "AreaOfEffect": 1500
   },
   {
     "SkillId": 7104511,
@@ -23250,7 +23250,7 @@
     "UnlockLevel": 75,
     "IconId": 4077,
     "BuffCode": 17,
-    "AreaOfEffect": 1000
+    "AreaOfEffect": 1500
   },
   {
     "SkillId": 7109311,
@@ -23319,7 +23319,7 @@
     "UnlockLevel": 75,
     "IconId": 4077,
     "BuffCode": 17,
-    "AreaOfEffect": 1000
+    "AreaOfEffect": 1500
   },
   {
     "SkillId": 7109411,
@@ -23388,7 +23388,7 @@
     "UnlockLevel": 75,
     "IconId": 4077,
     "BuffCode": 17,
-    "AreaOfEffect": 1000
+    "AreaOfEffect": 1500
   },
   {
     "SkillId": 7109511,
@@ -23457,7 +23457,7 @@
     "UnlockLevel": 75,
     "IconId": 4077,
     "BuffCode": 17,
-    "AreaOfEffect": 1000
+    "AreaOfEffect": 1500
   },
   {
     "SkillId": 7109611,
@@ -23871,7 +23871,7 @@
     "UnlockLevel": 30,
     "IconId": 4077,
     "BuffCode": 17,
-    "AreaOfEffect": 1000
+    "AreaOfEffect": 1500
   },
   {
     "SkillId": 7110311,
@@ -24094,14 +24094,14 @@
     "HPUsage": 0,
     "DSUsage": 853,
     "Target": 18,
-    "AttackType": 0,
+    "AttackType": 1,
     "Range": 1600,
     "CastingTime": 4,
     "CooldownMs": 30000,
     "UnlockLevel": 1,
     "IconId": 4236,
     "BuffCode": 18,
-    "AreaOfEffect": 0
+    "AreaOfEffect": 1500
   },
   {
     "SkillId": 7110911,
@@ -24255,14 +24255,14 @@
     "HPUsage": 0,
     "DSUsage": 1153,
     "Target": 18,
-    "AttackType": 0,
+    "AttackType": 1,
     "Range": 800,
     "CastingTime": 9,
     "CooldownMs": 12000,
     "UnlockLevel": 1,
     "IconId": 4244,
     "BuffCode": 18,
-    "AreaOfEffect": 0
+    "AreaOfEffect": 1500
   },
   {
     "SkillId": 7111111,
@@ -24446,7 +24446,7 @@
     "UnlockLevel": 1,
     "IconId": 5018,
     "BuffCode": 51,
-    "AreaOfEffect": 0
+    "AreaOfEffect": 2300
   },
   {
     "SkillId": 7111411,
@@ -24515,7 +24515,7 @@
     "UnlockLevel": 1,
     "IconId": 3128,
     "BuffCode": 51,
-    "AreaOfEffect": 1000
+    "AreaOfEffect": 1500
   },
   {
     "SkillId": 7111511,
@@ -24584,7 +24584,7 @@
     "UnlockLevel": 80,
     "IconId": 5038,
     "BuffCode": 51,
-    "AreaOfEffect": 1000
+    "AreaOfEffect": 2300
   },
   {
     "SkillId": 7700611,
@@ -24653,7 +24653,7 @@
     "UnlockLevel": 80,
     "IconId": 5038,
     "BuffCode": 51,
-    "AreaOfEffect": 1000
+    "AreaOfEffect": 2300
   },
   {
     "SkillId": 7111541,
@@ -24768,7 +24768,7 @@
     "UnlockLevel": 1,
     "IconId": 5058,
     "BuffCode": 17,
-    "AreaOfEffect": 1000
+    "AreaOfEffect": 2500
   },
   {
     "SkillId": 7111711,
@@ -24952,7 +24952,7 @@
     "UnlockLevel": 1,
     "IconId": 3185,
     "BuffCode": 17,
-    "AreaOfEffect": 1000
+    "AreaOfEffect": 2300
   },
   {
     "SkillId": 7900711,
@@ -25205,7 +25205,7 @@
     "UnlockLevel": 1,
     "IconId": 3219,
     "BuffCode": 17,
-    "AreaOfEffect": 1500
+    "AreaOfEffect": 2300
   },
   {
     "SkillId": 7112711,
@@ -26171,7 +26171,7 @@
     "UnlockLevel": 41,
     "IconId": 4041,
     "BuffCode": 17,
-    "AreaOfEffect": 1000
+    "AreaOfEffect": 1500
   },
   {
     "SkillId": 7500511,
@@ -27160,7 +27160,7 @@
     "UnlockLevel": 30,
     "IconId": 4137,
     "BuffCode": 17,
-    "AreaOfEffect": 1000
+    "AreaOfEffect": 1500
   },
   {
     "SkillId": 7503111,
@@ -27758,7 +27758,7 @@
     "UnlockLevel": 1,
     "IconId": 4163,
     "BuffCode": 51,
-    "AreaOfEffect": 1000
+    "AreaOfEffect": 1500
   },
   {
     "SkillId": 7510011,
@@ -29729,14 +29729,14 @@
     "HPUsage": 0,
     "DSUsage": 472,
     "Target": 51,
-    "AttackType": 0,
+    "AttackType": 1,
     "Range": 1800,
     "CastingTime": 2,
     "CooldownMs": 40000,
     "UnlockLevel": 46,
     "IconId": 4219,
     "BuffCode": 51,
-    "AreaOfEffect": 0
+    "AreaOfEffect": 1500
   },
   {
     "SkillId": 7571131,
@@ -29752,14 +29752,14 @@
     "HPUsage": 0,
     "DSUsage": 466,
     "Target": 18,
-    "AttackType": 0,
+    "AttackType": 1,
     "Range": 1200,
     "CastingTime": 2,
     "CooldownMs": 8000,
     "UnlockLevel": 51,
     "IconId": 4220,
     "BuffCode": 18,
-    "AreaOfEffect": 0
+    "AreaOfEffect": 1500
   },
   {
     "SkillId": 7571211,
@@ -30426,7 +30426,7 @@
     "UnlockLevel": 51,
     "IconId": 3226,
     "BuffCode": 17,
-    "AreaOfEffect": 1000
+    "AreaOfEffect": 2500
   },
   {
     "SkillId": 7590011,
@@ -30610,7 +30610,7 @@
     "UnlockLevel": 1,
     "IconId": 2159,
     "BuffCode": 51,
-    "AreaOfEffect": 1000
+    "AreaOfEffect": 4000
   },
   {
     "SkillId": 7590311,
@@ -30840,7 +30840,7 @@
     "UnlockLevel": 80,
     "IconId": 5042,
     "BuffCode": 51,
-    "AreaOfEffect": 1000
+    "AreaOfEffect": 1500
   },
   {
     "SkillId": 7590711,
@@ -31132,14 +31132,14 @@
     "HPUsage": 0,
     "DSUsage": 8079,
     "Target": 18,
-    "AttackType": 0,
+    "AttackType": 1,
     "Range": 600,
     "CastingTime": 9,
     "CooldownMs": 60000,
     "UnlockLevel": 1,
     "IconId": 3223,
     "BuffCode": 51,
-    "AreaOfEffect": 0
+    "AreaOfEffect": 2300
   },
   {
     "SkillId": 7591111,
@@ -39550,14 +39550,14 @@
     "HPUsage": 0,
     "DSUsage": 2433,
     "Target": 51,
-    "AttackType": 0,
+    "AttackType": 1,
     "Range": 1200,
     "CastingTime": 1,
     "CooldownMs": 9500,
     "UnlockLevel": 76,
     "IconId": 2219,
     "BuffCode": 51,
-    "AreaOfEffect": 0
+    "AreaOfEffect": 1500
   },
   {
     "SkillId": 7700331,
@@ -41206,14 +41206,14 @@
     "HPUsage": 0,
     "DSUsage": 1153,
     "Target": 18,
-    "AttackType": 0,
+    "AttackType": 1,
     "Range": 1300,
     "CastingTime": 9,
     "CooldownMs": 55000,
     "UnlockLevel": 1,
     "IconId": 2239,
     "BuffCode": 18,
-    "AreaOfEffect": 0
+    "AreaOfEffect": 1500
   },
   {
     "SkillId": 2552011,
@@ -41482,14 +41482,14 @@
     "HPUsage": 0,
     "DSUsage": 16968,
     "Target": 17,
-    "AttackType": 0,
+    "AttackType": 1,
     "Range": 1800,
     "CastingTime": 4,
     "CooldownMs": 51001,
     "UnlockLevel": 1,
     "IconId": 3216,
     "BuffCode": 51,
-    "AreaOfEffect": 0
+    "AreaOfEffect": 2000
   },
   {
     "SkillId": 7700511,

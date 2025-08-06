@@ -32,13 +32,13 @@ namespace DigitalWorldOnline.Game.Managers.Combat
             var partner = client.Tamer.Partner;
             var target = client.Tamer.TargetIMob;
 
-            // 1️⃣ Buscar JSON real
+            // 1 Buscar JSON real
             var jsonSkill = _assets.DigimonSkillsJson
                 .FirstOrDefault(x => x.SkillId == skillAsset.SkillId);
             if (jsonSkill == null)
                 throw new InvalidOperationException($"Skill ID {skillAsset.SkillId} not found in DigimonSkillsJson");
 
-            // 2️⃣ Nivel real de la skill
+            // 2 Nivel real de la skill
             int skillLevel = partner.Evolutions
                 .First(x => x.Type == partner.CurrentType)
                 .Skills[skillSlot].CurrentLevel;
@@ -46,32 +46,32 @@ namespace DigitalWorldOnline.Game.Managers.Combat
             if (skillLevel < 1) skillLevel = 1;
             if (skillLevel > jsonSkill.MaxLevel) skillLevel = jsonSkill.MaxLevel;
 
-            // 3️⃣ Daño base escalado + clones
+            // 3 Daño base escalado + clones
             double baseDamage = jsonSkill.BaseDamage + (skillLevel * jsonSkill.DamagePerLevel);
             double cloneFactor = 1 + 0.43 / (144.0 / partner.Digiclone.ATValue);
             double cloneScaled = baseDamage * cloneFactor;
 
-            // 4️⃣ Skill Factor (SCD)
+            // 4 Skill Factor (SCD)
             double scdBonus = partner.SCD / 10000.0;
             double scdScaled = cloneScaled * scdBonus;
 
-            // 5️⃣ AT y SKD
+            // 5 AT y SKD
             double rawBase = cloneScaled + scdScaled + partner.AT + partner.SKD;
 
-            // 6️⃣ Clone ATLevel Bonus (si aplica)
+            // 6 Clone ATLevel Bonus (si aplica)
             double cloneBonus = partner.Digiclone.ATLevel > 0 ? rawBase * 0.301 : 0.0;
 
             double totalBeforeBonuses = rawBase + cloneBonus;
 
-            // 7️⃣ Bonos atributo y elemento (sobre total base)
+            // 7 Bonos atributo y elemento (sobre total base)
             double attributeBonus = totalBeforeBonuses * AttackManager.GetAttributeBonus(client);
             double elementBonus = totalBeforeBonuses * AttackManager.GetElementBonus(client);
 
-            // 8️⃣ Defensa (sin cap)
+            // 8 Defensa (sin cap)
             double damageAfterDef = totalBeforeBonuses + attributeBonus + elementBonus - target.DEValue;
             if (damageAfterDef < 0) damageAfterDef = 0;
 
-            // 9️⃣ Buff SkillDmg
+            // 9 Buff SkillDmg
             var skillDmgBuffs = partner.BuffList.Buffs
                 .Where(x => x.Definition?.EffectType == BuffEffectTypeEnum.SkillDmg);
 
@@ -89,18 +89,18 @@ namespace DigitalWorldOnline.Game.Managers.Combat
             _ = GameLogger.LogInfo($"[SkillDamageCalculator] Final: base={baseDamage:F2}, clone={cloneScaled:F2}, scd={scdScaled:F2}, rawBase={rawBase:F2}, cloneBonus={cloneBonus:F2}, attr={attributeBonus:F2}, elem={elementBonus:F2}, def={target.DEValue}, FinalDamage={damageAfterDef:F2}",
                 "SkillDamageCalculator");
 
-            // 10️⃣ Resultado
+            // 10 Resultado
             var result = new DamageResult
             {
-                FinalDamage = (int)Math.Floor(damageAfterDef),
+                Damage = (int)Math.Floor(damageAfterDef),
                 SkillName = jsonSkill.Name
             };
 
-            // 11️⃣ Buffs adicionales
             var effects = _buffManager.ApplyBuffs(client, result, skillSlot);
             result.Buffs = effects;
 
-            // 12️⃣ Broadcast
+
+            // 12 Broadcast
             _broadcaster.BroadcastCombat(client, result, effects);
 
             return result;

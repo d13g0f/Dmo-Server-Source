@@ -30,17 +30,18 @@ namespace DigitalWorldOnline.Game.Managers.Combat
                 ? _dungeonServer.BroadcastForTamerViewsAndSelf
                 : _mapServer.BroadcastForTamerViewsAndSelf;
 
-            if (result.FinalDamage > 0 && AttackManager.IsBattle)
-            {
-                string skillName = result.SkillName ?? "Unknown Skill";
-                string msg = $"Used {skillName} and dealt {result.FinalDamage} DMG";
+           if (result.Damage > 0 && AttackManager.IsBattle)
+        {
+            string skillName = result.SkillName ?? "Auto Attack";
+            string msg = $"Used {skillName} and dealt {result.Damage} DMG";
 
-                broadcast(client.TamerId, new PartyMessagePacket(client.Tamer.Partner.Name, msg).Serialize());
-                _ = GameLogger.LogInfo(
-                    $"[Combat] {client.Tamer.Partner.Name} used {skillName} and dealt {result.FinalDamage} damage.",
-                    "combat"
-                );
-            }
+            broadcast(client.TamerId, new PartyMessagePacket(client.Tamer.Partner.Name, msg).Serialize());
+            _ = GameLogger.LogInfo(
+                $"[Combat] {client.Tamer.Partner.Name} used {skillName} and dealt {result.Damage} damage.",
+                "combat"
+            );
+        }
+
 
             foreach (var e in effects)
             {

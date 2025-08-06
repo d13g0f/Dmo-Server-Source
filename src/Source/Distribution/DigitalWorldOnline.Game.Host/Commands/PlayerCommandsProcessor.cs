@@ -59,7 +59,7 @@ namespace DigitalWorldOnline.Game.Commands
             commands = new Dictionary<string, (Func<GameClient, string[], Task> Command, List<AccountAccessLevelEnum> AccessLevels)>
             {
                 { "clear", (ClearCommand, null) },
-                { "battlelog", (BattleLogCommand, new List<AccountAccessLevelEnum> { AccountAccessLevelEnum.Vip1, AccountAccessLevelEnum.Vip2, AccountAccessLevelEnum.Vip3 }) },
+                { "battlelog", (BattleLogCommand , null) },
                 { "stats", (StatsCommand, null) },
                 { "time", (TimeCommand, null) },
                 { "deckload", (DeckLoadCommand, new List<AccountAccessLevelEnum> { AccountAccessLevelEnum.Vip1, AccountAccessLevelEnum.Vip2, AccountAccessLevelEnum.Vip3 }) },
