@@ -355,17 +355,22 @@ namespace DigitalWorldOnline.Commons.Models.Base
 
         public bool RemoveBits(long bits)
         {
+            if (bits <= 0)
+            {
+                Console.WriteLine($"[WARN] RemoveBits called with invalid value: {bits}");
+                return false;
+            }
+
             if (Bits >= bits)
             {
                 Bits -= bits;
                 return true;
             }
-            else
-            {
-                Bits = 0;
-                return false;
-            }
+
+            return false;
         }
+
+
 
         public bool AddItems(List<ItemModel> itemsToAdd, bool isShop = false)
         {
@@ -722,7 +727,6 @@ namespace DigitalWorldOnline.Commons.Models.Base
         {
             var backup = BackupOperation();
 
-            //TODO: teste com 2 slots do mesmo itemId
             foreach (var itemToRemove in itemsToRemoveOrReduce)
             {
                 if (itemToRemove.Amount == 0 || itemToRemove.ItemId == 0)
@@ -732,6 +736,9 @@ namespace DigitalWorldOnline.Commons.Models.Base
 
                 foreach (var targetItem in targetItems)
                 {
+                    if (itemToRemove.Amount <= 0)
+                        break;
+
                     if (targetItem.Amount >= itemToRemove.Amount)
                     {
                         targetItem.ReduceAmount(itemToRemove.Amount);
@@ -743,18 +750,19 @@ namespace DigitalWorldOnline.Commons.Models.Base
                     targetItem.SetAmount();
                 }
 
-                if (itemToRemove.Amount <= 0)
+                if (itemToRemove.Amount > 0)
                 {
-                    continue;
+                    RevertOperation(backup);
+                    return false;
                 }
-
-                RevertOperation(backup);
-                return false;
             }
 
-            CheckEmptyItemsThenRearrangeSlots();
+            if (reArrangeSlots)
+                CheckEmptyItemsThenRearrangeSlots();
+
             return true;
         }
+
 
         public bool RemoveOrReduceItem(ItemModel? itemToRemove, int amount, int slot = -1)
         {

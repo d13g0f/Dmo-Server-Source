@@ -4,20 +4,22 @@ using DigitalWorldOnline.Application.Separar.Commands.Update;
 using DigitalWorldOnline.Application.Separar.Queries;
 using DigitalWorldOnline.Commons.Entities;
 using DigitalWorldOnline.Commons.Enums;
-using DigitalWorldOnline.Commons.Enums.Account;
 using DigitalWorldOnline.Commons.Enums.ClientEnums;
 using DigitalWorldOnline.Commons.Enums.PacketProcessor;
-using DigitalWorldOnline.Commons.Extensions;
 using DigitalWorldOnline.Commons.Interfaces;
 using DigitalWorldOnline.Commons.Models.Base;
+using DigitalWorldOnline.Commons.Models.Map;
 using DigitalWorldOnline.Commons.Models.TamerShop;
 using DigitalWorldOnline.Commons.Packets.Chat;
 using DigitalWorldOnline.Commons.Packets.GameServer;
 using DigitalWorldOnline.Commons.Packets.PersonalShop;
 using DigitalWorldOnline.GameHost;
 using DigitalWorldOnline.GameHost.EventsServer;
+using GameServer.Logging;
 using MediatR;
-using Serilog;
+using DigitalWorldOnline.Commons.Extensions;
+using DigitalWorldOnline.Application.Separar.Commands.Delete;
+
 
 namespace DigitalWorldOnline.Game.PacketProcessors
 {
@@ -30,7 +32,6 @@ namespace DigitalWorldOnline.Game.PacketProcessors
         private readonly EventServer _eventServer;
         private readonly DungeonsServer _dungeonsServer;
         private readonly PvpServer _pvpServer;
-        private readonly ILogger _logger;
         private readonly ISender _sender;
 
         public ConsignedShopOpenPacketProcessor(
@@ -39,7 +40,6 @@ namespace DigitalWorldOnline.Game.PacketProcessors
             DungeonsServer dungeonsServer,
             PvpServer pvpServer,
             AssetsLoader assets,
-            ILogger logger,
             ISender sender)
         {
             _mapServer = mapServer;
@@ -47,7 +47,6 @@ namespace DigitalWorldOnline.Game.PacketProcessors
             _dungeonsServer = dungeonsServer;
             _pvpServer = pvpServer;
             _assets = assets;
-            _logger = logger;
             _sender = sender;
         }
 
@@ -55,7 +54,7 @@ namespace DigitalWorldOnline.Game.PacketProcessors
         {
             var packet = new GamePacketReader(packetData);
 
-            _logger.Verbose($"--- ConsigmentShop Open Packet 1516 ---");
+            await GameLogger.LogInfo($"Received ConsignedShopOpenPacket", "shops");
 
             var posX = packet.ReadInt();
             var posY = packet.ReadInt();
@@ -64,151 +63,167 @@ namespace DigitalWorldOnline.Game.PacketProcessors
             packet.Skip(9);
             var sellQuantity = packet.ReadInt();
 
-            _logger.Verbose(
-                $"Shop Location: Map {client.Tamer.Location.MapId} ({posX}, {posY}), ShopName: {shopName}, Items Amount: {sellQuantity}\n");
+            await GameLogger.LogInfo(
+                $"Player {client.Tamer.Name} tries to open shop: '{shopName}' at Map {client.Tamer.Location.MapId} ({posX},{posY}) with {sellQuantity} items",
+                "shops");
 
             List<ItemModel> sellList = new(sellQuantity);
-
-
-            //_logger.Information($"-------------------------------------\n");
 
             for (int i = 0; i < sellQuantity; i++)
             {
                 var itemId = packet.ReadInt();
                 var itemAmount = packet.ReadInt();
-
-                Console.WriteLine($"Item Index: {i} | ItemId: {itemId} | ItemAmount: {itemAmount}");
-
-                // Adiciona um novo item à lista
-                var sellItem = new ItemModel(itemId, itemAmount);
-
                 packet.Skip(64);
-
                 var price = packet.ReadInt64();
+                packet.Skip(8);
+
+                var sellItem = new ItemModel(itemId, itemAmount);
                 sellItem.SetSellPrice(price);
 
-                packet.Skip(8);
                 sellList.Add(sellItem);
-
-                Console.WriteLine($"Item Index: {i} | Price: {price}\n");
             }
 
+          foreach (var item in sellList)
+        {
+            item.SetItemInfo(_assets.ItemInfo.FirstOrDefault(x => x.ItemId == item.ItemId));
 
-            _logger.Information($"sell items count: {sellList.Count}");
+            var sameIdDiffPrice = sellList.Count(x => x.ItemId == item.ItemId && x.TamerShopSellPrice != item.TamerShopSellPrice);
 
-            //_logger.Information($"-------------------------------------");
-
-            foreach (var item in sellList)
+            if (sameIdDiffPrice > 0)
             {
-                //_logger.Information($"item: {item.ItemId} and amount: {item.Amount}");
-                item.SetItemInfo(_assets.ItemInfo.First(x => x.ItemId == item.ItemId));
+                await GameLogger.LogWarning(
+                    $"Player {client.Tamer.Name} tried to list same itemId with different prices!",
+                    "shops");
 
-                var itemsCount = sellList.Count(x =>
-                    x.ItemId == item.ItemId && x.TamerShopSellPrice != item.TamerShopSellPrice);
-
-                if (itemsCount > 0)
-                {
-                   // _logger.Error($"Tamer {client.Tamer.Name} tryed to add 2 items of same id with different price!");
-                    client.Send(new DisconnectUserPacket("You cant add 2 items of same id with different price!")
-                        .Serialize());
-                    return;
-                }
-
-                var HasQuanty = client.Tamer.Inventory.CountItensById(item.ItemId);
-
-                if (item.Amount > HasQuanty)
-                {
-                    //sistema de banimento permanente
-                    var banProcessor = SingletonResolver.GetService<BanForCheating>();
-                    var banMessage = banProcessor.BanAccountWithMessage(client.AccountId, client.Tamer.Name,
-                        AccountBlockEnum.Permanent, "Cheating", client, "You tried to open consigned shop with amount you don't have using a cheat method, So be happy with ban!");
-
-                    var chatPacket = new NoticeMessagePacket(banMessage);
-                    client.Send(chatPacket); // Envia a mensagem no chat
-
-                    // client.Send(new DisconnectUserPacket($"YOU HAVE BEEN PERMANENTLY BANNED").Serialize());
-
-                    return;
-                }
+                await CloseShopAndSync(client, "You can't add the same item with different prices!");
+                await _sender.Send(new UpdateItemsCommand(client.Tamer.Inventory));
+                return;
             }
 
-            _logger.Verbose($"Updating consigned shop item list...");
+            var alreadyListed = client.Tamer.ConsignedShopItems.CountItensById(item.ItemId);
+            var availableQuantity = client.Tamer.Inventory.CountItensById(item.ItemId) - alreadyListed;
+
+            if (item.Amount > availableQuantity)
+            {
+                await GameLogger.LogWarning(
+                    $"Player {client.Tamer.Name} tried to list {item.Amount} of itemId {item.ItemId} but has only {availableQuantity} available (excluding already listed items). Rejecting.",
+                    "shops");
+
+                await CloseShopAndSync(client, "You're trying to list more items than you have. Please check your inventory and consigned list.");
+                await _sender.Send(new UpdateItemsCommand(client.Tamer.Inventory));
+                return;
+            }
+        }
+
+
             client.Tamer.ConsignedShopItems.AddItems(sellList.Clone(), true);
             await _sender.Send(new UpdateItemsCommand(client.Tamer.ConsignedShopItems));
 
-            _logger.Verbose($"Updating tamer inventory item list...");
             client.Tamer.Inventory.RemoveOrReduceItems(sellList.Clone());
             await _sender.Send(new UpdateItemsCommand(client.Tamer.Inventory));
 
-            _logger.Verbose($"Creating consigned shop...");
             var newShop = ConsignedShop.Create(client.TamerId, shopName, posX, posY, client.Tamer.Location.MapId,
                 client.Tamer.Channel, client.Tamer.ShopItemId);
 
-            var Id = await _sender.Send(new CreateConsignedShopCommand(newShop));
+            var id = await _sender.Send(new CreateConsignedShopCommand(newShop));
+            newShop.SetId(id.Id);
+            newShop.SetGeneralHandler(id.GeneralHandler);
 
-            newShop.SetId(Id.Id);
-            newShop.SetGeneralHandler(Id.GeneralHandler);
+            await GameLogger.LogInfo($"Shop {newShop.Id} created by {client.Tamer.Name}", "shops");
 
-            _logger.Verbose($"Sending consigned shop load packet...");
+            var mapType = GetMapType(client.Tamer.Location.MapId);
 
-            var mapConfig = await _sender.Send(new GameMapConfigByMapIdQuery(client.Tamer.Location.MapId));
-            switch (mapConfig?.Type)
+            var loadPacket = new LoadConsignedShopPacket(newShop).Serialize();
+
+            switch (mapType)
             {
                 case MapTypeEnum.Dungeon:
-                    _dungeonsServer.BroadcastForTamerViewsAndSelf(client.TamerId,
-                        new LoadConsignedShopPacket(newShop).Serialize());
+                    _dungeonsServer.BroadcastForTamerViewsAndSelf(client.TamerId, loadPacket);
                     break;
-
                 case MapTypeEnum.Event:
-                    _eventServer.BroadcastForTamerViewsAndSelf(client.TamerId,
-                        new LoadConsignedShopPacket(newShop).Serialize());
+                    _eventServer.BroadcastForTamerViewsAndSelf(client.TamerId, loadPacket);
                     break;
-
                 case MapTypeEnum.Pvp:
-                    _pvpServer.BroadcastForTamerViewsAndSelf(client.TamerId,
-                        new LoadConsignedShopPacket(newShop).Serialize());
+                    _pvpServer.BroadcastForTamerViewsAndSelf(client.TamerId, loadPacket);
                     break;
-
                 default:
-                    _mapServer.BroadcastForTamerViewsAndSelf(client.TamerId,
-                        new LoadConsignedShopPacket(newShop).Serialize());
+                    _mapServer.BroadcastForTamerViewsAndSelf(client.TamerId, loadPacket);
                     break;
             }
 
-
-            _logger.Verbose($"Sending personal shop close packet...");
             client.Tamer.UpdateShopItemId(0);
             client.Send(new PersonalShopPacket(TamerShopActionEnum.CloseWindow, client.Tamer.ShopItemId));
             client.Tamer.RestorePreviousCondition();
 
-            _logger.Verbose($"Sending sync in condition packet...");
+            var syncConditionPacket = new SyncConditionPacket(client.Tamer.GeneralHandler, client.Tamer.CurrentCondition).Serialize();
 
-            switch (mapConfig?.Type)
+            switch (mapType)
             {
                 case MapTypeEnum.Dungeon:
-                    _dungeonsServer.BroadcastForTamerViewsAndSelf(client.TamerId,
-                        new SyncConditionPacket(client.Tamer.GeneralHandler, client.Tamer.CurrentCondition)
-                            .Serialize());
+                    _dungeonsServer.BroadcastForTamerViewsAndSelf(client.TamerId, syncConditionPacket);
                     break;
-
                 case MapTypeEnum.Event:
-                    _eventServer.BroadcastForTamerViewsAndSelf(client.TamerId,
-                        new SyncConditionPacket(client.Tamer.GeneralHandler, client.Tamer.CurrentCondition)
-                            .Serialize());
+                    _eventServer.BroadcastForTamerViewsAndSelf(client.TamerId, syncConditionPacket);
                     break;
-
                 case MapTypeEnum.Pvp:
-                    _pvpServer.BroadcastForTamerViewsAndSelf(client.TamerId,
-                        new SyncConditionPacket(client.Tamer.GeneralHandler, client.Tamer.CurrentCondition)
-                            .Serialize());
+                    _pvpServer.BroadcastForTamerViewsAndSelf(client.TamerId, syncConditionPacket);
                     break;
-
                 default:
-                    _mapServer.BroadcastForTamerViewsAndSelf(client.TamerId,
-                        new SyncConditionPacket(client.Tamer.GeneralHandler, client.Tamer.CurrentCondition)
-                            .Serialize());
+                    _mapServer.BroadcastForTamerViewsAndSelf(client.TamerId, syncConditionPacket);
                     break;
             }
         }
+
+        private static MapTypeEnum GetMapType(short mapId)
+        {
+            if (GameMap.DungeonMapIds.Contains(mapId))
+                return MapTypeEnum.Dungeon;
+            if (GameMap.PvpMapIds.Contains(mapId))
+                return MapTypeEnum.Pvp;
+            if (GameMap.EventMapIds.Contains(mapId))
+                return MapTypeEnum.Event;
+
+            return MapTypeEnum.Default;
+        }
+        
+        private async Task CloseShopAndSync(GameClient client, string message)
+        {
+            client.Send(new NoticeMessagePacket(message));
+            client.Send(new PersonalShopPacket(TamerShopActionEnum.CloseWindow, 0));
+            client.Tamer.RestorePreviousCondition();
+
+            // Cerrar tienda activamente
+            var shopHandler = client.Tamer.GeneralHandler;
+            await _sender.Send(new DeleteConsignedShopCommand(shopHandler));
+        
+            client.Send(new ConsignedShopClosePacket());
+
+            // Sincronizar condición del Tamer
+            var syncPacket = new SyncConditionPacket(client.Tamer.GeneralHandler, client.Tamer.CurrentCondition).Serialize();
+            var mapType = GetMapType(client.Tamer.Location.MapId);
+
+            switch (mapType)
+            {
+                case MapTypeEnum.Dungeon:
+                    _dungeonsServer.BroadcastForTamerViewsAndSelf(client.TamerId, syncPacket);
+                    break;
+                case MapTypeEnum.Event:
+                    _eventServer.BroadcastForTamerViewsAndSelf(client.TamerId, syncPacket);
+                    break;
+                case MapTypeEnum.Pvp:
+                    _pvpServer.BroadcastForTamerViewsAndSelf(client.TamerId, syncPacket);
+                    break;
+                default:
+                    _mapServer.BroadcastForTamerViewsAndSelf(client.TamerId, syncPacket);
+                    break;
+            }
+        }
+
+
+
+
+
+
+
     }
 }

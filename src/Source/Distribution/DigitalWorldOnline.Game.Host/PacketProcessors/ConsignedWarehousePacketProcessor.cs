@@ -1,8 +1,9 @@
-﻿using DigitalWorldOnline.Commons.Entities;
+﻿using System.Threading.Tasks;
+using DigitalWorldOnline.Commons.Entities;
 using DigitalWorldOnline.Commons.Enums.PacketProcessor;
 using DigitalWorldOnline.Commons.Interfaces;
 using DigitalWorldOnline.Commons.Packets.PersonalShop;
-using Serilog;
+using GameServer.Logging;
 
 namespace DigitalWorldOnline.Game.PacketProcessors
 {
@@ -10,17 +11,14 @@ namespace DigitalWorldOnline.Game.PacketProcessors
     {
         public GameServerPacketEnum Type => GameServerPacketEnum.ConsignedWarehouse;
 
-        private readonly ILogger _logger;
-
-        public ConsignedWarehousePacketProcessor(ILogger logger)
-        {
-            _logger = logger;
-        }
-
         public Task Process(GameClient client, byte[] packetData)
         {
-            _logger.Debug($"Sending consigned warehouse packet...");
             client.Send(new LoadConsignedShopWarehousePacket(client.Tamer.ConsignedWarehouse));
+
+            _ = GameLogger.LogInfo(
+                $"Warehouse items sent to player: {client.Tamer.Name} (CharacterId={client.Tamer.Id})",
+                "shops"
+            );
 
             return Task.CompletedTask;
         }

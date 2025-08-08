@@ -6,9 +6,8 @@ using DigitalWorldOnline.Commons.Extensions;
 using DigitalWorldOnline.Commons.Interfaces;
 using DigitalWorldOnline.Commons.Packets.Items;
 using DigitalWorldOnline.Commons.Packets.PersonalShop;
-
+using GameServer.Logging;
 using MediatR;
-using Serilog;
 
 namespace DigitalWorldOnline.Game.PacketProcessors
 {
@@ -16,43 +15,52 @@ namespace DigitalWorldOnline.Game.PacketProcessors
     {
         public GameServerPacketEnum Type => GameServerPacketEnum.ConsignedWarehouseRetrieve;
 
-        private readonly ILogger _logger;
         private readonly ISender _sender;
 
-        public ConsignedWarehouseRetrievePacketProcessor(
-            ILogger logger,
-            ISender sender)
+        public ConsignedWarehouseRetrievePacketProcessor(ISender sender)
         {
-            _logger = logger;
             _sender = sender;
         }
 
         public async Task Process(GameClient client, byte[] packetData)
         {
-            var items = client.Tamer.ConsignedWarehouse.Items.Clone();
-            var bits = client.Tamer.ConsignedWarehouse.Bits;
+            var tamer = client.Tamer;
+            var inventory = tamer.Inventory;
+            var warehouse = tamer.ConsignedWarehouse;
 
-            _logger.Debug($"Updating consigned warehouse...");
-            client.Tamer.ConsignedWarehouse.RemoveOrReduceItems(items.Clone());
-            client.Tamer.ConsignedWarehouse.RemoveBits(bits);
+            var itemsToRetrieve = warehouse.Items.Clone();
+            var bitsToRetrieve = warehouse.Bits;
 
-            _logger.Debug($"Updating tamer inventory...");
-            client.Tamer.Inventory.AddItems(items.Clone());
-            client.Tamer.Inventory.AddBits(bits);
+            // Registro inicial
+            await GameLogger.LogInfo(
+                $"[ConsignedRetrieve] Start retrieve: Player={tamer.Name}, CharacterId={tamer.Id}, Items={itemsToRetrieve.Count}, Bits={bitsToRetrieve}",
+                "shops"
+            );
 
-            _logger.Debug($"Sending load inventory packet...");
-            client.Send(new LoadInventoryPacket(client.Tamer.Inventory, InventoryTypeEnum.Inventory));
+            // Actualizamos warehouse
+            warehouse.RemoveOrReduceItems(itemsToRetrieve.Clone());
+            warehouse.RemoveBits(bitsToRetrieve);
 
-            _logger.Debug($"Sending load consigned shop warehouse packet...");
-            client.Send(new LoadConsignedShopWarehousePacket(client.Tamer.ConsignedWarehouse));
+            // Añadimos a inventario
+            inventory.AddItems(itemsToRetrieve.Clone());
+            inventory.AddBits(bitsToRetrieve);
 
-            _logger.Debug($"Sending consigned shop warehouse item retrieve packet...");
+            // Enviamos los paquetes actualizados al cliente
+            client.Send(new LoadInventoryPacket(inventory, InventoryTypeEnum.Inventory));
+            client.Send(new LoadConsignedShopWarehousePacket(warehouse));
             client.Send(new ConsignedShopWarehouseItemRetrievePacket());
 
-            await _sender.Send(new UpdateItemsCommand(client.Tamer.Inventory));
-            await _sender.Send(new UpdateItemListBitsCommand(client.Tamer.Inventory));
-            await _sender.Send(new UpdateItemsCommand(client.Tamer.ConsignedWarehouse));
-            await _sender.Send(new UpdateItemListBitsCommand(client.Tamer.ConsignedWarehouse));
+            // Guardado en base de datos
+            await _sender.Send(new UpdateItemsCommand(inventory));
+            await _sender.Send(new UpdateItemListBitsCommand(inventory));
+            await _sender.Send(new UpdateItemsCommand(warehouse));
+            await _sender.Send(new UpdateItemListBitsCommand(warehouse));
+
+            // Confirmación final
+            await GameLogger.LogInfo(
+                $"[ConsignedRetrieve] Finished retrieve: Player={tamer.Name}, CharacterId={tamer.Id}, RetrievedItems={itemsToRetrieve.Count}, RetrievedBits={bitsToRetrieve}",
+                "shops"
+            );
         }
     }
 }
