@@ -93,8 +93,10 @@ namespace DigitalWorldOnline.Game.Managers.Combat
             var result = new DamageResult
             {
                 Damage = (int)Math.Floor(damageAfterDef),
-                SkillName = jsonSkill.Name
+                SkillName = jsonSkill.Name,
+                Target = target // ← importante
             };
+
 
             var effects = _buffManager.ApplyBuffs(client, result, skillSlot);
             result.Buffs = effects;

@@ -3,8 +3,8 @@
     public enum InventoryTypeEnum
     {
         Inventory = 0,
-        Warehouse = 1,          // Equipamento
-        AccountWarehouse = 2,    // Desconhecido
+        Warehouse = 1,
+        AccountWarehouse = 2,   
         Skill = 3,
         Chipset = 4,
         Digivice = 5,

@@ -6,13 +6,19 @@ namespace DigitalWorldOnline.Commons.Models.Character
 {
     public sealed partial class CharacterIncubatorModel
     {
+        
+        /// <summary>
+        /// Inserts a new egg into the incubator.
+        /// </summary>
+        public bool IsBusy { get; private set; }
         /// <summary>
         /// Inserts a new egg into the incubator.
         /// </summary>
         public void InsertEgg(int eggId)
-        { 
+        {
             EggId = eggId;
             HatchLevel = 0;
+            IsBusy = true;
         }
 
         /// <summary>
@@ -22,8 +28,8 @@ namespace DigitalWorldOnline.Commons.Models.Character
         { 
             EggId = 0;
             HatchLevel = 0;
+            IsBusy = false;
         }
-        
         /// <summary>
         /// Inserts a new backup disk into the incubator.
         /// </summary>

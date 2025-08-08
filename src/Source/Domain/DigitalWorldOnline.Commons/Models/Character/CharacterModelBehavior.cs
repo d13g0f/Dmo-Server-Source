@@ -61,136 +61,7 @@ namespace DigitalWorldOnline.Commons.Models.Character
         /// <summary>
         /// Returns the condition result for partner miss hit.
         /// </summary>
-        public bool CanMissHit()
-        {
-
-
-            var debuff = TargetIMob?.DebuffList.ActiveBuffs.Where(buff => buff.BuffInfo.SkillInfo.Apply.Any(apply =>
-                    apply.Attribute == Commons.Enums.SkillCodeApplyAttributeEnum.CrowdControl || !buff.DebuffExpired))
-                .ToList();
-
-            if (debuff.Any())
-            {
-                return false;
-            }
-
-            try
-            {
-                if (TargetIMob == null)
-                    return true;
-
-                var rand = new Random();
-
-                double TargetEvasion = (double)TargetIMob?.EVValue;
-                double AttackerHitRate = (double)Partner.HT;
-
-                int levelDifference = Partner.Level - TargetIMob.Level;
-
-                if (AttackerHitRate > TargetEvasion || levelDifference > 15)
-                {
-                    return false; // O Tamer acerta o hit
-                }
-                else if (levelDifference <= 20)
-                {
-                    if (Partner.Level >= TargetIMob.Level)
-                        return false;
-
-                    double attributeAdvantage = 1.5; // Defina o valor do attributeAdvantage conforme necessário
-
-                    if (Partner.BaseInfo.Attribute.HasAttributeAdvantage(TargetIMob.Attribute) ||
-                        Partner.BaseInfo.Element.HasElementAdvantage(TargetIMob.Element))
-                        attributeAdvantage = 2.0;
-
-                    if (TargetIMob.Attribute.HasAttributeAdvantage(Partner.BaseInfo.Attribute) ||
-                        TargetIMob.Element.HasElementAdvantage(Partner.BaseInfo.Element))
-                        attributeAdvantage = 1.0;
-
-                    double adjustedPercent = CalcularProbabilidadeAcerto(AttackerHitRate,Partner.Level,
-                        TargetIMob.Level,TargetEvasion,attributeAdvantage);
-
-                    if (adjustedPercent <= 1.0)
-                        adjustedPercent = 0;
-
-                    if (adjustedPercent > 100.0)
-                        adjustedPercent = 100;
-
-                    var TotalChance = (int)adjustedPercent;
-
-                    if (TotalChance <= 10)
-                        return true;
-
-                    return rand.Next(1,100) >= TotalChance; // Ajuste esse valor conforme necessário
-                }
-            }
-            catch (Exception ex)
-            {
-                return true;
-            }
-
-            return true;
-        }
-
-        public bool CanMissHit(bool summon)
-        {
-            if (TargetSummonMob == null)
-                return true;
-
-            var rand = new Random();
-
-            double TargetEvasion = (double)TargetSummonMob?.EVValue;
-            double AttackerHitRate = (double)Partner.HT;
-
-            int levelDifference = Partner.Level - TargetSummonMob.Level;
-
-            if (AttackerHitRate > TargetEvasion || levelDifference > 15)
-            {
-                return false; // O Tamer acerta o hit
-            }
-            else if (levelDifference <= 20)
-            {
-                if (Partner.Level >= TargetSummonMob.Level)
-                    return false;
-
-                double attributeAdvantage = 1.5; // Defina o valor do attributeAdvantage conforme necessário
-
-                if (Partner.BaseInfo.Attribute.HasAttributeAdvantage(TargetMob.Attribute) ||
-                    Partner.BaseInfo.Element.HasElementAdvantage(TargetMob.Element))
-                    attributeAdvantage = 2.0;
-
-                if (TargetMob.Attribute.HasAttributeAdvantage(Partner.BaseInfo.Attribute) ||
-                    TargetMob.Element.HasElementAdvantage(Partner.BaseInfo.Element))
-                    attributeAdvantage = 1.0;
-
-                double adjustedPercent = CalcularProbabilidadeAcerto(AttackerHitRate, Partner.Level,
-                    TargetSummonMob.Level, TargetEvasion, attributeAdvantage);
-
-                if (adjustedPercent <= 1.0)
-                    adjustedPercent = 0;
-
-                if (adjustedPercent > 100.0)
-                    adjustedPercent = 100;
-
-                var TotalChance = (int)adjustedPercent;
-
-                if (TotalChance <= 10)
-                    return true;
-
-                return rand.Next(1, 100) >= TotalChance; // Ajuste esse valor conforme necessário
-            }
-
-
-            return true;
-        }
-
-        public static double CalcularProbabilidadeAcerto(double seuHitRate, int seuNivel, int nivelDoMonstro, double evDoMonstro, double attributeAdvantage)
-        {
-            double diferencaDeNiveis = seuNivel - nivelDoMonstro;
-            double levelMultiplier = 1 / (1 + Math.Exp(-diferencaDeNiveis / 9.0));
-            double probabilidade = levelMultiplier * (seuHitRate / evDoMonstro) * attributeAdvantage * 100;
-
-            return probabilidade;
-        }
-
+  
         /// <summary>
         /// Flag for no active threats.
         /// </summary>
@@ -2075,14 +1946,26 @@ namespace DigitalWorldOnline.Commons.Models.Character
 
         public void RemovePartnerPassiveBuff()
         {
-            var targetPassiveBuff = Partner.BuffList.TamerBaseSkill();
-
-            if (targetPassiveBuff != null)
+            if (Partner == null || Partner.BuffList == null)
             {
+                // No hay partner o lista de buffs, nada que remover, pero al menos intentamos setear
+                SetPartnerPassiveBuff();
+                return;
+            }
+
+            var targetPassiveBuff = Partner.BuffList.TamerBaseSkill();
+            
+            if (targetPassiveBuff == null)
+            {
+                // Si no existe el buff, quizás nunca se aplicó correctamente. Reintentamos setearlo.
+                SetPartnerPassiveBuff();
+                return;
+            }
+
                 Partner.BuffList.ForceExpired(targetPassiveBuff.BuffId);
                 Partner.BuffList.Remove(targetPassiveBuff.BuffId);
-            }
         }
+
 
         /// <summary>
         /// Set the tamer's current channel.

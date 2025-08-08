@@ -38,5 +38,17 @@ namespace DigitalWorldOnline.Game.Managers
         /// Buffs aplicados junto al golpe. Null si no aplica.
         /// </summary>
         public BuffEffect[]? Buffs { get; set; }
+
+
+        /// <summary>
+        /// Objetivo del ataque. Puede ser un IMob o un DigimonModel (PvE o PvP).
+        /// </summary>
+        public object? Target { get; set; }
+        /// <summary>
+        /// Objetivos secundarios en habilidades de área.
+        /// </summary>
+        public List<object>? Targets { get; set; }
+
+
     }
 }
