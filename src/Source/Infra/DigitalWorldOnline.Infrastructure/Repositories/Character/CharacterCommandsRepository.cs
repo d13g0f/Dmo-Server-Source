@@ -47,48 +47,42 @@ namespace DigitalWorldOnline.Infrastructure.Repositories.Character
             return dto.Id;
         }
 
+
+
         public async Task<DigimonDTO> AddDigimonAsync(DigimonModel digimon)
         {
-            var tamerDto = await _context.Character
-                .Include(x => x.Digimons)
-                .ThenInclude(y => y.Digiclone)
-                .ThenInclude(z => z.History)
-                .Include(x => x.Digimons)
-                .ThenInclude(y => y.AttributeExperience)
-                .Include(x => x.Digimons)
-                .ThenInclude(y => y.Location)
-                .Include(x => x.Digimons)
-                .ThenInclude(y => y.BuffList)
-                .ThenInclude(z => z.Buffs)
-                .Include(x => x.Digimons)
-                .ThenInclude(y => y.Evolutions)
-                .ThenInclude(z => z.Skills)
-                .Include(x => x.Encyclopedia)
-                .ThenInclude(x => x.Evolutions)
-                .Include(x => x.Encyclopedia)
-                .ThenInclude(y => y.EvolutionAsset)
-                .SingleOrDefaultAsync(x => x.Id == digimon.CharacterId);
+            if (digimon == null)
+                return null;
 
             try
             {
-                var dto = _mapper.Map<DigimonDTO>(digimon);
+                var character = await _context.Character
+                    .Include(c => c.Digimons)
+                    .ThenInclude(d => d.Evolutions)
+                    .ThenInclude(e => e.Skills)
+                    .SingleOrDefaultAsync(c => c.Id == digimon.CharacterId);
 
-                if (tamerDto != null)
+                if (character == null)
                 {
-                    tamerDto.Digimons.Add(dto);
-
-                    _context.SaveChanges();
+                    return null;
                 }
 
-                return dto;
+                var digimonDto = _mapper.Map<DigimonDTO>(digimon);
+                character.Digimons.Add(digimonDto);
+
+                _context.Update(character);
+                await _context.SaveChangesAsync();
+
+                return digimonDto;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Console.WriteLine(e);
-                throw;
+                return null;
             }
         }
 
+
+        
         public async Task<CharacterFriendDTO> AddFriendAsync(CharacterFriendModel friend)
         {
             var tamerDto = await _context.Character
@@ -179,7 +173,6 @@ namespace DigitalWorldOnline.Infrastructure.Repositories.Character
         public async Task UpdateCharacterLocationAsync(CharacterLocationModel location)
         {
             var dto = await _context.CharacterLocation
-                .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == location.Id);
 
             if (dto != null)
@@ -190,14 +183,14 @@ namespace DigitalWorldOnline.Infrastructure.Repositories.Character
                 dto.Z = location.Z;
 
                 _context.CharacterLocation.Update(dto);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
         }
+
 
         public async Task UpdateDigimonLocationAsync(DigimonLocationModel location)
         {
             var dto = await _context.DigimonLocation
-                .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == location.Id);
 
             if (dto != null)
@@ -208,7 +201,7 @@ namespace DigitalWorldOnline.Infrastructure.Repositories.Character
                 dto.Z = location.Z;
 
                 _context.DigimonLocation.Update(dto);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
         }
 
@@ -1703,5 +1696,8 @@ namespace DigitalWorldOnline.Infrastructure.Repositories.Character
                 await _context.SaveChangesAsync();
             }
         }
+
+
+
     }
 }

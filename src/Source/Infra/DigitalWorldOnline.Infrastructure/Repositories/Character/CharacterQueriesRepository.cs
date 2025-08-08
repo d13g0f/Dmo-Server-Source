@@ -160,21 +160,24 @@ namespace DigitalWorldOnline.Infrastructure.Repositories.Character
                 .SingleOrDefaultAsync(x => x.Id == digimonId);
         }
 
-        public async Task<List<DigimonDTO>> GetAllDigimonsAsync()
+        public async Task<List<DigimonDTO>> GetAllDigimonsAsync(int skip = 0, int take = 100)
         {
             return await _context.Digimon
                 .AsNoTracking()
                 .Include(x => x.Character)
-                .ThenInclude(y => y.Encyclopedia)
-                .ThenInclude(y => y.Evolutions)
+                    .ThenInclude(y => y.Encyclopedia)
+                    .ThenInclude(y => y.Evolutions)
                 .Include(x => x.Digiclone)
-                .ThenInclude(x => x.History)
+                    .ThenInclude(x => x.History)
                 .Include(x => x.AttributeExperience)
                 .Include(x => x.Location)
                 .Include(x => x.Evolutions)
-                .ThenInclude(y => y.Skills)
+                    .ThenInclude(y => y.Skills)
                 .Include(x => x.BuffList)
-                .ThenInclude(x => x.Buffs)
+                    .ThenInclude(x => x.Buffs)
+                .OrderBy(x => x.Id)
+                .Skip(skip)
+                .Take(take)
                 .ToListAsync();
         }
 
@@ -244,5 +247,15 @@ namespace DigitalWorldOnline.Infrastructure.Repositories.Character
 
             return characters;
         }
+
+
+        public async Task<DigimonDTO?> GetDigimonByTamerIdAsync(long characterId)
+        {
+            return await _context.Digimon
+                .AsNoTracking()
+                .Include(x => x.Location) // Incluye la ubicación para permitir actualizaciones posteriores
+                .FirstOrDefaultAsync(x => x.CharacterId == characterId && x.Slot == 0);
+        }
+
     }
 }

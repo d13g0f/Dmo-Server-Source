@@ -9,22 +9,6 @@ namespace DigitalWorldOnline.Commons.Utils
     //TODO: Separar utils de extensions
     public static class UtilitiesFunctions
     {
-        public static List<short> DungeonMapIds = new List<short>()
-        {
-            17, 50, 51, 10, 210, 211, 212, 213, 214, 252, 263, 264, 300, 301, 1110, 1111, 1112, 1304, 1308, 1310, 1311, 1403,
-            1404, 1406, 1500, 1501, 1502, 1600, 1601, 1602, 1603, 1604, 1605, 1606, 1607, 1608, 1609, 1610, 1611, 1612, 1613, 1614,
-            1615, 1701, 1702, 1703, 1704, 1705, 1706, 1809, 1810, 1911, 2001, 2002, 9103, 9861
-        };
-
-        public static List<short> EventMapIds = new List<short>()
-        {
-
-        };
-
-        public static List<short> PvpMapIds = new List<short>()
-        {
-            9101
-        };
 
         public static List<int> IncreasePerLevelStun = new List<int>()
         {
@@ -341,15 +325,22 @@ namespace DigitalWorldOnline.Commons.Utils
             return hitter switch
             {
                 DigimonAttributeEnum.Data => target == DigimonAttributeEnum.None ||
-                                             target == DigimonAttributeEnum.Vaccine,
+                                            target == DigimonAttributeEnum.Vaccine,
+
                 DigimonAttributeEnum.Vaccine => target == DigimonAttributeEnum.None ||
                                                 target == DigimonAttributeEnum.Virus,
+
                 DigimonAttributeEnum.Virus => target == DigimonAttributeEnum.None ||
-                                              target == DigimonAttributeEnum.Data,
-                DigimonAttributeEnum.Unknown => true,
+                                            target == DigimonAttributeEnum.Data,
+
+                DigimonAttributeEnum.Unknown => target != DigimonAttributeEnum.Unknown,
+
+                DigimonAttributeEnum.None => false,
+
                 _ => false,
             };
         }
+
 
         public static bool HasElementAdvantage(this DigimonElementEnum hitter, DigimonElementEnum target)
         {

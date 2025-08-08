@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿using System.Diagnostics;
+using System.Text.Json;
+using AutoMapper;
 using DigitalWorldOnline.Application;
 using DigitalWorldOnline.Application.Separar.Commands.Create;
 using DigitalWorldOnline.Application.Separar.Commands.Update;
@@ -109,14 +111,19 @@ namespace DigitalWorldOnline.Game
                 _logger.Warning($"Request source {gameClientEvent.Client.ClientAddress} has been disconnected.");
         }
 
-        /// <summary>
-        /// Event triggered everytime the game client disconnects from the server.
+       /// <summary>
+        /// Event triggered every time the game client disconnects from the server.
         /// </summary>
         /// <param name="sender">The object itself</param>
         /// <param name="gameClientEvent">Game client who disconnected</param>
         private async void OnDisconnectEvent(object sender, GameClientEvent gameClientEvent)
         {
-            var client = gameClientEvent.Client;
+            var client = gameClientEvent?.Client;
+            if (client == null)
+            {
+                _logger.Error("[Disconnect] gameClientEvent.Client es null.");
+                return;
+            }
 
             if (client.TamerId <= 0)
             {
@@ -124,48 +131,79 @@ namespace DigitalWorldOnline.Game
                 return;
             }
 
-            _logger.Information($"[Disconnect] Recibido evento de desconexión: Tamer={client.Tamer?.Name} TamerId={client.TamerId} IP={client.HiddenAddress} AccountId={client.AccountId}");
+            _logger.Information($"[Disconnect] Recibido evento de desconexión: Tamer={client.Tamer?.Name ?? "Unknown"} TamerId={client.TamerId} IP={client.HiddenAddress} AccountId={client.AccountId}");
 
             _logger.Debug($"[Disconnect] Detalle conexión: RemoteEndPoint={client.ClientAddress} Handshake={client.Handshake} ServerId={client.ServerId}");
 
+            // Remover cliente del servidor correspondiente
             if (client.DungeonMap)
             {
-                _logger.Information($"[Disconnect] Cliente estaba en DungeonMap. Removiendo del servidor de Dungeon. MapId={client.Tamer?.Location.MapId} Channel={client.Tamer?.Channel}");
-                _dungeonsServer.RemoveClient(client);
+                _logger.Information($"[Disconnect] Cliente estaba en DungeonMap. Removiendo del servidor de Dungeon. MapId={client.Tamer?.Location.MapId ?? 0} Channel={client.Tamer?.Channel ?? 0}");
+                _dungeonsServer?.RemoveClient(client);
             }
             else if (client.EventMap)
             {
-                _logger.Information($"[Disconnect] Cliente estaba en EventMap. Removiendo del servidor de Event. MapId={client.Tamer?.Location.MapId} Channel={client.Tamer?.Channel}");
-                _eventServer.RemoveClient(client);
+                _logger.Information($"[Disconnect] Cliente estaba en EventMap. Removiendo del servidor de Event. MapId={client.Tamer?.Location.MapId ?? 0} Channel={client.Tamer?.Channel ?? 0}");
+                _eventServer?.RemoveClient(client);
             }
             else if (client.PvpMap)
             {
-                _logger.Information($"[Disconnect] Cliente estaba en PvpMap. Removiendo del servidor de PvP. MapId={client.Tamer?.Location.MapId} Channel={client.Tamer?.Channel}");
-                _pvpServer.RemoveClient(client);
+                _logger.Information($"[Disconnect] Cliente estaba en PvpMap. Removiendo del servidor de PvP. MapId={client.Tamer?.Location.MapId ?? 0} Channel={client.Tamer?.Channel ?? 0}");
+                _pvpServer?.RemoveClient(client);
             }
             else
             {
-                _logger.Information($"[Disconnect] Cliente estaba en Map normal. Removiendo del servidor de Map. MapId={client.Tamer?.Location.MapId} Channel={client.Tamer?.Channel}");
-                _mapServer.RemoveClient(client);
+                _logger.Information($"[Disconnect] Cliente estaba en Map normal. Removiendo del servidor de Map. MapId={client.Tamer?.Location.MapId ?? 0} Channel={client.Tamer?.Channel ?? 0}");
+                _mapServer?.RemoveClient(client);
             }
 
             if (client.GameQuit)
             {
-                _logger.Information($"[Disconnect] Flag GameQuit=true. Actualizando estado a Disconnected para Tamer={client.Tamer?.Name} TamerId={client.TamerId}");
-                client.Tamer.UpdateState(CharacterStateEnum.Disconnected);
+                // Validar Tamer antes de actualizar estado
+                if (client.Tamer != null)
+                {
+                    _logger.Information($"[Disconnect] Flag GameQuit=true. Actualizando estado a Disconnected para Tamer={client.Tamer.Name} TamerId={client.TamerId}");
+                    try
+                    {
+                        client.Tamer.UpdateState(CharacterStateEnum.Disconnected);
+                        await _sender.Send(new UpdateCharacterStateCommand(client.TamerId, CharacterStateEnum.Disconnected));
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.Error($"[Disconnect] Error al actualizar estado para TamerId={client.TamerId}: {ex.Message}");
+                    }
 
-                await _sender.Send(new UpdateCharacterStateCommand(client.TamerId, CharacterStateEnum.Disconnected));
+                    // Ejecutar notificaciones solo si Tamer está inicializado
+                    _logger.Information($"[Disconnect] Notificando Friends, Guild, Party, Trader para TamerId={client.TamerId}");
+                    try
+                    {
+                        CharacterFriendsNotification(gameClientEvent);
+                        CharacterGuildNotification(gameClientEvent);
+                        await PartyNotification(gameClientEvent);
+                        CharacterTargetTraderNotification(gameClientEvent);
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.Error($"[Disconnect] Error al procesar notificaciones para TamerId={client.TamerId}: {ex.Message}");
+                    }
+                }
+                else
+                {
+                    _logger.Warning($"[Disconnect] Tamer es null para TamerId={client.TamerId}. Omitiendo actualización de estado y notificaciones.");
+                }
 
-                _logger.Information($"[Disconnect] Notificando Friends, Guild, Party, Trader para TamerId={client.TamerId}");
-                CharacterFriendsNotification(gameClientEvent);
-                CharacterGuildNotification(gameClientEvent);
-                await PartyNotification(gameClientEvent);
-                CharacterTargetTraderNotification(gameClientEvent);
-
+                // Ejecutar DungeonWarpGate si corresponde
                 if (client.DungeonMap)
                 {
                     _logger.Information($"[Disconnect] Cliente estaba en DungeonMap. Ejecutando DungeonWarpGate para TamerId={client.TamerId}");
-                    await DungeonWarpGate(gameClientEvent);
+                    try
+                    {
+                        await DungeonWarpGate(gameClientEvent);
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.Error($"[Disconnect] Error en DungeonWarpGate para TamerId={client.TamerId}: {ex.Message}");
+                    }
                 }
             }
             else
@@ -173,15 +211,22 @@ namespace DigitalWorldOnline.Game
                 _logger.Information($"[Disconnect] GameQuit=false. No se actualiza estado ni se notifican redes sociales para TamerId={client.TamerId}");
             }
 
+            // Limpiar estado del cliente
             _logger.Information($"[Disconnect] Limpiando estado interno del cliente TamerId={client.TamerId} AccountId={client.AccountId}");
-            client.ResetState();
-            client.SetGameQuit(false);
+            try
+            {
+                client.ResetState();
+                client.SetGameQuit(false);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"[Disconnect] Error al limpiar estado para TamerId={client.TamerId}: {ex.Message}");
+            }
 
             await GameLogger.LogInfo(
                 $"[Disconnect] Cleanup completo: AccountId={client.AccountId}, TamerId={client.TamerId}, IP={client.ClientAddress}",
                 "session/disconnects");
         }
-
 
         private async Task PartyNotification(GameClientEvent gameClientEvent)
         {
@@ -287,81 +332,139 @@ namespace DigitalWorldOnline.Game
             }
         }
 
-        private void CharacterGuildNotification(GameClientEvent gameClientEvent)
+       private void CharacterGuildNotification(GameClientEvent gameClientEvent)
         {
-            if (gameClientEvent.Client.Tamer.Guild != null)
+            // Validar parámetros de entrada
+            if (gameClientEvent?.Client == null)
             {
-                foreach (var guildMember in gameClientEvent.Client.Tamer.Guild.Members)
-                {
-                    if (guildMember.CharacterInfo == null)
-                    {
-                        var guildMemberClient = _mapServer.FindClientByTamerId(guildMember.CharacterId);
+                _logger.Error("CharacterGuildNotification: gameClientEvent o Client es null.");
+                return;
+            }
+            if (gameClientEvent.Client.Tamer == null)
+            {
+                _logger.Warning($"CharacterGuildNotification: Tamer es null para ClientId={gameClientEvent.Client.AccountId}. Omitiendo notificaciones.");
+                return;
+            }
 
-                        if (guildMemberClient != null)
+            try
+            {
+                if (gameClientEvent.Client.Tamer.Guild != null) // Línea 292
+                {
+                    if (gameClientEvent.Client.Tamer.Guild.Members == null)
+                    {
+                        _logger.Warning($"CharacterGuildNotification: Guild.Members es null para TamerId={gameClientEvent.Client.TamerId}.");
+                        return;
+                    }
+
+                    foreach (var guildMember in gameClientEvent.Client.Tamer.Guild.Members)
+                    {
+                        if (guildMember?.CharacterInfo == null)
                         {
-                            guildMember.SetCharacterInfo(guildMemberClient.Tamer);
-                        }
-                        else
-                        {
-                            guildMember.SetCharacterInfo(_mapper.Map<CharacterModel>(_sender
-                                .Send(new CharacterByIdQuery(guildMember.CharacterId)).Result));
+                            var guildMemberClient = _mapServer?.FindClientByTamerId(guildMember.CharacterId);
+                            if (guildMemberClient != null)
+                            {
+                                guildMember.SetCharacterInfo(guildMemberClient.Tamer);
+                            }
+                            else
+                            {
+                                try
+                                {
+                                    var characterResult = _sender.Send(new CharacterByIdQuery(guildMember.CharacterId)).Result;
+                                    guildMember.SetCharacterInfo(_mapper.Map<CharacterModel>(characterResult));
+                                }
+                                catch (Exception ex)
+                                {
+                                    _logger.Error($"Error al obtener CharacterInfo para CharacterId={guildMember.CharacterId}: {ex.Message}");
+                                }
+                            }
                         }
                     }
-                }
 
-                foreach (var guildMember in gameClientEvent.Client.Tamer.Guild.Members)
+                    foreach (var guildMember in gameClientEvent.Client.Tamer.Guild.Members)
+                    {
+                        if (guildMember == null)
+                        {
+                            _logger.Warning($"CharacterGuildNotification: guildMember null para TamerId={gameClientEvent.Client.TamerId}.");
+                            continue;
+                        }
+
+                        _logger.Debug($"Sending guild member disconnection packet for character {guildMember.CharacterId}...");
+                        _logger.Debug($"Sending guild information packet for character {gameClientEvent.Client.TamerId}...");
+
+                        var disconnectPacket = new GuildMemberDisconnectPacket(gameClientEvent.Client.Tamer.Name ?? "Unknown").Serialize();
+                        var infoPacket = new GuildInformationPacket(gameClientEvent.Client.Tamer.Guild).Serialize();
+
+                        _mapServer?.BroadcastForUniqueTamer(guildMember.CharacterId, disconnectPacket);
+                        _mapServer?.BroadcastForUniqueTamer(guildMember.CharacterId, infoPacket);
+                        _dungeonsServer?.BroadcastForUniqueTamer(guildMember.CharacterId, disconnectPacket);
+                        _dungeonsServer?.BroadcastForUniqueTamer(guildMember.CharacterId, infoPacket);
+                        _eventServer?.BroadcastForUniqueTamer(guildMember.CharacterId, disconnectPacket);
+                        _eventServer?.BroadcastForUniqueTamer(guildMember.CharacterId, infoPacket);
+                        _pvpServer?.BroadcastForUniqueTamer(guildMember.CharacterId, disconnectPacket);
+                        _pvpServer?.BroadcastForUniqueTamer(guildMember.CharacterId, infoPacket);
+                    }
+                }
+                else
                 {
-                    _logger.Debug(
-                        $"Sending guild member disconnection packet for character {guildMember.CharacterId}...");
-
-                    _logger.Debug(
-                        $"Sending guild information packet for character {gameClientEvent.Client.TamerId}...");
-
-                    _mapServer.BroadcastForUniqueTamer(guildMember.CharacterId,
-                        new GuildMemberDisconnectPacket(gameClientEvent.Client.Tamer.Name).Serialize());
-
-                    _mapServer.BroadcastForUniqueTamer(guildMember.CharacterId,
-                        new GuildInformationPacket(gameClientEvent.Client.Tamer.Guild).Serialize());
-
-                    _dungeonsServer.BroadcastForUniqueTamer(guildMember.CharacterId,
-                        new GuildMemberDisconnectPacket(gameClientEvent.Client.Tamer.Name).Serialize());
-
-                    _dungeonsServer.BroadcastForUniqueTamer(guildMember.CharacterId,
-                        new GuildInformationPacket(gameClientEvent.Client.Tamer.Guild).Serialize());
-
-                    _eventServer.BroadcastForUniqueTamer(guildMember.CharacterId,
-                        new GuildMemberDisconnectPacket(gameClientEvent.Client.Tamer.Name).Serialize());
-
-                    _eventServer.BroadcastForUniqueTamer(guildMember.CharacterId,
-                        new GuildInformationPacket(gameClientEvent.Client.Tamer.Guild).Serialize());
-
-                    _pvpServer.BroadcastForUniqueTamer(guildMember.CharacterId,
-                        new GuildMemberDisconnectPacket(gameClientEvent.Client.Tamer.Name).Serialize());
-
-                    _pvpServer.BroadcastForUniqueTamer(guildMember.CharacterId,
-                        new GuildInformationPacket(gameClientEvent.Client.Tamer.Guild).Serialize());
+                    _logger.Debug($"CharacterGuildNotification: TamerId={gameClientEvent.Client.TamerId} no pertenece a un gremio. Omitiendo notificaciones.");
                 }
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"Error en CharacterGuildNotification para TamerId={gameClientEvent.Client.TamerId}: {ex.Message}");
             }
         }
 
-        private async void CharacterFriendsNotification(GameClientEvent gameClientEvent)
+      private async void CharacterFriendsNotification(GameClientEvent gameClientEvent)
+    {
+        // Validar parámetros de entrada
+        if (gameClientEvent?.Client == null)
         {
+            _logger.Error("CharacterFriendsNotification: gameClientEvent o Client es null.");
+            return;
+        }
+        if (gameClientEvent.Client.Tamer == null)
+        {
+            _logger.Warning($"CharacterFriendsNotification: Tamer es null para ClientId={gameClientEvent.Client.AccountId}. Omitiendo notificaciones.");
+            return;
+        }
+        if (gameClientEvent.Client.Tamer.Friended == null)
+        {
+            _logger.Warning($"CharacterFriendsNotification: Friended es null para TamerId={gameClientEvent.Client.TamerId}. Omitiendo notificaciones.");
+            return;
+        }
+
+        try
+        {
+            // Iterar sobre la lista de amigos
             gameClientEvent.Client.Tamer.Friended.ForEach(friend =>
             {
+                if (friend == null)
+                {
+                    _logger.Warning($"CharacterFriendsNotification: Amigo null encontrado para TamerId={gameClientEvent.Client.TamerId}.");
+                    return;
+                }
+
                 _logger.Debug($"Sending friend disconnection packet for character {friend.FriendId}...");
 
-                _mapServer.BroadcastForUniqueTamer(friend.FriendId,
-                    new FriendDisconnectPacket(gameClientEvent.Client.Tamer.Name).Serialize());
-                _dungeonsServer.BroadcastForUniqueTamer(friend.FriendId,
-                    new FriendDisconnectPacket(gameClientEvent.Client.Tamer.Name).Serialize());
-                _eventServer.BroadcastForUniqueTamer(friend.FriendId,
-                    new FriendDisconnectPacket(gameClientEvent.Client.Tamer.Name).Serialize());
-                _pvpServer.BroadcastForUniqueTamer(friend.FriendId,
-                    new FriendDisconnectPacket(gameClientEvent.Client.Tamer.Name).Serialize());
+                // Crear el paquete una vez para reutilizarlo (DRY)
+                var packet = new FriendDisconnectPacket(gameClientEvent.Client.Tamer.Name ?? "Unknown").Serialize();
+
+                // Enviar a los servidores, verificando que no sean null
+                _mapServer?.BroadcastForUniqueTamer(friend.FriendId, packet);
+                _dungeonsServer?.BroadcastForUniqueTamer(friend.FriendId, packet);
+                _eventServer?.BroadcastForUniqueTamer(friend.FriendId, packet);
+                _pvpServer?.BroadcastForUniqueTamer(friend.FriendId, packet);
             });
 
+            // Actualizar el estado de los amigos
             await _sender.Send(new UpdateCharacterFriendsCommand(gameClientEvent.Client.Tamer, false));
         }
+        catch (Exception ex)
+        {
+            _logger.Error($"Error en CharacterFriendsNotification para TamerId={gameClientEvent.Client.TamerId}: {ex.Message}");
+        }
+    }
 
         private void CharacterTargetTraderNotification(GameClientEvent gameClientEvent)
         {
@@ -544,216 +647,218 @@ namespace DigitalWorldOnline.Game
             _logger.Information($"{GetType().Name} stopped.");
         }
 
-        private async Task<Task> CheckAllDigimonEvolutions()
+           
+       private async Task CheckAllDigimonEvolutions()
+{
+    try
+    {
+        var swGlobal = Stopwatch.StartNew();
+        int skip = 0;
+        int take = 200;
+
+        var evolutionAssetCache = new Dictionary<int, EvolutionAssetModel>();
+
+        while (true)
         {
-            try
+            var swBatch = Stopwatch.StartNew();
+            var digimons = _mapper.Map<List<DigimonModel>>(await _sender.Send(new GetAllCharactersDigimonQuery(skip, take)));
+            swBatch.Stop();
+
+            if (digimons.Count == 0)
+                break;
+
+            _logger.Information($"[CheckAllDigimonEvolutions] :: Batch {skip}-{skip + take} fetched {digimons.Count} digimons in {swBatch.ElapsedMilliseconds} ms");
+
+            foreach (var digimon in digimons)
             {
-                List<DigimonModel> Digimons = _mapper.Map<List<DigimonModel>>(await _sender.Send(new GetAllCharactersDigimonQuery()));
 
-                foreach (var digimon in Digimons)
+                if (!evolutionAssetCache.TryGetValue(digimon.BaseType, out var evolutionAsset))
                 {
-                    var digimonEvolutionInfo = _mapper.Map<EvolutionAssetModel>(
+                    var swInner = Stopwatch.StartNew();
+                    evolutionAsset = _mapper.Map<EvolutionAssetModel>(
                         await _sender.Send(new DigimonEvolutionAssetsByTypeQuery(digimon.BaseType)));
+                    swInner.Stop();
 
-                    if (digimonEvolutionInfo == null)
-                    {
-                        //_logger.Error($"[CheckAllDigimonEvolutions] :: EvolutionInfo is null for digimon type {digimon.BaseType}.");
-                    }
-                    else
-                    {
-                        foreach (var evolutionLine in digimonEvolutionInfo.Lines)
-                        {
-                            //_logger.Information($"BaseType: {digimon.BaseType} --> EvolutionLine: {evolutionLine.Type}");
-                        }
+                    evolutionAssetCache[digimon.BaseType] = evolutionAsset;
 
-                        //_logger.Information($"DigimonEvolutionInfo: [{digimonEvolutionInfo.Id} : {digimonEvolutionInfo.Type}]");
+                }
+
+                if (evolutionAsset == null)
+                {
+                    _logger.Warning($"[CheckAllDigimonEvolutions] :: EvolutionAsset is NULL for BaseType: {digimon.BaseType}");
+                    continue;
+                }
+
+                foreach (var line in evolutionAsset.Lines)
+                {
+                    if (!digimon.Evolutions.Exists(x => x.Type == line.Type))
+                    {
+                        _logger.Information($"[CheckAllDigimonEvolutions] :: Digimon BaseType: {digimon.BaseType} missing EvolutionLine: {line.Type}");
                     }
                 }
 
-                Digimons.ForEach(async void (digimon) =>
+                foreach (var evolution in digimon.Evolutions)
                 {
-                    var digimonEvolutionInfo = _mapper.Map<EvolutionAssetModel>(
-                        await _sender.Send(new DigimonEvolutionAssetsByTypeQuery(digimon.BaseType)));
-
-                    if (digimonEvolutionInfo == null)
+                    try
                     {
-                        _logger.Error($"[CheckAllDigimonEvolutions] :: EvolutionInfo is null for digimon type {digimon.BaseType}.");
-                        return;
-                    }
-                    else
-                    {
-                        foreach (var evolutionLine in digimonEvolutionInfo.Lines)
+                        var evolutionLine = evolutionAsset.Lines.FirstOrDefault(y => y.Type == evolution.Type);
+                        if (evolutionLine == null)
                         {
-                            if (!digimon.Evolutions.Exists(x => x.Type == evolutionLine.Type))
-                            {
-                                //digimonCount++;
-                                //digimon.Evolutions.Add(new DigimonEvolutionModel(evolutionLine.Type));
-                            }
-                            else
-                            {
-                                //_logger.Information($"DigimonEvolutionInfo: {digimonEvolutionInfo.Type}");
-                            }
+                            _logger.Warning($"[CheckAllDigimonEvolutions] :: EvolutionLine not found for EvolutionType: {evolution.Type} on BaseType: {digimon.BaseType}");
                         }
-
-                        //_logger.Information($"----------------------------------------------------------------------");
-
-                        digimon?.Evolutions?.ForEach(async void (evolution) =>
-                        {
-                            try
-                            {
-                                var evolutionLine = digimonEvolutionInfo.Lines.FirstOrDefault(y => y.Type == evolution.Type);
-                                
-                            }
-                            catch (Exception e)
-                            {
-                                _logger.Error($"[Encyclopedia] :: {e.Message}");
-                                _logger.Error($"{e.StackTrace}");
-                            }
-                        });
-
                     }
-
-                });
-
-            }
-            catch (Exception e)
-            {
-                _logger.Error($"[CheckAllDigimonEvolutions]:\n {e.Message}");
-                _logger.Error($"InnerException: {e.InnerException}");
+                    catch (Exception ex)
+                    {
+                        _logger.Error($"[CheckAllDigimonEvolutions][InnerLoop] :: {ex.Message}");
+                        _logger.Error(ex.StackTrace);
+                    }
+                }
             }
 
-            return Task.CompletedTask;
+            skip += take;
         }
 
-        private async Task<Task> CheckEncyclopedia()
+        swGlobal.Stop();
+        _logger.Information($"[CheckAllDigimonEvolutions] :: Completed in {swGlobal.ElapsedMilliseconds} ms");
+    }
+    catch (Exception ex)
+    {
+        _logger.Error($"[CheckAllDigimonEvolutions][Outer] :: {ex.Message}");
+        if (ex.InnerException != null)
+            _logger.Error($"[CheckAllDigimonEvolutions][InnerException] :: {ex.InnerException}");
+    }
+}
+
+   private async Task CheckEncyclopedia()
         {
             try
             {
-                List<DigimonModel> Digimons = _mapper.Map<List<DigimonModel>>(await _sender.Send(new GetAllCharactersDigimonQuery()));
+                var swGlobal = Stopwatch.StartNew();
+                _logger.Information($"[CheckEncyclopedia] :: Started processing");
 
-                int digimonCount = 0;
-                int encyclopediaCount = 0;
-                int encyclopediaEvolutionCount = 0;
+                int skip = 0;
+                int take = 100;
 
-                Digimons.ForEach(async void (digimon) =>
+                var evolutionAssetCache = new Dictionary<int, EvolutionAssetModel>();
+
+                int encyclopediaCreated = 0;
+                int evolutionsAdded = 0;
+
+                while (true)
                 {
-                    var digimonEvolutionInfo = _mapper.Map<EvolutionAssetModel>(
-                        await _sender.Send(new DigimonEvolutionAssetsByTypeQuery(digimon.BaseType)));
+                    var digimons = _mapper.Map<List<DigimonModel>>(await _sender.Send(new GetAllCharactersDigimonQuery(skip, take)));
 
-                    if (digimonEvolutionInfo == null)
+                    if (digimons.Count == 0)
+                        break;
+
+                    foreach (var digimon in digimons)
                     {
-                        _logger.Warning($"EvolutionInfo is null for digimon {digimon.BaseType}.");
-                        return;
-                    }
-
-                    if (digimonEvolutionInfo != null && digimon.Character.Encyclopedia != null)
-                    {
-                        var encyclopediaExists =
-                        digimon.Character.Encyclopedia.Exists(x => x.DigimonEvolutionId == digimonEvolutionInfo.Id);
-
-                        foreach (var evolutionLine in digimonEvolutionInfo.Lines)
+                        if (!evolutionAssetCache.TryGetValue(digimon.BaseType, out var evolutionAsset))
                         {
-                            if (!digimon.Evolutions.Exists(x => x.Type == evolutionLine.Type))
-                            {
-                                digimonCount++;
-                                digimon.Evolutions.Add(new DigimonEvolutionModel(evolutionLine.Type));
-                            }
+                            evolutionAsset = _mapper.Map<EvolutionAssetModel>(
+                                await _sender.Send(new DigimonEvolutionAssetsByTypeQuery(digimon.BaseType)));
+                            evolutionAssetCache[digimon.BaseType] = evolutionAsset;
                         }
 
-                        // Check if encyclopedia exists
+                        if (evolutionAsset == null)
+                        {
+                            _logger.Error($"[CheckEncyclopedia] :: EvolutionAsset is NULL for BaseType: {digimon.BaseType}");
+                            continue;
+                        }
+
+                        bool encyclopediaExists = digimon.Character.Encyclopedia?.Any(x => x.DigimonEvolutionId == evolutionAsset.Id) ?? false;
+
                         if (!encyclopediaExists)
                         {
-                            encyclopediaCount++;
-                            var encyclopedia = CharacterEncyclopediaModel.Create(digimon.Character.Id,
-                            digimonEvolutionInfo.Id, digimon.Level, digimon.Size, digimon.Digiclone.ATLevel,
-                            digimon.Digiclone.BLLevel, digimon.Digiclone.CTLevel, digimon.Digiclone.EVLevel,
-                            digimon.Digiclone.HPLevel,
-                            digimon.Evolutions.Count(x => Convert.ToBoolean(x.Unlocked)) ==
-                            digimon.Evolutions.Count,
-                            false);
+                            var encyclopedia = CharacterEncyclopediaModel.Create(
+                                digimon.Character.Id,
+                                evolutionAsset.Id,
+                                digimon.Level,
+                                digimon.Size,
+                                digimon.Digiclone.ATLevel,
+                                digimon.Digiclone.BLLevel,
+                                digimon.Digiclone.CTLevel,
+                                digimon.Digiclone.EVLevel,
+                                digimon.Digiclone.HPLevel,
+                                digimon.Evolutions.All(x => Convert.ToBoolean(x.Unlocked)),
+                                false
+                            );
 
-                            digimon.Evolutions?.ForEach(x =>
+                            foreach (var evo in digimon.Evolutions)
                             {
-                                encyclopediaEvolutionCount++;
+                                var evolutionLine = evolutionAsset.Lines.FirstOrDefault(y => y.Type == evo.Type);
+                                byte slotLevel = evolutionLine?.SlotLevel ?? 0;
 
-                                var evolutionLine = digimonEvolutionInfo.Lines.FirstOrDefault(y => y.Type == x.Type);
-                                byte slotLevel = 0;
-
-                                if (evolutionLine != null)
-                                {
-                                    slotLevel = evolutionLine.SlotLevel;
-                                }
-
-                                var encyclopediaEvo = CharacterEncyclopediaEvolutionsModel.Create(x.Type, slotLevel, Convert.ToBoolean(x.Unlocked));
-
+                                var encyclopediaEvo = CharacterEncyclopediaEvolutionsModel.Create(evo.Type, slotLevel, Convert.ToBoolean(evo.Unlocked));
                                 encyclopedia.Evolutions.Add(encyclopediaEvo);
-                            });
+                            }
 
+                            var created = await _sender.Send(new CreateCharacterEncyclopediaCommand(encyclopedia));
+                            digimon.Character.Encyclopedia.Add(created);
 
-                            var encyclopediaAdded = await _sender.Send(new CreateCharacterEncyclopediaCommand(encyclopedia));
-
-                            digimon.Character.Encyclopedia.Add(encyclopediaAdded);
+                            encyclopediaCreated++;
                         }
                         else
                         {
-                            digimon?.Evolutions?.ForEach(async void (evolution) =>
+                            foreach (var evo in digimon.Evolutions)
                             {
                                 try
                                 {
-                                    var evolutionLine =
-                                        digimonEvolutionInfo.Lines.FirstOrDefault(y => y.Type == evolution.Type);
-                                    byte slotLevel = 0;
+                                    var evolutionLine = evolutionAsset.Lines.FirstOrDefault(y => y.Type == evo.Type);
+                                    byte slotLevel = evolutionLine?.SlotLevel ?? 0;
 
-                                    if (evolutionLine != null)
-                                        slotLevel = evolutionLine.SlotLevel;
+                                    var encyclopediaEntry = digimon.Character.Encyclopedia.First(x => x.DigimonEvolutionId == evolutionAsset.Id);
 
-                                    if (!digimon.Character.Encyclopedia.Exists(x => x.DigimonEvolutionId == digimonEvolutionInfo?.Id && x.Evolutions.Exists(evo => evo.DigimonBaseType == evolution.Type)))
+                                    if (!encyclopediaEntry.Evolutions.Any(e => e.DigimonBaseType == evo.Type))
                                     {
-                                        encyclopediaEvolutionCount++;
+                                        var encyclopediaEvo = CharacterEncyclopediaEvolutionsModel.Create(evo.Type, slotLevel, Convert.ToBoolean(evo.Unlocked));
+                                        encyclopediaEntry.Evolutions.Add(encyclopediaEvo);
+                                        evolutionsAdded++;
 
-                                        var encyclopediaEvo = CharacterEncyclopediaEvolutionsModel.Create(evolution.Type, slotLevel, Convert.ToBoolean(evolution.Unlocked));
-
-                                        digimon.Character.Encyclopedia
-                                            .First(x => x.DigimonEvolutionId == digimonEvolutionInfo?.Id)?.Evolutions.Add(encyclopediaEvo);
-
-                                        var lockedEncyclopediaCount = digimon.Character.Encyclopedia.First(x => x.DigimonEvolutionId == digimonEvolutionInfo?.Id)
-                                            .Evolutions.Count(x => x.IsUnlocked == false);
-
-                                    if (lockedEncyclopediaCount <= 0)
-                                    {
-                                        var encyclopediaEntry = digimon.Character.Encyclopedia.First(x => x.DigimonEvolutionId == digimonEvolutionInfo?.Id);
-
-                                        // If the encyclopedia entry is not already marked as rewarded, mark it as allowed and not received
-                                        if (!encyclopediaEntry.IsRewardReceived)
+                                        if (encyclopediaEntry.Evolutions.All(e => e.IsUnlocked))
                                         {
-                                            encyclopediaEntry.SetRewardAllowed(true);
-                                            encyclopediaEntry.SetRewardReceived(false);
+                                            if (!encyclopediaEntry.IsRewardReceived)
+                                            {
+                                                encyclopediaEntry.SetRewardAllowed(true);
+                                                encyclopediaEntry.SetRewardReceived(false);
 
-                                            await _sender.Send(new UpdateCharacterEncyclopediaCommand(encyclopediaEntry));
+                                                if (encyclopediaEntry.Evolutions == null)
+                                                {
+                                                    _logger.Error($"[CheckEncyclopedia] :: Skipping update for DigimonEvolutionId: {encyclopediaEntry.DigimonEvolutionId} due to null Evolutions list");
+                                                    continue;
+                                                }
+
+                                                await _sender.Send(new UpdateCharacterEncyclopediaCommand(encyclopediaEntry));
+                                            }
                                         }
                                     }
-
-                                    }
                                 }
-                                catch (Exception e)
+                                catch (Exception ex)
                                 {
-                                    _logger.Error($"[Encyclopedia] :: {e.Message}");
-                                    _logger.Error($"{e.StackTrace}");
+                                    _logger.Error($"[CheckEncyclopedia][InnerLoop] :: Failed to process evolution for DigimonBaseType: {digimon.BaseType}, EvolutionType: {evo.Type}. Error: {ex.Message}");
+                                    _logger.Error(ex.StackTrace);
                                 }
-                            });
+                            }
                         }
                     }
 
-                });
+                    skip += take;
+                }
 
+                swGlobal.Stop();
+                _logger.Information($"[CheckEncyclopedia] :: Finished in {swGlobal.ElapsedMilliseconds} ms, Created {encyclopediaCreated} new Encyclopedias, Added {evolutionsAdded} evolutions.");
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                _logger.Error($"Error to CheckAllDigimonEvolutions:\n {e.Message}");
-                _logger.Error($"InnerException: {e.InnerException}");
+                _logger.Error($"[CheckEncyclopedia][Outer] :: {ex.Message}");
+                if (ex.InnerException != null)
+                    _logger.Error($"[CheckEncyclopedia][InnerException] :: {ex.InnerException}");
             }
-
-            return Task.CompletedTask;
         }
+
+
+
     }
 }
+
+

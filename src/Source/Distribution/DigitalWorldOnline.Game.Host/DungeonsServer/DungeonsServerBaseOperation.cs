@@ -398,6 +398,7 @@ namespace DigitalWorldOnline.GameHost
                 _logger.Error($"Unexpected error at map running: {ex.Message} {ex.StackTrace}.");
             }
         }
+    
 
 
         /// <summary>
@@ -409,8 +410,8 @@ namespace DigitalWorldOnline.GameHost
 
             if (client?.Tamer == null)
             {
-                _ =GameLogger.LogInfo($"Client sin Tamer detectado (AccountId: {client?.AccountId}). Forzando RemoveClient.");
-                    
+                _ = GameLogger.LogInfo($"Client sin Tamer detectado (AccountId: {client?.AccountId}). Forzando RemoveClient.");
+
                 RemoveClient(client);
                 return;
             }
@@ -825,7 +826,7 @@ namespace DigitalWorldOnline.GameHost
 
             return targetMobs;
         }
-        public IMob? GetIMobByHandler(short mapId,int handler,long tamerId)
+        public IMob? GetIMobByHandler(long mapId,int handler,long tamerId)
         {
             var map = Maps.FirstOrDefault(x => x.Clients.Exists(gameClient => gameClient.TamerId == tamerId));
 

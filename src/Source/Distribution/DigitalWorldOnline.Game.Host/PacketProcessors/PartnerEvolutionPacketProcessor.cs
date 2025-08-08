@@ -465,9 +465,9 @@ namespace DigitalWorldOnline.Game.PacketProcessors
                                 return;
                             }
 
-                            client.Tamer.ConsumeXg(68);
+                            client.Tamer.ConsumeXg(34);
 
-                            client.Tamer.ActiveEvolution.SetXg(2);
+                            client.Tamer.ActiveEvolution.SetXg(1);
                             client.Tamer.ActiveEvolution.SetDs(0);
                         }
                         break;
@@ -482,9 +482,9 @@ namespace DigitalWorldOnline.Game.PacketProcessors
                                 return;
                             }
 
-                            client.Tamer.ConsumeXg(92);
+                            client.Tamer.ConsumeXg(46);
 
-                            client.Tamer.ActiveEvolution.SetXg(4);
+                            client.Tamer.ActiveEvolution.SetXg(2);
                             client.Tamer.ActiveEvolution.SetDs(0);
                         }
                         break;
@@ -499,9 +499,9 @@ namespace DigitalWorldOnline.Game.PacketProcessors
                                 return;
                             }
 
-                            client.Tamer.ConsumeXg(130);
+                            client.Tamer.ConsumeXg(65);
 
-                            client.Tamer.ActiveEvolution.SetXg(6);
+                            client.Tamer.ActiveEvolution.SetXg(3);
                             client.Tamer.ActiveEvolution.SetDs(0);
                         }
                         break;
@@ -516,9 +516,9 @@ namespace DigitalWorldOnline.Game.PacketProcessors
                                 return;
                             }
 
-                            client.Tamer.ConsumeXg(174);
+                            client.Tamer.ConsumeXg(87);
 
-                            client.Tamer.ActiveEvolution.SetXg(8);
+                            client.Tamer.ActiveEvolution.SetXg(4);
                             client.Tamer.ActiveEvolution.SetDs(0);
                         }
                         break;
@@ -533,9 +533,9 @@ namespace DigitalWorldOnline.Game.PacketProcessors
                                 return;
                             }
 
-                            client.Tamer.ConsumeXg(280);
+                            client.Tamer.ConsumeXg(140);
 
-                            client.Tamer.ActiveEvolution.SetXg(10);
+                            client.Tamer.ActiveEvolution.SetXg(5);
                             client.Tamer.ActiveEvolution.SetDs(0);
                         }
                         break;
@@ -550,9 +550,9 @@ namespace DigitalWorldOnline.Game.PacketProcessors
                                 return;
                             }
 
-                            client.Tamer.ConsumeXg(320);
+                            client.Tamer.ConsumeXg(160);
 
-                            client.Tamer.ActiveEvolution.SetXg(12);
+                            client.Tamer.ActiveEvolution.SetXg(6);
                             client.Tamer.ActiveEvolution.SetDs(0);
                         }
                         break;

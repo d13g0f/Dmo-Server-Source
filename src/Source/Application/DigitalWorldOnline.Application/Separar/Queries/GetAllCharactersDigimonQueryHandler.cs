@@ -16,7 +16,7 @@ namespace DigitalWorldOnline.Application.Separar.Queries
 
         public async Task<List<DigimonDTO>> Handle(GetAllCharactersDigimonQuery request, CancellationToken cancellationToken)
         {
-            return await _repository.GetAllDigimonsAsync();
+            return await _repository.GetAllDigimonsAsync(request.Skip, request.Take);
         }
     }
 }

@@ -84,13 +84,17 @@ namespace DigitalWorldOnline.Infrastructure.Mapping
                 .ForMember(dest => dest.Id, x => x.Ignore())
                 .ReverseMap();
 
-            CreateMap<CharacterEncyclopediaModel, CharacterEncyclopediaDTO>()
+           CreateMap<CharacterEncyclopediaModel, CharacterEncyclopediaDTO>()
+                .ForMember(dest => dest.Evolutions, opt => opt.MapFrom(src => src.Evolutions ?? new List<CharacterEncyclopediaEvolutionsModel>())) // Handle null case
+                .ForMember(dest => dest.Character, opt => opt.Ignore()) // Ignore navigation property
+                .ForMember(dest => dest.EvolutionAsset, opt => opt.Ignore()) // Ignore navigation property
                 .ReverseMap();
 
+            
             CreateMap<CharacterEncyclopediaEvolutionsModel, CharacterEncyclopediaEvolutionsDTO>()
-                .ReverseMap();
-
-            CreateMap<CharacterEncyclopediaEvolutionsDTO, CharacterEncyclopediaEvolutionsModel>()
+                .ForMember(dest => dest.DigimonBaseType, opt => opt.MapFrom(src => src.DigimonBaseType))
+                .ForMember(dest => dest.SlotLevel, opt => opt.MapFrom(src => src.SlotLevel))
+                .ForMember(dest => dest.IsUnlocked, opt => opt.MapFrom(src => src.IsUnlocked))
                 .ReverseMap();
         }
     }

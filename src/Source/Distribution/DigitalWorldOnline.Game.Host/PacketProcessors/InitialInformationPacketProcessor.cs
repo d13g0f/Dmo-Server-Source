@@ -18,6 +18,7 @@ using DigitalWorldOnline.GameHost.EventsServer;
 using Microsoft.IdentityModel.Tokens;
 using MediatR;
 using Serilog;
+using GameServer.Logging;
 
 namespace DigitalWorldOnline.Game.PacketProcessors
 {
@@ -63,29 +64,36 @@ namespace DigitalWorldOnline.Game.PacketProcessors
         {
             var packet = new GamePacketReader(packetData);
 
-            //_logger.Information($"Runing InitialInformationPacketProcessor ... **************************");
+           _ = GameLogger.LogInfo("[loading] Starting InitialInformationPacketProcessor", "Loading");
 
             packet.Skip(4);
             var accountId = packet.ReadUInt();
             var accessCode = packet.ReadUInt();
 
+           _ = GameLogger.LogInfo($"[loading] Received accountId={accountId}, accessCode={accessCode}", "Loading");
+
             var account = _mapper.Map<AccountModel>(await _sender.Send(new AccountByIdQuery(accountId)));
             client.SetAccountInfo(account);
+
+           _ = GameLogger.LogInfo($"[loading] Loaded account with ID={account.Id}", "Loading");
 
             try
             {
                 CharacterModel? character = _mapper.Map<CharacterModel>(
                         await _sender.Send(new CharacterByIdQuery(account.LastPlayedCharacter)));
 
-                //_logger.Information($"Search character with id {account.LastPlayedCharacter} for account {account.Id}...");
+               _ = GameLogger.LogInfo($"[loading] Loaded character with ID={account.LastPlayedCharacter}", "Loading");
 
                 if (character == null || character.Partner == null)
                 {
                     _logger.Error($"Invalid character information for tamer id {account.LastPlayedCharacter}.");
+                   _ = GameLogger.LogInfo($"[loading] Invalid character information for tamer id {account.LastPlayedCharacter}", "Loading");
                     return;
                 }
 
                 account.ItemList.ForEach(character.AddItemList);
+
+               _ = GameLogger.LogInfo("[loading] Added items to character inventory", "Loading");
 
                 foreach (var digimon in character.Digimons)
                 {
@@ -97,14 +105,20 @@ namespace DigitalWorldOnline.Game.PacketProcessors
                     digimon.SetSealStatus(_assets.SealInfo);
                 }
 
+               _ = GameLogger.LogInfo("[loading] Configured digimon base info and status", "Loading");
+
                 var tamerLevelStatus = _statusManager.GetTamerLevelStatus(character.Model, character.Level);
 
                 character.SetBaseStatus(_statusManager.GetTamerBaseStatus(character.Model));
                 character.SetLevelStatus(tamerLevelStatus);
 
+               _ = GameLogger.LogInfo("[loading] Configured tamer base and level status", "Loading");
+
                 character.NewViewLocation(character.Location.X, character.Location.Y);
                 character.NewLocation(character.Location.MapId, character.Location.X, character.Location.Y);
                 character.Partner.NewLocation(character.Location.MapId, character.Location.X, character.Location.Y);
+
+               _ = GameLogger.LogInfo("[loading] Set new location for character and partner", "Loading");
 
                 character.RemovePartnerPassiveBuff();
                 character.SetPartnerPassiveBuff();
@@ -112,10 +126,14 @@ namespace DigitalWorldOnline.Game.PacketProcessors
 
                 await _sender.Send(new UpdateDigimonBuffListCommand(character.Partner.BuffList));
 
+               _ = GameLogger.LogInfo("[loading] Updated digimon buff list", "Loading");
+
                 foreach (var item in character.ItemList.SelectMany(x => x.Items).Where(x => x.ItemId > 0))
                     item.SetItemInfo(_assets.ItemInfo.FirstOrDefault(x => x.ItemId == item?.ItemId));
 
-                foreach (var buff in character.BuffList.ActiveBuffs)
+               _ = GameLogger.LogInfo("[loading] Set item info for inventory items", "Loading");
+
+                foreach (var buff in character.BuffList.ActiveBuffs)    
                     buff.SetBuffInfo(_assets.BuffInfo.FirstOrDefault(x =>
                         x.SkillCode == buff.SkillId || x.DigimonSkillCode == buff.SkillId));
 
@@ -123,15 +141,17 @@ namespace DigitalWorldOnline.Game.PacketProcessors
                     buff.SetBuffInfo(_assets.BuffInfo.FirstOrDefault(x =>
                         x.SkillCode == buff.SkillId || x.DigimonSkillCode == buff.SkillId));
 
+               _ = GameLogger.LogInfo("[loading] Set buff info for character and partner", "Loading");
+
                 _logger.Debug($"Getting available channels...");
 
                 if (client.DungeonMap)
                 {
                     character.SetCurrentChannel(0);
+                   _ = GameLogger.LogInfo("[loading] Set current channel to 0 for dungeon map", "Loading");
                 }
                 else
                 {
-
                     var channels = (Dictionary<byte, byte>)await _sender.Send(new ChannelsByMapIdQuery(character.Location.MapId));
                     byte? channel = GetTargetChannel(character.Channel, channels);
 
@@ -139,11 +159,13 @@ namespace DigitalWorldOnline.Game.PacketProcessors
                     {
                         _logger.Information($"Creating new channel for map {character.Location.MapId}...");
                         channel = CreateNewChannelForMap(channels);
+                       _ = GameLogger.LogInfo($"[loading] Created new channel {channel} for map {character.Location.MapId}", "Loading");
                     }
 
                     if (character.Channel == byte.MaxValue)
                     {
                         character.SetCurrentChannel(channel.Value);
+                       _ = GameLogger.LogInfo($"[loading] Set current channel to {channel.Value}", "Loading");
                     }
                 }
 
@@ -155,6 +177,8 @@ namespace DigitalWorldOnline.Game.PacketProcessors
                 _logger.Debug($"Updating character state...");
                 await _sender.Send(new UpdateCharacterStateCommand(character.Id, CharacterStateEnum.Loading));
 
+               _ = GameLogger.LogInfo("[loading] Updated character state to Loading", "Loading");
+
                 var mapConfig = await _sender.Send(new GameMapConfigByMapIdQuery(client.Tamer.Location.MapId));
 
                 if (mapConfig == null)
@@ -162,6 +186,7 @@ namespace DigitalWorldOnline.Game.PacketProcessors
                     _logger.Warning(
                         $"Adding Tamer {character.Id}:{character.Name} to map {character.Location.MapId} Ch {character.Channel}... (Default Map)");
                     await _mapServer.AddClient(client);
+                   _ = GameLogger.LogInfo($"[loading] Added tamer to default map {character.Location.MapId} Ch {character.Channel}", "Loading");
                 }
                 else
                 {
@@ -172,30 +197,38 @@ namespace DigitalWorldOnline.Game.PacketProcessors
                                 $"Adding Tamer {character.Id}:{character.Name} to map {character.Location.MapId} Ch {character.Channel}... (Dungeon Map)");
                             client.Tamer.SetCurrentChannel(0);
                             await _dungeonsServer.AddClient(client);
+                           _ = GameLogger.LogInfo($"[loading] Added tamer to dungeon map {character.Location.MapId} Ch 0", "Loading");
                             break;
                         case MapTypeEnum.Pvp:
                             _logger.Information(
                                 $"Adding Tamer {character.Id}:{character.Name} to map {character.Location.MapId} Ch {character.Channel}... (PVP Map)");
                             await _pvpServer.AddClient(client);
+                           _ = GameLogger.LogInfo($"[loading] Added tamer to PVP map {character.Location.MapId} Ch {character.Channel}", "Loading");
                             break;
                         case MapTypeEnum.Event:
                             _logger.Information(
                                 $"Adding Tamer {character.Id}:{character.Name} to map {character.Location.MapId} Ch {character.Channel}... (Event Map)");
                             await _eventServer.AddClient(client);
+                           _ = GameLogger.LogInfo($"[loading] Added tamer to event map {character.Location.MapId} Ch {character.Channel}", "Loading");
                             break;
                         case MapTypeEnum.Default:
                             _logger.Information(
                                 $"Adding Tamer {character.Id}:{character.Name} to map {character.Location.MapId} Ch {character.Channel}... (Normal Map)");
                             await _mapServer.AddClient(client);
+                           _ = GameLogger.LogInfo($"[loading] Added tamer to normal map {character.Location.MapId} Ch {character.Channel}", "Loading");
                             break;
                     }
-
                 }
 
                 while (client.Loading)
+                {
                     await Task.Delay(200);
+                   _ = GameLogger.LogInfo("[loading] Waiting for client loading to complete", "Loading");
+                }
 
                 character.SetGenericHandler(character.Partner.GeneralHandler);
+
+               _ = GameLogger.LogInfo("[loading] Set generic handler for character", "Loading");
 
                 if (!client.DungeonMap)
                 {
@@ -209,11 +242,13 @@ namespace DigitalWorldOnline.Game.PacketProcessors
                             characterRegion.Unlock();
 
                             await _sender.Send(new UpdateCharacterMapRegionCommand(characterRegion));
+                           _ = GameLogger.LogInfo($"[loading] Unlocked map region {region.RegionIndex} for character", "Loading");
                         }
                     }
                 }
 
                 client.Send(new InitialInfoPacket(character, null));
+               _ = GameLogger.LogInfo("[loading] Sent InitialInfoPacket to client", "Loading");
 
                 var party = _partyManager.FindParty(client.TamerId);
 
@@ -228,6 +263,7 @@ namespace DigitalWorldOnline.Game.PacketProcessors
                     {
                         character.SetCurrentChannel(firstMemberLocation.Channel);
                         client.Tamer.SetCurrentChannel(firstMemberLocation.Channel);
+                       _ = GameLogger.LogInfo($"[loading] Set current channel to {firstMemberLocation.Channel} based on party member", "Loading");
                     }
 
                     foreach (var target in party.Members.Values.Where(x => x.Id != client.TamerId))
@@ -245,21 +281,24 @@ namespace DigitalWorldOnline.Game.PacketProcessors
                                 new PartyMemberWarpGatePacket(partyMember, targetClient.Tamer).Serialize(),
                                 new PartyMemberMovimentationPacket(partyMember).Serialize()
                             ));
+                       _ = GameLogger.LogInfo($"[loading] Sent party member packets to target client {targetClient.TamerId}", "Loading");
                     }
                     await Task.Delay(100);
 
                     client.Send(new PartyMemberListPacket(party, character.Id));
+                   _ = GameLogger.LogInfo("[loading] Sent PartyMemberListPacket to client", "Loading");
                 }
 
                 await ReceiveArenaPoints(client);
+               _ = GameLogger.LogInfo("[loading] Processed arena points", "Loading");
 
                 _logger.Debug($"Send initial packet for tamer {client.Tamer.Name}");
 
                 await _sender.Send(new ChangeTamerIdTPCommand(client.Tamer.Id, (int)0));
+               _ = GameLogger.LogInfo("[loading] Updated tamer TP to 0", "Loading");
 
                 await _sender.Send(new UpdateCharacterChannelCommand(character.Id, character.Channel));
-
-                //_logger.Information($"***********************************************************************");
+               _ = GameLogger.LogInfo($"[loading] Updated character channel to {character.Channel}", "Loading");
             }
             catch (Exception ex)
             {
@@ -269,6 +308,7 @@ namespace DigitalWorldOnline.Game.PacketProcessors
                 _logger.Error($"Stacktrace: {ex.StackTrace}");
                 _logger.Error($"Disconnecting Client");
                 client.Disconnect();
+               _ = GameLogger.LogInfo($"[loading] Exception occurred: {ex.Message}", "Loading");
             }
         }
 
@@ -290,6 +330,7 @@ namespace DigitalWorldOnline.Game.PacketProcessors
                 if (client.Tamer.Inventory.AddItem(newItem))
                 {
                     await _sender.Send(new UpdateItemsCommand(client.Tamer.Inventory));
+                   _ = GameLogger.LogInfo("[loading] Added arena points item to inventory", "Loading");
                 }
                 else
                 {
@@ -297,17 +338,20 @@ namespace DigitalWorldOnline.Game.PacketProcessors
 
                     client.Tamer.GiftWarehouse.AddItem(newItem);
                     await _sender.Send(new UpdateItemsCommand(client.Tamer.GiftWarehouse));
+                   _ = GameLogger.LogInfo("[loading] Added arena points item to gift warehouse", "Loading");
                 }
 
                 client.Tamer.Points.SetAmount(0);
                 client.Tamer.Points.SetCurrentStage(0);
 
                 await _sender.Send(new UpdateCharacterArenaPointsCommand(client.Tamer.Points));
+               _ = GameLogger.LogInfo("[loading] Updated arena points to 0", "Loading");
             }
             else if (client.Tamer.Points.CurrentStage > 0)
             {
                 client.Tamer.Points.SetCurrentStage(0);
                 await _sender.Send(new UpdateCharacterArenaPointsCommand(client.Tamer.Points));
+               _ = GameLogger.LogInfo("[loading] Reset current stage to 0", "Loading");
             }
         }
 
