@@ -465,10 +465,7 @@ namespace DigitalWorldOnline.GameHost
 
                 var missed = false;
 
-                if (!tamer.GodMode)
-                {
-                    missed = tamer.CanMissHit();
-                }
+
 
                 if (missed)
                 {

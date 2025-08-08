@@ -5,22 +5,22 @@
         /// <summary>
         /// Reference ID to map.
         /// </summary>
-        public short MapId { get; private set; }
+        public short MapId { get;  set; }
 
         /// <summary>
         /// Position X (horizontal).
         /// </summary>
-        public int X { get; private set; }
+        public int X { get;  set; }
 
         /// <summary>
         /// Position Y (vertical).
         /// </summary>
-        public int Y { get; private set; }
+        public int Y { get;  set; }
 
         /// <summary>
         /// Position Z (looking for).
         /// </summary>
-        public float Z { get; private set; }
+        public float Z { get;  set; }
 
         public int TicksCount { get; private set; }
     }

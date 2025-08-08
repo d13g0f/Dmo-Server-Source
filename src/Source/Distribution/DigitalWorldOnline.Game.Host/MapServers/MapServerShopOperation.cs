@@ -50,5 +50,8 @@ namespace DigitalWorldOnline.GameHost
                 targetClient?.Send(new UnloadConsignedShopPacket(shopToHide).Serialize());
             }
         }
+
+
+        
     }
 }

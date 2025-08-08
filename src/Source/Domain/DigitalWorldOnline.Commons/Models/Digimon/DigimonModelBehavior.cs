@@ -823,31 +823,19 @@ namespace DigitalWorldOnline.Commons.Models.Digimon
         {
             switch (BaseInfo.Attribute)
             {
-                case DigimonAttributeEnum.None: //Não ganha
+                case DigimonAttributeEnum.None:
+                    // No gana experiencia de atributo
                     break;
-                case DigimonAttributeEnum.Data:
-                    break;
-                case DigimonAttributeEnum.Vaccine:
-                    AttributeExperience.IncreaseAttributeExperience(value, BaseInfo.Attribute);
-                    break;
-                case DigimonAttributeEnum.Virus:
-                    AttributeExperience.IncreaseAttributeExperience(value, BaseInfo.Attribute);
-                    break;
-                case DigimonAttributeEnum.Unknown:
-                    {
-                        switch (CurrentType)
-                        {
-                            //TODO: fixo com base na forma atual + equipamento
-                            // Rookie 35% | Champion 45% | Ultimate 55% | Mega 65% | Burst Mode is 75%
-                            // +equipment (max 100%)
 
-                            default:
-                                break;
-                        }
-                    }
+                case DigimonAttributeEnum.Data:
+                case DigimonAttributeEnum.Vaccine:
+                case DigimonAttributeEnum.Virus:
+                case DigimonAttributeEnum.Unknown:
+                    AttributeExperience.IncreaseAttributeExperience(value, BaseInfo.Attribute);
                     break;
             }
         }
+
 
         /// <summary>
         /// Increases current element exp value.

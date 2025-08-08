@@ -5,6 +5,6 @@
         /// <summary>
         /// Unique sequential identifier.
         /// </summary>
-        public long Id { get; private set; }
+        public long Id { get;  set; }
     }
 }

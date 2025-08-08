@@ -194,7 +194,11 @@ namespace DigitalWorldOnline.Commons.Models.Digimon
                     break;
 
                 case DigimonAttributeEnum.Unknown:
-                    //Fixed by current form
+                    {
+                        Unknown += value;
+                        if (Unknown > 10000)
+                            Unknown = 10000;
+                    }
                     break;
             }
         }
@@ -225,7 +229,7 @@ namespace DigitalWorldOnline.Commons.Models.Digimon
                     break;
 
                 case DigimonAttributeEnum.Unknown:
-                    //Fixed by current form
+                    Unknown -= value;
                     break;
             }
         }

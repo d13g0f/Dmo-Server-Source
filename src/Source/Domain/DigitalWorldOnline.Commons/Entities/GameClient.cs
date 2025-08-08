@@ -2,6 +2,7 @@
 using DigitalWorldOnline.Commons.Models.Account;
 using DigitalWorldOnline.Commons.Models.Character;
 using DigitalWorldOnline.Commons.Models.Digimon;
+using DigitalWorldOnline.Commons.Models.Map;
 using DigitalWorldOnline.Commons.Utils;
 using DigitalWorldOnline.Commons.Writers;
 using System.Net.Sockets;
@@ -94,11 +95,11 @@ namespace DigitalWorldOnline.Commons.Entities
 
         // -------------------------------------------------------------------------------------------------------
 
-        public bool DungeonMap => UtilitiesFunctions.DungeonMapIds.Contains(Tamer?.Location.MapId ?? 0);
+        public bool DungeonMap => GameMap.DungeonMapIds.Contains(Tamer?.Location.MapId ?? 0);
 
-        public bool EventMap => UtilitiesFunctions.EventMapIds.Contains(Tamer?.Location.MapId ?? 0);
+        public bool EventMap => GameMap.EventMapIds.Contains(Tamer?.Location.MapId ?? 0);
 
-        public bool PvpMap => UtilitiesFunctions.PvpMapIds.Contains(Tamer?.Location.MapId ?? 0);
+        public bool PvpMap => GameMap.PvpMapIds.Contains(Tamer?.Location.MapId ?? 0);
 
         // -------------------------------------------------------------------------------------------------------
 

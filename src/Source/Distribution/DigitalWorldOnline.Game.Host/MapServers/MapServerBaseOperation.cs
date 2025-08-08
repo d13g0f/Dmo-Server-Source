@@ -11,6 +11,7 @@ using DigitalWorldOnline.Commons.Models.Map;
 using DigitalWorldOnline.Commons.Models.Summon;
 using DigitalWorldOnline.Commons.Models.TamerShop;
 using DigitalWorldOnline.Commons.Packets.MapServer;
+using GameServer.Logging;
 using Newtonsoft.Json;
 using System.Diagnostics;
 using System.Text;
@@ -171,32 +172,112 @@ namespace DigitalWorldOnline.GameHost
             }
         }
 
-        /// <summary>
+
         /// Gets the consigned shops latest list.
         /// </summary>
+        /// <param name="cancellationToken">Control token for the operation</param>
         /// <returns>The consigned shops collection</returns>
         private async Task GetMapConsignedShops(CancellationToken cancellationToken)
         {
-            if (DateTime.Now > _lastConsignedShopsSearch)
+            if (DateTime.Now <= _lastConsignedShopsSearch)
+                return;
+
+            var initializedMaps = Maps.Where(x => x.Initialized).ToList();
+
+            foreach (var map in initializedMaps)
             {
-                // Take a snapshot of initialized maps
-                var initializedMaps = Maps.Where(x => x.Initialized).ToList();
-                foreach (var map in initializedMaps)
+                if (map.Operating)
+                    continue;
+
+                int retryCount = 0;
+                const int maxRetries = 3;
+                bool success = false;
+
+                while (!success && retryCount < maxRetries)
                 {
-                    if (map.Operating)
-                        continue;
+                    try
+                    {
+                        using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(2)); // Timeout for query
+                        var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cts.Token, cancellationToken);
+                        var consignedShops = _mapper.Map<List<ConsignedShop>>(
+                            await _sender.Send(new ConsignedShopsQuery((int)map.Id), linkedCts.Token)
+                        );
 
-                    var consignedShops =
-                        _mapper.Map<List<ConsignedShop>>(await _sender.Send(new ConsignedShopsQuery((int)map.Id),
-                            cancellationToken));
+                        map.UpdateConsignedShops(consignedShops);
+                        foreach (var client in map.Clients)
+                        {
+                            if (client?.IsConnected == true)
+                                RefreshConsignedShopsForClient(client);
+                        }
 
-                    map.UpdateConsignedShops(consignedShops);
+                        success = true;
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        retryCount++;
+                        await GameLogger.LogWarning(
+                            $"[ConsignedShop] Query timed out for MapId={map.Id} | Attempt {retryCount}/{maxRetries}",
+                            "shop"
+                        );
+
+                        if (retryCount >= maxRetries)
+                        {
+                            await GameLogger.LogError(
+                                $"[ConsignedShop] FINAL FAILURE loading consigned shops for MapId={map.Id} after {maxRetries} attempts.",
+                                "shop"
+                            );
+                        }
+                        else
+                        {
+                            await Task.Delay(1000 * retryCount, cancellationToken);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        retryCount++;
+                        await GameLogger.LogWarning(
+                            $"[ConsignedShop] Failed to retrieve shops for MapId={map.Id} | Attempt {retryCount}/{maxRetries} | Error: {ex.Message}",
+                            "shop"
+                        );
+
+                        if (retryCount >= maxRetries)
+                        {
+                            await GameLogger.LogError(
+                                $"[ConsignedShop] FINAL FAILURE loading consigned shops for MapId={map.Id}. Giving up after {maxRetries} attempts.",
+                                "shop"
+                            );
+                        }
+                        else
+                        {
+                            await Task.Delay(1000 * retryCount, cancellationToken);
+                        }
+                    }
                 }
-
-                _lastConsignedShopsSearch = DateTime.Now.AddSeconds(15);
             }
+
+            _lastConsignedShopsSearch = DateTime.Now.AddSeconds(10); // Reduced interval for faster updates
         }
 
+
+
+            public void RefreshConsignedShopsForClient(GameClient client)
+            {
+                var map = Maps.FirstOrDefault(x => x.MapId == client?.Tamer?.Location?.MapId && x.Clients.Exists(y => y.TamerId == client.TamerId));
+                if (map == null || client.IsConnected == false)
+                    return;
+
+                foreach (var shop in map.ConsignedShops)
+                {
+                    if (shop?.CharacterId == null || shop?.Id == null)
+                        continue;
+
+                    ShowConsignedShop(map, shop, client.Tamer.Id);
+                }
+            }
+
+
+        
+                
         /// <summary>
         /// The default hosted service "starting" method.
         /// </summary>

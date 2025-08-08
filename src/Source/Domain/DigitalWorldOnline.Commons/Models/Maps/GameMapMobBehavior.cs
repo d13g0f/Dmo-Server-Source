@@ -1,4 +1,5 @@
-﻿using DigitalWorldOnline.Commons.Enums.ClientEnums;
+﻿using DigitalWorldOnline.Commons.Enums;
+using DigitalWorldOnline.Commons.Enums.ClientEnums;
 using DigitalWorldOnline.Commons.Models.Asset;
 using DigitalWorldOnline.Commons.Models.Assets;
 using DigitalWorldOnline.Commons.Models.Character;
@@ -15,6 +16,22 @@ namespace DigitalWorldOnline.Commons.Models.Map
 {
     public sealed partial class GameMap
     {
+        public static readonly List<short> DungeonMapIds = new()
+        {
+            17, 50, 51, 10, 210, 211, 212, 213, 214, 252, 263, 264, 300, 301,
+            1110, 1111, 1112, 1304, 1308, 1310, 1311, 1403, 1404, 1406, 1500,
+            1501, 1502, 1600, 1601, 1602, 1603, 1604, 1605, 1606, 1607, 1608,
+            1609, 1610, 1611, 1612, 1613, 1614, 1615, 1701, 1702, 1703, 1704,
+            1705, 1706, 1809, 1810, 1911, 2001, 2002, 9103, 9861
+        };
+
+        public static readonly List<short> PvpMapIds = new() { 9101 };
+
+        public static readonly List<short> EventMapIds = new() { 
+            // tus ids de evento si tienes 
+        };
+
+
         private List<MobConfigModel> _mobsToDestroy = new List<MobConfigModel>();
 
         private List<MobConfigModel> _mobsToAdd = new List<MobConfigModel>();
@@ -248,10 +265,10 @@ namespace DigitalWorldOnline.Commons.Models.Map
                 baseDamage *= critBonusMultiplier;
               
             }
-            else
-            {
-               Console.WriteLine($"No critical hit: effectiveCriticalChance={effectiveCriticalChance:F4}");
-            }
+           // else
+           // {
+            //    Console.WriteLine($"No critical hit: effectiveCriticalChance={effectiveCriticalChance:F4}");
+           // }
 
             // Bonificaciones
             double levelBonus = mob.Level > mob.Target.Level ? baseDamage * 0.01 * (mob.Level - mob.Target.Level) : 0;
@@ -335,10 +352,10 @@ namespace DigitalWorldOnline.Commons.Models.Map
                 baseDamage *= critBonusMultiplier;
                 
             }
-            else
-            {
-                Console.WriteLine($"No critical hit: effectiveCriticalChance={effectiveCriticalChance:F4}");
-            }
+           // else
+          //  {
+            //    Console.WriteLine($"No critical hit: effectiveCriticalChance={effectiveCriticalChance:F4}");
+           // }
 
             // Bonificaciones
             double levelBonus = mob.Level > mob.Target.Level ? baseDamage * 0.01 * (mob.Level - mob.Target.Level) : 0;
@@ -347,14 +364,14 @@ namespace DigitalWorldOnline.Commons.Models.Map
             double elementBonus = baseDamage * (mob.Element.HasElementAdvantage(mob.Target.BaseInfo.Element) ? 0.25 :
                                                mob.Target.BaseInfo.Element.HasElementAdvantage(mob.Element) ? -0.25 : 0.0);
 
-            Console.WriteLine( "AttackManager",
-                $"Bonuses: levelBonus={levelBonus:F2}, attributeBonus={attributeBonus:F2}, elementBonus={elementBonus:F2}");
+           // Console.WriteLine( "AttackManager",
+              //  $"Bonuses: levelBonus={levelBonus:F2}, attributeBonus={attributeBonus:F2}, elementBonus={elementBonus:F2}");
 
             // Daño final
             int finalDmg = (int)Math.Floor(baseDamage + levelBonus + attributeBonus + elementBonus);
             if (finalDmg <= 0) finalDmg = 1;
-            Console.WriteLine( "AttackManager",
-                $"Final damage: finalDmg={finalDmg}, blocked={blocked}, isCritical={isCritical}");
+           // Console.WriteLine( "AttackManager",
+           //     $"Final damage: finalDmg={finalDmg}, blocked={blocked}, isCritical={isCritical}");
             #endregion
 
             var previousHp = mob.Target.CurrentHp;
@@ -383,14 +400,14 @@ namespace DigitalWorldOnline.Commons.Models.Map
         {
             #region Hit Damage
             // Registrar valores de entrada
-            Console.WriteLine( "AttackManager",
-                $"Input: MobType=EventMobConfigModel, AT={mob.ATValue}, CT={mob.CTValue}, CD={mob.CDValue}, TargetDE={mob.Target.DE}, TargetBL={mob.Target.BL}, TargetLevel={mob.Target.Level}");
+           // Console.WriteLine( "AttackManager",
+             //   $"Input: MobType=EventMobConfigModel, AT={mob.ATValue}, CT={mob.CTValue}, CD={mob.CDValue}, TargetDE={mob.Target.DE}, TargetBL={mob.Target.BL}, TargetLevel={mob.Target.Level}");
 
             // Daño base
             double baseDamage = mob.ATValue - mob.Target.DE + UtilitiesFunctions.RandomInt(1, 15);
             if (baseDamage < 0) baseDamage = 0;
-            Console.WriteLine( "AttackManager",
-                $"Base damage: baseDamage={baseDamage:F2}, RandomBonus={UtilitiesFunctions.RandomInt(1, 15)}");
+          //  Console.WriteLine( "AttackManager",
+            //    $"Base damage: baseDamage={baseDamage:F2}, RandomBonus={UtilitiesFunctions.RandomInt(1, 15)}");
 
             // Bloqueo
             double enemyBlockChance = mob.Target.BL;
@@ -398,8 +415,8 @@ namespace DigitalWorldOnline.Commons.Models.Map
             if (blocked)
             {
                 baseDamage /= 2; // Bloqueo reduce daño a la mitad
-                Console.WriteLine( "AttackManager",
-                    $"Blocked: baseDamage halved to {baseDamage:F2}");
+                //Console.WriteLine( "AttackManager",
+                //    $"Blocked: baseDamage halved to {baseDamage:F2}");
             }
 
             // Cálculo de crítico
@@ -418,14 +435,14 @@ namespace DigitalWorldOnline.Commons.Models.Map
                 blocked = false; // Crítico anula bloqueo
                 critBonusMultiplier = 1.0 + criticalDamageBonus + excessCdBonus;
                 baseDamage *= critBonusMultiplier;
-                Console.WriteLine( "AttackManager",
-                    $"Critical hit: effectiveCriticalChance={effectiveCriticalChance:F4}, critBonusMultiplier={critBonusMultiplier:F2}, baseDamage={baseDamage:F2}");
+                //Console.WriteLine( "AttackManager",
+                  //  $"Critical hit: effectiveCriticalChance={effectiveCriticalChance:F4}, critBonusMultiplier={critBonusMultiplier:F2}, baseDamage={baseDamage:F2}");
             }
-            else
-            {
-                Console.WriteLine( "AttackManager",
-                    $"No critical hit: effectiveCriticalChance={effectiveCriticalChance:F4}");
-            }
+           // else
+          //  {
+           //     Console.WriteLine( "AttackManager",
+            //        $"No critical hit: effectiveCriticalChance={effectiveCriticalChance:F4}");
+          //  }
 
             // Bonificaciones
             double levelBonus = mob.Level > mob.Target.Level ? baseDamage * 0.01 * (mob.Level - mob.Target.Level) : 0;
@@ -434,14 +451,14 @@ namespace DigitalWorldOnline.Commons.Models.Map
             double elementBonus = baseDamage * (mob.Element.HasElementAdvantage(mob.Target.BaseInfo.Element) ? 0.25 :
                                                mob.Target.BaseInfo.Element.HasElementAdvantage(mob.Element) ? -0.25 : 0.0);
 
-            Console.WriteLine("AttackManager",
-                $"Bonuses: levelBonus={levelBonus:F2}, attributeBonus={attributeBonus:F2}, elementBonus={elementBonus:F2}");
+           // Console.WriteLine("AttackManager",
+            //    $"Bonuses: levelBonus={levelBonus:F2}, attributeBonus={attributeBonus:F2}, elementBonus={elementBonus:F2}");
 
             // Daño final
             int finalDmg = (int)Math.Floor(baseDamage + levelBonus + attributeBonus + elementBonus);
             if (finalDmg <= 0) finalDmg = 1;
-            Console.WriteLine("AttackManager",
-                $"Final damage: finalDmg={finalDmg}, blocked={blocked}, isCritical={isCritical}");
+          //  Console.WriteLine("AttackManager",
+          //      $"Final damage: finalDmg={finalDmg}, blocked={blocked}, isCritical={isCritical}");
             #endregion
 
             var previousHp = mob.Target.CurrentHp;

@@ -442,7 +442,7 @@ namespace DigitalWorldOnline.GameHost
 
         // ----------------------------------------------------------------------------------------------------------------------------
 
-        public DigimonModel? GetEnemyByHandler(short mapId, int handler)
+        public DigimonModel? GetEnemyByHandler(long mapId, int handler)
         {
             return Maps.FirstOrDefault(x => x.MapId == mapId)?.ConnectedTamers
                 .Select(x => x.Partner).FirstOrDefault(x => x.GeneralHandler == handler);
