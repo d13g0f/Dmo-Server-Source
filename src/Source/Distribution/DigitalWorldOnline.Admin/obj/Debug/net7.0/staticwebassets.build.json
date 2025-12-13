@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "boqf3KtK1soI4/pWfttZprsarG/FwEth77T169mSpfY=",
+  "Hash": "9jo8EV2cHE7yVHrlS7+a1H9FUmN04LBrGmTtvilpoQE=",
   "Source": "DigitalWorldOnline.Admin",
   "BasePath": "_content/DigitalWorldOnline.Admin",
   "Mode": "Default",
@@ -10,7 +10,7 @@
     {
       "Name": "DigitalWorldOnline.Admin\\wwwroot",
       "Source": "DigitalWorldOnline.Admin",
-      "ContentRoot": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
+      "ContentRoot": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
       "BasePath": "_content/DigitalWorldOnline.Admin",
       "Pattern": "**"
     }
@@ -59,10 +59,10 @@
       "OriginalItemSpec": "C:\\Users\\Diego\\.nuget\\packages\\mudblazor\\6.1.2\\staticwebassets\\MudBlazor.min.js"
     },
     {
-      "Identity": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\_content1\\MudBlazor\\MudBlazor.min.css",
+      "Identity": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\_content1\\MudBlazor\\MudBlazor.min.css",
       "SourceId": "DigitalWorldOnline.Admin",
       "SourceType": "Discovered",
-      "ContentRoot": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
+      "ContentRoot": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
       "BasePath": "_content/DigitalWorldOnline.Admin",
       "RelativePath": "_content1/MudBlazor/MudBlazor.min#[.{fingerprint}]?.css",
       "AssetKind": "All",
@@ -73,17 +73,17 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "4zzcyv4eu3",
-      "Integrity": "ID+YQTHdxOAQwL3HkDNmN+gvKpDMbSCI90Hlsl4cfE0=",
+      "Fingerprint": "2uiaht2b4q",
+      "Integrity": "Jl1p6VJNIQfevOQWGW+P7BlJoHGDXXf+i4cb2qUHDRo=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\_content1\\MudBlazor\\MudBlazor.min.css"
     },
     {
-      "Identity": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\_content1\\MudBlazor\\MudBlazor.min.js",
+      "Identity": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\_content1\\MudBlazor\\MudBlazor.min.js",
       "SourceId": "DigitalWorldOnline.Admin",
       "SourceType": "Discovered",
-      "ContentRoot": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
+      "ContentRoot": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
       "BasePath": "_content/DigitalWorldOnline.Admin",
       "RelativePath": "_content1/MudBlazor/MudBlazor.min#[.{fingerprint}]?.js",
       "AssetKind": "All",
@@ -94,17 +94,17 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "r28yrlkyxf",
-      "Integrity": "Y4xauMcIt84Bvrj3olTDT2vGwa9ZzAIuG7+BSyVhhn8=",
+      "Fingerprint": "qqy426g4vy",
+      "Integrity": "Hl0466OEwfeA4HKlkEFTlkOGVYaOJlTWBQGNeDPgCjY=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\_content1\\MudBlazor\\MudBlazor.min.js"
     },
     {
-      "Identity": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
+      "Identity": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
       "SourceId": "DigitalWorldOnline.Admin",
       "SourceType": "Discovered",
-      "ContentRoot": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
+      "ContentRoot": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
       "BasePath": "_content/DigitalWorldOnline.Admin",
       "RelativePath": "css/bootstrap/bootstrap.min#[.{fingerprint}]?.css",
       "AssetKind": "All",
@@ -115,17 +115,17 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "o2wlpouf80",
-      "Integrity": "YLGeXaapI0/5IgZopewRJcFXomhRMlYYjugPLSyNjTY=",
+      "Fingerprint": "etnb7xlipe",
+      "Integrity": "rldnE7wZYJj3Q43t5v8fg1ojKRwyt0Wtfm+224CacZs=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\bootstrap\\bootstrap.min.css"
     },
     {
-      "Identity": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
+      "Identity": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
       "SourceId": "DigitalWorldOnline.Admin",
       "SourceType": "Discovered",
-      "ContentRoot": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
+      "ContentRoot": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
       "BasePath": "_content/DigitalWorldOnline.Admin",
       "RelativePath": "css/bootstrap/bootstrap.min.css#[.{fingerprint}]?.map",
       "AssetKind": "All",
@@ -143,10 +143,10 @@
       "OriginalItemSpec": "wwwroot\\css\\bootstrap\\bootstrap.min.css.map"
     },
     {
-      "Identity": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css",
+      "Identity": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css",
       "SourceId": "DigitalWorldOnline.Admin",
       "SourceType": "Discovered",
-      "ContentRoot": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
+      "ContentRoot": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
       "BasePath": "_content/DigitalWorldOnline.Admin",
       "RelativePath": "css/open-iconic/font/css/open-iconic-bootstrap.min#[.{fingerprint}]?.css",
       "AssetKind": "All",
@@ -164,10 +164,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css"
     },
     {
-      "Identity": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot",
+      "Identity": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot",
       "SourceId": "DigitalWorldOnline.Admin",
       "SourceType": "Discovered",
-      "ContentRoot": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
+      "ContentRoot": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
       "BasePath": "_content/DigitalWorldOnline.Admin",
       "RelativePath": "css/open-iconic/font/fonts/open-iconic#[.{fingerprint}]?.eot",
       "AssetKind": "All",
@@ -185,10 +185,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot"
     },
     {
-      "Identity": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf",
+      "Identity": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf",
       "SourceId": "DigitalWorldOnline.Admin",
       "SourceType": "Discovered",
-      "ContentRoot": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
+      "ContentRoot": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
       "BasePath": "_content/DigitalWorldOnline.Admin",
       "RelativePath": "css/open-iconic/font/fonts/open-iconic#[.{fingerprint}]?.otf",
       "AssetKind": "All",
@@ -206,10 +206,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf"
     },
     {
-      "Identity": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg",
+      "Identity": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg",
       "SourceId": "DigitalWorldOnline.Admin",
       "SourceType": "Discovered",
-      "ContentRoot": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
+      "ContentRoot": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
       "BasePath": "_content/DigitalWorldOnline.Admin",
       "RelativePath": "css/open-iconic/font/fonts/open-iconic#[.{fingerprint}]?.svg",
       "AssetKind": "All",
@@ -220,17 +220,17 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "10uzszoped",
-      "Integrity": "oUpLdS+SoLJFwf4bzA3iKD7TCm66oLkTpAQlVJ2s1wc=",
+      "Fingerprint": "sjnzgf7e1h",
+      "Integrity": "+P1oQ5jPzOVJGC52E1oxGXIXxxCyMlqy6A9cNxGYzVk=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg"
     },
     {
-      "Identity": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf",
+      "Identity": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf",
       "SourceId": "DigitalWorldOnline.Admin",
       "SourceType": "Discovered",
-      "ContentRoot": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
+      "ContentRoot": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
       "BasePath": "_content/DigitalWorldOnline.Admin",
       "RelativePath": "css/open-iconic/font/fonts/open-iconic#[.{fingerprint}]?.ttf",
       "AssetKind": "All",
@@ -248,10 +248,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf"
     },
     {
-      "Identity": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff",
+      "Identity": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff",
       "SourceId": "DigitalWorldOnline.Admin",
       "SourceType": "Discovered",
-      "ContentRoot": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
+      "ContentRoot": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
       "BasePath": "_content/DigitalWorldOnline.Admin",
       "RelativePath": "css/open-iconic/font/fonts/open-iconic#[.{fingerprint}]?.woff",
       "AssetKind": "All",
@@ -269,10 +269,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff"
     },
     {
-      "Identity": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\FONT-LICENSE",
+      "Identity": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\FONT-LICENSE",
       "SourceId": "DigitalWorldOnline.Admin",
       "SourceType": "Discovered",
-      "ContentRoot": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
+      "ContentRoot": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
       "BasePath": "_content/DigitalWorldOnline.Admin",
       "RelativePath": "css/open-iconic/FONT-LICENSE#[.{fingerprint}]?",
       "AssetKind": "All",
@@ -283,17 +283,17 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "z189sdz1gv",
-      "Integrity": "+Q44zfEaCMmXduni5Td+IgCbk8sSUQwES2nWs+KKQz0=",
+      "Fingerprint": "48tmkg660f",
+      "Integrity": "jA4J4h/k76zVxbFKEaWwFKJccmO0voOQ1DbUW+5YNlI=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\FONT-LICENSE"
     },
     {
-      "Identity": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\ICON-LICENSE",
+      "Identity": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\ICON-LICENSE",
       "SourceId": "DigitalWorldOnline.Admin",
       "SourceType": "Discovered",
-      "ContentRoot": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
+      "ContentRoot": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
       "BasePath": "_content/DigitalWorldOnline.Admin",
       "RelativePath": "css/open-iconic/ICON-LICENSE#[.{fingerprint}]?",
       "AssetKind": "All",
@@ -304,17 +304,17 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "3cg08az021",
-      "Integrity": "s/Is6Ey6jfNAEfXUIOyHrXXX+RcA8hzchYnuOIWUMl4=",
+      "Fingerprint": "4dwjve0o0b",
+      "Integrity": "aF5g/izareSj02F3MPSoTGNbcMBl9nmZKDe04zjU/ss=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\ICON-LICENSE"
     },
     {
-      "Identity": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\README.md",
+      "Identity": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\README.md",
       "SourceId": "DigitalWorldOnline.Admin",
       "SourceType": "Discovered",
-      "ContentRoot": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
+      "ContentRoot": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
       "BasePath": "_content/DigitalWorldOnline.Admin",
       "RelativePath": "css/open-iconic/README#[.{fingerprint}]?.md",
       "AssetKind": "All",
@@ -325,17 +325,17 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "l5877nzu3a",
-      "Integrity": "9wdNXQFE78LCNHo+Hq2eXMTx+YBf2gjsufVTJc8dAV0=",
+      "Fingerprint": "psxpu4y82n",
+      "Integrity": "p/oxU91iBE+uaDr3kYOyZPuulf4YcPAMNIz6PRA/tb0=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\README.md"
     },
     {
-      "Identity": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\site.css",
+      "Identity": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\site.css",
       "SourceId": "DigitalWorldOnline.Admin",
       "SourceType": "Discovered",
-      "ContentRoot": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
+      "ContentRoot": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
       "BasePath": "_content/DigitalWorldOnline.Admin",
       "RelativePath": "css/site#[.{fingerprint}]?.css",
       "AssetKind": "All",
@@ -346,17 +346,17 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "1vtxvcb14m",
-      "Integrity": "k8ttQt8b3auf2TSFFS+FpMy1PeccST9J5ozTv8hxRMs=",
+      "Fingerprint": "a2u9ewzzoj",
+      "Integrity": "cj6YkO5H80sMTPANmlcY+fTshg0yFWZradLEaOoge7s=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\site.css"
     },
     {
-      "Identity": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\favicon.ico",
+      "Identity": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\favicon.ico",
       "SourceId": "DigitalWorldOnline.Admin",
       "SourceType": "Discovered",
-      "ContentRoot": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
+      "ContentRoot": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
       "BasePath": "_content/DigitalWorldOnline.Admin",
       "RelativePath": "favicon#[.{fingerprint}]?.ico",
       "AssetKind": "All",
@@ -374,10 +374,10 @@
       "OriginalItemSpec": "wwwroot\\favicon.ico"
     },
     {
-      "Identity": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\Images\\dmo_header.png",
+      "Identity": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\Images\\dmo_header.png",
       "SourceId": "DigitalWorldOnline.Admin",
       "SourceType": "Discovered",
-      "ContentRoot": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
+      "ContentRoot": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
       "BasePath": "_content/DigitalWorldOnline.Admin",
       "RelativePath": "Images/dmo_header#[.{fingerprint}]?.png",
       "AssetKind": "All",
@@ -395,10 +395,10 @@
       "OriginalItemSpec": "wwwroot\\Images\\dmo_header.png"
     },
     {
-      "Identity": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\Images\\dmo_login_v2.png",
+      "Identity": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\Images\\dmo_login_v2.png",
       "SourceId": "DigitalWorldOnline.Admin",
       "SourceType": "Discovered",
-      "ContentRoot": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
+      "ContentRoot": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
       "BasePath": "_content/DigitalWorldOnline.Admin",
       "RelativePath": "Images/dmo_login_v2#[.{fingerprint}]?.png",
       "AssetKind": "All",
@@ -416,10 +416,10 @@
       "OriginalItemSpec": "wwwroot\\Images\\dmo_login_v2.png"
     },
     {
-      "Identity": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\js\\script.js",
+      "Identity": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\js\\script.js",
       "SourceId": "DigitalWorldOnline.Admin",
       "SourceType": "Discovered",
-      "ContentRoot": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
+      "ContentRoot": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\",
       "BasePath": "_content/DigitalWorldOnline.Admin",
       "RelativePath": "js/script#[.{fingerprint}]?.js",
       "AssetKind": "All",
@@ -430,8 +430,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "qlpid94yti",
-      "Integrity": "4vzflePRBPWB54ir4xD8xg4t70z22erx1Y9VbA9qbPo=",
+      "Fingerprint": "61nuilfzy9",
+      "Integrity": "5rlCLgZkViDGg7XlkMGmK9dxxLtwIe/utJKhkKGu+jQ=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\script.js"
@@ -513,8 +513,8 @@
       ]
     },
     {
-      "Route": "_content1/MudBlazor/MudBlazor.min.4zzcyv4eu3.css",
-      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\_content1\\MudBlazor\\MudBlazor.min.css",
+      "Route": "_content1/MudBlazor/MudBlazor.min.2uiaht2b4q.css",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\_content1\\MudBlazor\\MudBlazor.min.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -523,7 +523,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "505971"
+          "Value": "505977"
         },
         {
           "Name": "Content-Type",
@@ -531,11 +531,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"ID+YQTHdxOAQwL3HkDNmN+gvKpDMbSCI90Hlsl4cfE0=\""
+          "Value": "\"Jl1p6VJNIQfevOQWGW+P7BlJoHGDXXf+i4cb2qUHDRo=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 07 Feb 2025 08:44:54 GMT"
+          "Value": "Wed, 13 Aug 2025 12:23:42 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -545,7 +545,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "4zzcyv4eu3"
+          "Value": "2uiaht2b4q"
         },
         {
           "Name": "label",
@@ -553,13 +553,13 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-ID+YQTHdxOAQwL3HkDNmN+gvKpDMbSCI90Hlsl4cfE0="
+          "Value": "sha256-Jl1p6VJNIQfevOQWGW+P7BlJoHGDXXf+i4cb2qUHDRo="
         }
       ]
     },
     {
       "Route": "_content1/MudBlazor/MudBlazor.min.css",
-      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\_content1\\MudBlazor\\MudBlazor.min.css",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\_content1\\MudBlazor\\MudBlazor.min.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -568,7 +568,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "505971"
+          "Value": "505977"
         },
         {
           "Name": "Content-Type",
@@ -576,11 +576,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"ID+YQTHdxOAQwL3HkDNmN+gvKpDMbSCI90Hlsl4cfE0=\""
+          "Value": "\"Jl1p6VJNIQfevOQWGW+P7BlJoHGDXXf+i4cb2qUHDRo=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 07 Feb 2025 08:44:54 GMT"
+          "Value": "Wed, 13 Aug 2025 12:23:42 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -590,13 +590,13 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-ID+YQTHdxOAQwL3HkDNmN+gvKpDMbSCI90Hlsl4cfE0="
+          "Value": "sha256-Jl1p6VJNIQfevOQWGW+P7BlJoHGDXXf+i4cb2qUHDRo="
         }
       ]
     },
     {
       "Route": "_content1/MudBlazor/MudBlazor.min.js",
-      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\_content1\\MudBlazor\\MudBlazor.min.js",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\_content1\\MudBlazor\\MudBlazor.min.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -605,7 +605,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "41476"
+          "Value": "41481"
         },
         {
           "Name": "Content-Type",
@@ -613,11 +613,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"Y4xauMcIt84Bvrj3olTDT2vGwa9ZzAIuG7+BSyVhhn8=\""
+          "Value": "\"Hl0466OEwfeA4HKlkEFTlkOGVYaOJlTWBQGNeDPgCjY=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 07 Feb 2025 08:44:54 GMT"
+          "Value": "Wed, 13 Aug 2025 12:23:42 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -627,13 +627,13 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-Y4xauMcIt84Bvrj3olTDT2vGwa9ZzAIuG7+BSyVhhn8="
+          "Value": "sha256-Hl0466OEwfeA4HKlkEFTlkOGVYaOJlTWBQGNeDPgCjY="
         }
       ]
     },
     {
-      "Route": "_content1/MudBlazor/MudBlazor.min.r28yrlkyxf.js",
-      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\_content1\\MudBlazor\\MudBlazor.min.js",
+      "Route": "_content1/MudBlazor/MudBlazor.min.qqy426g4vy.js",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\_content1\\MudBlazor\\MudBlazor.min.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -642,7 +642,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "41476"
+          "Value": "41481"
         },
         {
           "Name": "Content-Type",
@@ -650,11 +650,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"Y4xauMcIt84Bvrj3olTDT2vGwa9ZzAIuG7+BSyVhhn8=\""
+          "Value": "\"Hl0466OEwfeA4HKlkEFTlkOGVYaOJlTWBQGNeDPgCjY=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 07 Feb 2025 08:44:54 GMT"
+          "Value": "Wed, 13 Aug 2025 12:23:42 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -664,7 +664,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "r28yrlkyxf"
+          "Value": "qqy426g4vy"
         },
         {
           "Name": "label",
@@ -672,13 +672,13 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-Y4xauMcIt84Bvrj3olTDT2vGwa9ZzAIuG7+BSyVhhn8="
+          "Value": "sha256-Hl0466OEwfeA4HKlkEFTlkOGVYaOJlTWBQGNeDPgCjY="
         }
       ]
     },
     {
       "Route": "css/bootstrap/bootstrap.min.css",
-      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -687,7 +687,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "155758"
+          "Value": "155764"
         },
         {
           "Name": "Content-Type",
@@ -695,11 +695,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"YLGeXaapI0/5IgZopewRJcFXomhRMlYYjugPLSyNjTY=\""
+          "Value": "\"rldnE7wZYJj3Q43t5v8fg1ojKRwyt0Wtfm+224CacZs=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 07 Feb 2025 08:44:54 GMT"
+          "Value": "Wed, 13 Aug 2025 12:23:42 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -709,13 +709,13 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-YLGeXaapI0/5IgZopewRJcFXomhRMlYYjugPLSyNjTY="
+          "Value": "sha256-rldnE7wZYJj3Q43t5v8fg1ojKRwyt0Wtfm+224CacZs="
         }
       ]
     },
     {
       "Route": "css/bootstrap/bootstrap.min.css.kao5znno1s.map",
-      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -736,7 +736,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 07 Feb 2025 08:44:54 GMT"
+          "Value": "Mon, 23 Jun 2025 00:33:41 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -760,7 +760,7 @@
     },
     {
       "Route": "css/bootstrap/bootstrap.min.css.map",
-      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -781,7 +781,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 07 Feb 2025 08:44:54 GMT"
+          "Value": "Mon, 23 Jun 2025 00:33:41 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -796,8 +796,8 @@
       ]
     },
     {
-      "Route": "css/bootstrap/bootstrap.min.o2wlpouf80.css",
-      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
+      "Route": "css/bootstrap/bootstrap.min.etnb7xlipe.css",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -806,7 +806,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "155758"
+          "Value": "155764"
         },
         {
           "Name": "Content-Type",
@@ -814,11 +814,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"YLGeXaapI0/5IgZopewRJcFXomhRMlYYjugPLSyNjTY=\""
+          "Value": "\"rldnE7wZYJj3Q43t5v8fg1ojKRwyt0Wtfm+224CacZs=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 07 Feb 2025 08:44:54 GMT"
+          "Value": "Wed, 13 Aug 2025 12:23:42 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -828,7 +828,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "o2wlpouf80"
+          "Value": "etnb7xlipe"
         },
         {
           "Name": "label",
@@ -836,13 +836,13 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-YLGeXaapI0/5IgZopewRJcFXomhRMlYYjugPLSyNjTY="
+          "Value": "sha256-rldnE7wZYJj3Q43t5v8fg1ojKRwyt0Wtfm+224CacZs="
         }
       ]
     },
     {
       "Route": "css/open-iconic/font/css/open-iconic-bootstrap.min.cmapd0fi15.css",
-      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -863,7 +863,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 07 Feb 2025 08:44:54 GMT"
+          "Value": "Mon, 23 Jun 2025 00:33:41 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -887,7 +887,7 @@
     },
     {
       "Route": "css/open-iconic/font/css/open-iconic-bootstrap.min.css",
-      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -908,7 +908,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 07 Feb 2025 08:44:54 GMT"
+          "Value": "Mon, 23 Jun 2025 00:33:41 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -924,7 +924,7 @@
     },
     {
       "Route": "css/open-iconic/font/fonts/open-iconic.0uw8dim9nl.eot",
-      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -945,7 +945,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 07 Feb 2025 08:44:54 GMT"
+          "Value": "Mon, 23 Jun 2025 00:33:41 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -968,53 +968,8 @@
       ]
     },
     {
-      "Route": "css/open-iconic/font/fonts/open-iconic.10uzszoped.svg",
-      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "54789"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "image/svg+xml"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"oUpLdS+SoLJFwf4bzA3iKD7TCm66oLkTpAQlVJ2s1wc=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Fri, 07 Feb 2025 08:44:54 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "10uzszoped"
-        },
-        {
-          "Name": "label",
-          "Value": "css/open-iconic/font/fonts/open-iconic.svg"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-oUpLdS+SoLJFwf4bzA3iKD7TCm66oLkTpAQlVJ2s1wc="
-        }
-      ]
-    },
-    {
       "Route": "css/open-iconic/font/fonts/open-iconic.eot",
-      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1035,7 +990,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 07 Feb 2025 08:44:54 GMT"
+          "Value": "Mon, 23 Jun 2025 00:33:41 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1051,7 +1006,7 @@
     },
     {
       "Route": "css/open-iconic/font/fonts/open-iconic.h4d0pazwgy.woff",
-      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1072,7 +1027,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 07 Feb 2025 08:44:54 GMT"
+          "Value": "Mon, 23 Jun 2025 00:33:41 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1096,7 +1051,7 @@
     },
     {
       "Route": "css/open-iconic/font/fonts/open-iconic.ll5grcv8wv.ttf",
-      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1117,7 +1072,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 07 Feb 2025 08:44:54 GMT"
+          "Value": "Mon, 23 Jun 2025 00:33:41 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1141,7 +1096,7 @@
     },
     {
       "Route": "css/open-iconic/font/fonts/open-iconic.otf",
-      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1162,7 +1117,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 07 Feb 2025 08:44:54 GMT"
+          "Value": "Mon, 23 Jun 2025 00:33:41 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1177,8 +1132,8 @@
       ]
     },
     {
-      "Route": "css/open-iconic/font/fonts/open-iconic.svg",
-      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg",
+      "Route": "css/open-iconic/font/fonts/open-iconic.sjnzgf7e1h.svg",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1187,7 +1142,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "54789"
+          "Value": "55332"
         },
         {
           "Name": "Content-Type",
@@ -1195,11 +1150,56 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"oUpLdS+SoLJFwf4bzA3iKD7TCm66oLkTpAQlVJ2s1wc=\""
+          "Value": "\"+P1oQ5jPzOVJGC52E1oxGXIXxxCyMlqy6A9cNxGYzVk=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 07 Feb 2025 08:44:54 GMT"
+          "Value": "Wed, 13 Aug 2025 12:23:42 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "sjnzgf7e1h"
+        },
+        {
+          "Name": "label",
+          "Value": "css/open-iconic/font/fonts/open-iconic.svg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-+P1oQ5jPzOVJGC52E1oxGXIXxxCyMlqy6A9cNxGYzVk="
+        }
+      ]
+    },
+    {
+      "Route": "css/open-iconic/font/fonts/open-iconic.svg",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "55332"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/svg+xml"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"+P1oQ5jPzOVJGC52E1oxGXIXxxCyMlqy6A9cNxGYzVk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 13 Aug 2025 12:23:42 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1209,13 +1209,13 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-oUpLdS+SoLJFwf4bzA3iKD7TCm66oLkTpAQlVJ2s1wc="
+          "Value": "sha256-+P1oQ5jPzOVJGC52E1oxGXIXxxCyMlqy6A9cNxGYzVk="
         }
       ]
     },
     {
       "Route": "css/open-iconic/font/fonts/open-iconic.ttf",
-      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1236,7 +1236,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 07 Feb 2025 08:44:54 GMT"
+          "Value": "Mon, 23 Jun 2025 00:33:41 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1252,7 +1252,7 @@
     },
     {
       "Route": "css/open-iconic/font/fonts/open-iconic.wk8x8xm0ah.otf",
-      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1273,7 +1273,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 07 Feb 2025 08:44:54 GMT"
+          "Value": "Mon, 23 Jun 2025 00:33:41 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1297,7 +1297,7 @@
     },
     {
       "Route": "css/open-iconic/font/fonts/open-iconic.woff",
-      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1318,7 +1318,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 07 Feb 2025 08:44:54 GMT"
+          "Value": "Mon, 23 Jun 2025 00:33:41 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1334,7 +1334,7 @@
     },
     {
       "Route": "css/open-iconic/FONT-LICENSE",
-      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\FONT-LICENSE",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\FONT-LICENSE",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1343,7 +1343,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "4017"
+          "Value": "4103"
         },
         {
           "Name": "Content-Type",
@@ -1351,11 +1351,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"+Q44zfEaCMmXduni5Td+IgCbk8sSUQwES2nWs+KKQz0=\""
+          "Value": "\"jA4J4h/k76zVxbFKEaWwFKJccmO0voOQ1DbUW+5YNlI=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 07 Feb 2025 08:44:54 GMT"
+          "Value": "Wed, 13 Aug 2025 12:23:42 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1365,13 +1365,13 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-+Q44zfEaCMmXduni5Td+IgCbk8sSUQwES2nWs+KKQz0="
+          "Value": "sha256-jA4J4h/k76zVxbFKEaWwFKJccmO0voOQ1DbUW+5YNlI="
         }
       ]
     },
     {
-      "Route": "css/open-iconic/FONT-LICENSE.z189sdz1gv",
-      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\FONT-LICENSE",
+      "Route": "css/open-iconic/FONT-LICENSE.48tmkg660f",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\FONT-LICENSE",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1380,7 +1380,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "4017"
+          "Value": "4103"
         },
         {
           "Name": "Content-Type",
@@ -1388,11 +1388,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"+Q44zfEaCMmXduni5Td+IgCbk8sSUQwES2nWs+KKQz0=\""
+          "Value": "\"jA4J4h/k76zVxbFKEaWwFKJccmO0voOQ1DbUW+5YNlI=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 07 Feb 2025 08:44:54 GMT"
+          "Value": "Wed, 13 Aug 2025 12:23:42 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1402,7 +1402,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "z189sdz1gv"
+          "Value": "48tmkg660f"
         },
         {
           "Name": "label",
@@ -1410,13 +1410,13 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-+Q44zfEaCMmXduni5Td+IgCbk8sSUQwES2nWs+KKQz0="
+          "Value": "sha256-jA4J4h/k76zVxbFKEaWwFKJccmO0voOQ1DbUW+5YNlI="
         }
       ]
     },
     {
       "Route": "css/open-iconic/ICON-LICENSE",
-      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\ICON-LICENSE",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\ICON-LICENSE",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1425,7 +1425,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "1073"
+          "Value": "1093"
         },
         {
           "Name": "Content-Type",
@@ -1433,11 +1433,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"s/Is6Ey6jfNAEfXUIOyHrXXX+RcA8hzchYnuOIWUMl4=\""
+          "Value": "\"aF5g/izareSj02F3MPSoTGNbcMBl9nmZKDe04zjU/ss=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 07 Feb 2025 08:44:54 GMT"
+          "Value": "Wed, 13 Aug 2025 12:23:42 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1447,13 +1447,13 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-s/Is6Ey6jfNAEfXUIOyHrXXX+RcA8hzchYnuOIWUMl4="
+          "Value": "sha256-aF5g/izareSj02F3MPSoTGNbcMBl9nmZKDe04zjU/ss="
         }
       ]
     },
     {
-      "Route": "css/open-iconic/ICON-LICENSE.3cg08az021",
-      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\ICON-LICENSE",
+      "Route": "css/open-iconic/ICON-LICENSE.4dwjve0o0b",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\ICON-LICENSE",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1462,7 +1462,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "1073"
+          "Value": "1093"
         },
         {
           "Name": "Content-Type",
@@ -1470,11 +1470,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"s/Is6Ey6jfNAEfXUIOyHrXXX+RcA8hzchYnuOIWUMl4=\""
+          "Value": "\"aF5g/izareSj02F3MPSoTGNbcMBl9nmZKDe04zjU/ss=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 07 Feb 2025 08:44:54 GMT"
+          "Value": "Wed, 13 Aug 2025 12:23:42 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1484,7 +1484,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "3cg08az021"
+          "Value": "4dwjve0o0b"
         },
         {
           "Name": "label",
@@ -1492,13 +1492,13 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-s/Is6Ey6jfNAEfXUIOyHrXXX+RcA8hzchYnuOIWUMl4="
+          "Value": "sha256-aF5g/izareSj02F3MPSoTGNbcMBl9nmZKDe04zjU/ss="
         }
       ]
     },
     {
-      "Route": "css/open-iconic/README.l5877nzu3a.md",
-      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\README.md",
+      "Route": "css/open-iconic/README.md",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\README.md",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1507,7 +1507,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "3501"
+          "Value": "3615"
         },
         {
           "Name": "Content-Type",
@@ -1515,11 +1515,48 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"9wdNXQFE78LCNHo+Hq2eXMTx+YBf2gjsufVTJc8dAV0=\""
+          "Value": "\"p/oxU91iBE+uaDr3kYOyZPuulf4YcPAMNIz6PRA/tb0=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 07 Feb 2025 08:44:54 GMT"
+          "Value": "Wed, 13 Aug 2025 12:23:42 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-p/oxU91iBE+uaDr3kYOyZPuulf4YcPAMNIz6PRA/tb0="
+        }
+      ]
+    },
+    {
+      "Route": "css/open-iconic/README.psxpu4y82n.md",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\README.md",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "3615"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/markdown"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"p/oxU91iBE+uaDr3kYOyZPuulf4YcPAMNIz6PRA/tb0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 13 Aug 2025 12:23:42 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1529,7 +1566,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "l5877nzu3a"
+          "Value": "psxpu4y82n"
         },
         {
           "Name": "label",
@@ -1537,13 +1574,13 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-9wdNXQFE78LCNHo+Hq2eXMTx+YBf2gjsufVTJc8dAV0="
+          "Value": "sha256-p/oxU91iBE+uaDr3kYOyZPuulf4YcPAMNIz6PRA/tb0="
         }
       ]
     },
     {
-      "Route": "css/open-iconic/README.md",
-      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\open-iconic\\README.md",
+      "Route": "css/site.a2u9ewzzoj.css",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\site.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1552,44 +1589,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "3501"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/markdown"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"9wdNXQFE78LCNHo+Hq2eXMTx+YBf2gjsufVTJc8dAV0=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Fri, 07 Feb 2025 08:44:54 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-9wdNXQFE78LCNHo+Hq2eXMTx+YBf2gjsufVTJc8dAV0="
-        }
-      ]
-    },
-    {
-      "Route": "css/site.1vtxvcb14m.css",
-      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\site.css",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "858"
+          "Value": "908"
         },
         {
           "Name": "Content-Type",
@@ -1597,11 +1597,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"k8ttQt8b3auf2TSFFS+FpMy1PeccST9J5ozTv8hxRMs=\""
+          "Value": "\"cj6YkO5H80sMTPANmlcY+fTshg0yFWZradLEaOoge7s=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 07 Feb 2025 08:44:54 GMT"
+          "Value": "Wed, 13 Aug 2025 12:23:42 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1611,7 +1611,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "1vtxvcb14m"
+          "Value": "a2u9ewzzoj"
         },
         {
           "Name": "label",
@@ -1619,13 +1619,13 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-k8ttQt8b3auf2TSFFS+FpMy1PeccST9J5ozTv8hxRMs="
+          "Value": "sha256-cj6YkO5H80sMTPANmlcY+fTshg0yFWZradLEaOoge7s="
         }
       ]
     },
     {
       "Route": "css/site.css",
-      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\site.css",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\css\\site.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1634,7 +1634,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "858"
+          "Value": "908"
         },
         {
           "Name": "Content-Type",
@@ -1642,11 +1642,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"k8ttQt8b3auf2TSFFS+FpMy1PeccST9J5ozTv8hxRMs=\""
+          "Value": "\"cj6YkO5H80sMTPANmlcY+fTshg0yFWZradLEaOoge7s=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 07 Feb 2025 08:44:54 GMT"
+          "Value": "Wed, 13 Aug 2025 12:23:42 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1656,13 +1656,13 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-k8ttQt8b3auf2TSFFS+FpMy1PeccST9J5ozTv8hxRMs="
+          "Value": "sha256-cj6YkO5H80sMTPANmlcY+fTshg0yFWZradLEaOoge7s="
         }
       ]
     },
     {
       "Route": "favicon.61n19gt1b8.ico",
-      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\favicon.ico",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\favicon.ico",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1683,7 +1683,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 07 Feb 2025 08:44:54 GMT"
+          "Value": "Mon, 23 Jun 2025 00:33:41 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1707,7 +1707,7 @@
     },
     {
       "Route": "favicon.ico",
-      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\favicon.ico",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\favicon.ico",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1728,7 +1728,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 07 Feb 2025 08:44:54 GMT"
+          "Value": "Mon, 23 Jun 2025 00:33:41 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1744,7 +1744,7 @@
     },
     {
       "Route": "Images/dmo_header.7e25eyq1m0.png",
-      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\Images\\dmo_header.png",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\Images\\dmo_header.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1765,7 +1765,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 07 Feb 2025 08:44:54 GMT"
+          "Value": "Mon, 23 Jun 2025 00:33:41 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1789,7 +1789,7 @@
     },
     {
       "Route": "Images/dmo_header.png",
-      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\Images\\dmo_header.png",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\Images\\dmo_header.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1810,7 +1810,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 07 Feb 2025 08:44:54 GMT"
+          "Value": "Mon, 23 Jun 2025 00:33:41 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1826,7 +1826,7 @@
     },
     {
       "Route": "Images/dmo_login_v2.iev14uswfk.png",
-      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\Images\\dmo_login_v2.png",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\Images\\dmo_login_v2.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1847,7 +1847,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 11 Feb 2025 13:11:19 GMT"
+          "Value": "Thu, 14 Aug 2025 18:59:52 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1871,7 +1871,7 @@
     },
     {
       "Route": "Images/dmo_login_v2.png",
-      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\Images\\dmo_login_v2.png",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\Images\\dmo_login_v2.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1892,7 +1892,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 11 Feb 2025 13:11:19 GMT"
+          "Value": "Thu, 14 Aug 2025 18:59:52 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1907,8 +1907,8 @@
       ]
     },
     {
-      "Route": "js/script.js",
-      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\js\\script.js",
+      "Route": "js/script.61nuilfzy9.js",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\js\\script.js",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1917,7 +1917,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "311"
+          "Value": "318"
         },
         {
           "Name": "Content-Type",
@@ -1925,48 +1925,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"4vzflePRBPWB54ir4xD8xg4t70z22erx1Y9VbA9qbPo=\""
+          "Value": "\"5rlCLgZkViDGg7XlkMGmK9dxxLtwIe/utJKhkKGu+jQ=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 07 Feb 2025 08:44:54 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-4vzflePRBPWB54ir4xD8xg4t70z22erx1Y9VbA9qbPo="
-        }
-      ]
-    },
-    {
-      "Route": "js/script.qlpid94yti.js",
-      "AssetFile": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\js\\script.js",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "311"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/javascript"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"4vzflePRBPWB54ir4xD8xg4t70z22erx1Y9VbA9qbPo=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Fri, 07 Feb 2025 08:44:54 GMT"
+          "Value": "Wed, 13 Aug 2025 12:23:42 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1976,7 +1939,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "qlpid94yti"
+          "Value": "61nuilfzy9"
         },
         {
           "Name": "label",
@@ -1984,7 +1947,44 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-4vzflePRBPWB54ir4xD8xg4t70z22erx1Y9VbA9qbPo="
+          "Value": "sha256-5rlCLgZkViDGg7XlkMGmK9dxxLtwIe/utJKhkKGu+jQ="
+        }
+      ]
+    },
+    {
+      "Route": "js/script.js",
+      "AssetFile": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Admin\\wwwroot\\js\\script.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "318"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"5rlCLgZkViDGg7XlkMGmK9dxxLtwIe/utJKhkKGu+jQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 13 Aug 2025 12:23:42 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-5rlCLgZkViDGg7XlkMGmK9dxxLtwIe/utJKhkKGu+jQ="
         }
       ]
     }

@@ -5549,11 +5549,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Character.Host\\DigitalWorldOnline.Character.csproj",
+      "projectUniqueName": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Character.Host\\DigitalWorldOnline.Character.csproj",
       "projectName": "DigitalWorldOnline.Character",
-      "projectPath": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Character.Host\\DigitalWorldOnline.Character.csproj",
+      "projectPath": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Character.Host\\DigitalWorldOnline.Character.csproj",
       "packagesPath": "C:\\Users\\Diego\\.nuget\\packages\\",
-      "outputPath": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Character.Host\\obj\\",
+      "outputPath": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Character.Host\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -5575,8 +5575,8 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Infra\\DigitalWorldOnline.Infrastructure\\DigitalWorldOnline.Infrastructure.csproj": {
-              "projectPath": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Infra\\DigitalWorldOnline.Infrastructure\\DigitalWorldOnline.Infrastructure.csproj"
+            "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Infra\\DigitalWorldOnline.Infrastructure\\DigitalWorldOnline.Infrastructure.csproj": {
+              "projectPath": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Infra\\DigitalWorldOnline.Infrastructure\\DigitalWorldOnline.Infrastructure.csproj"
             }
           }
         }

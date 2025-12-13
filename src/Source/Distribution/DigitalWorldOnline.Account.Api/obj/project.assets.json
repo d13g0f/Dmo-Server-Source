@@ -5073,11 +5073,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Account.Api\\DigitalWorldOnline.Api.csproj",
+      "projectUniqueName": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Account.Api\\DigitalWorldOnline.Api.csproj",
       "projectName": "DigitalWorldOnline.Api",
-      "projectPath": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Account.Api\\DigitalWorldOnline.Api.csproj",
+      "projectPath": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Account.Api\\DigitalWorldOnline.Api.csproj",
       "packagesPath": "C:\\Users\\Diego\\.nuget\\packages\\",
-      "outputPath": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Account.Api\\obj\\",
+      "outputPath": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Account.Api\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -5099,8 +5099,8 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Infra\\DigitalWorldOnline.Infrastructure\\DigitalWorldOnline.Infrastructure.csproj": {
-              "projectPath": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Infra\\DigitalWorldOnline.Infrastructure\\DigitalWorldOnline.Infrastructure.csproj"
+            "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Infra\\DigitalWorldOnline.Infrastructure\\DigitalWorldOnline.Infrastructure.csproj": {
+              "projectPath": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Infra\\DigitalWorldOnline.Infrastructure\\DigitalWorldOnline.Infrastructure.csproj"
             }
           }
         }

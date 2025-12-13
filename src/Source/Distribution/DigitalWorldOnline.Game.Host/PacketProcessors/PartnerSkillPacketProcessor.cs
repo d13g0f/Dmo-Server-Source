@@ -235,7 +235,7 @@ namespace DigitalWorldOnline.Game.PacketProcessors
 
                     var newHp = targetMob.ReceiveDamage(finalDmg, client.TamerId);
 
-                    var effects = _buffManager.ApplyBuffs(client, null, skillSlot);
+                    var effects = _buffManager.ApplyBuffs(client, targetMob, skillSlot);
                     foreach (var effect in effects)
                     {
                         if (effect.IsDebuff)
@@ -289,7 +289,7 @@ namespace DigitalWorldOnline.Game.PacketProcessors
 
                 var newHp = targetMob.ReceiveDamage(finalDmg, client.TamerId);
 
-                var effects = _buffManager.ApplyBuffs(client, null, skillSlot);
+                var effects = _buffManager.ApplyBuffs(client, targetMob, skillSlot);
                 foreach (var effect in effects)
                 {
                     if (effect.IsDebuff)

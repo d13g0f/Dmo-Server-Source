@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DigitalWorldOnline.Game")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b75cd558619b13716b58465962e6b9e26667c337")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+dcb53d4b5ea3a53ca297e52fac77448083a34329")]
 [assembly: System.Reflection.AssemblyProductAttribute("DigitalWorldOnline.Game")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DigitalWorldOnline.Game")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

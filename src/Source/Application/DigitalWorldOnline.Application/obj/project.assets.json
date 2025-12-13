@@ -483,11 +483,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Application\\DigitalWorldOnline.Application\\DigitalWorldOnline.Application.csproj",
+      "projectUniqueName": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Application\\DigitalWorldOnline.Application\\DigitalWorldOnline.Application.csproj",
       "projectName": "DigitalWorldOnline.Application",
-      "projectPath": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Application\\DigitalWorldOnline.Application\\DigitalWorldOnline.Application.csproj",
+      "projectPath": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Application\\DigitalWorldOnline.Application\\DigitalWorldOnline.Application.csproj",
       "packagesPath": "C:\\Users\\Diego\\.nuget\\packages\\",
-      "outputPath": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Application\\DigitalWorldOnline.Application\\obj\\",
+      "outputPath": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Application\\DigitalWorldOnline.Application\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -509,8 +509,8 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Domain\\DigitalWorldOnline.Commons\\DigitalWorldOnline.Commons.csproj": {
-              "projectPath": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Domain\\DigitalWorldOnline.Commons\\DigitalWorldOnline.Commons.csproj"
+            "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Domain\\DigitalWorldOnline.Commons\\DigitalWorldOnline.Commons.csproj": {
+              "projectPath": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Domain\\DigitalWorldOnline.Commons\\DigitalWorldOnline.Commons.csproj"
             }
           }
         }

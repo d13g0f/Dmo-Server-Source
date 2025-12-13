@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Account.Host\\DigitalWorldOnline.Account.csproj": {}
+    "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Account.Host\\DigitalWorldOnline.Account.csproj": {}
   },
   "projects": {
-    "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Application\\DigitalWorldOnline.Application\\DigitalWorldOnline.Application.csproj": {
+    "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Application\\DigitalWorldOnline.Application\\DigitalWorldOnline.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Application\\DigitalWorldOnline.Application\\DigitalWorldOnline.Application.csproj",
+        "projectUniqueName": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Application\\DigitalWorldOnline.Application\\DigitalWorldOnline.Application.csproj",
         "projectName": "DigitalWorldOnline.Application",
-        "projectPath": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Application\\DigitalWorldOnline.Application\\DigitalWorldOnline.Application.csproj",
+        "projectPath": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Application\\DigitalWorldOnline.Application\\DigitalWorldOnline.Application.csproj",
         "packagesPath": "C:\\Users\\Diego\\.nuget\\packages\\",
-        "outputPath": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Application\\DigitalWorldOnline.Application\\obj\\",
+        "outputPath": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Application\\DigitalWorldOnline.Application\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -33,8 +33,8 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Domain\\DigitalWorldOnline.Commons\\DigitalWorldOnline.Commons.csproj": {
-                "projectPath": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Domain\\DigitalWorldOnline.Commons\\DigitalWorldOnline.Commons.csproj"
+              "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Domain\\DigitalWorldOnline.Commons\\DigitalWorldOnline.Commons.csproj": {
+                "projectPath": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Domain\\DigitalWorldOnline.Commons\\DigitalWorldOnline.Commons.csproj"
               }
             }
           }
@@ -92,14 +92,14 @@
         }
       }
     },
-    "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Account.Host\\DigitalWorldOnline.Account.csproj": {
+    "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Account.Host\\DigitalWorldOnline.Account.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Account.Host\\DigitalWorldOnline.Account.csproj",
+        "projectUniqueName": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Account.Host\\DigitalWorldOnline.Account.csproj",
         "projectName": "DigitalWorldOnline.Account",
-        "projectPath": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Account.Host\\DigitalWorldOnline.Account.csproj",
+        "projectPath": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Account.Host\\DigitalWorldOnline.Account.csproj",
         "packagesPath": "C:\\Users\\Diego\\.nuget\\packages\\",
-        "outputPath": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Account.Host\\obj\\",
+        "outputPath": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Account.Host\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -121,14 +121,14 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Character.Host\\DigitalWorldOnline.Character.csproj": {
-                "projectPath": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Character.Host\\DigitalWorldOnline.Character.csproj"
+              "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Character.Host\\DigitalWorldOnline.Character.csproj": {
+                "projectPath": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Character.Host\\DigitalWorldOnline.Character.csproj"
               },
-              "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Game.Host\\DigitalWorldOnline.Game.csproj": {
-                "projectPath": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Game.Host\\DigitalWorldOnline.Game.csproj"
+              "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Game.Host\\DigitalWorldOnline.Game.csproj": {
+                "projectPath": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Game.Host\\DigitalWorldOnline.Game.csproj"
               },
-              "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Infra\\DigitalWorldOnline.Infrastructure\\DigitalWorldOnline.Infrastructure.csproj": {
-                "projectPath": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Infra\\DigitalWorldOnline.Infrastructure\\DigitalWorldOnline.Infrastructure.csproj"
+              "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Infra\\DigitalWorldOnline.Infrastructure\\DigitalWorldOnline.Infrastructure.csproj": {
+                "projectPath": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Infra\\DigitalWorldOnline.Infrastructure\\DigitalWorldOnline.Infrastructure.csproj"
               }
             }
           }
@@ -212,14 +212,14 @@
         }
       }
     },
-    "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Character.Host\\DigitalWorldOnline.Character.csproj": {
+    "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Character.Host\\DigitalWorldOnline.Character.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Character.Host\\DigitalWorldOnline.Character.csproj",
+        "projectUniqueName": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Character.Host\\DigitalWorldOnline.Character.csproj",
         "projectName": "DigitalWorldOnline.Character",
-        "projectPath": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Character.Host\\DigitalWorldOnline.Character.csproj",
+        "projectPath": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Character.Host\\DigitalWorldOnline.Character.csproj",
         "packagesPath": "C:\\Users\\Diego\\.nuget\\packages\\",
-        "outputPath": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Character.Host\\obj\\",
+        "outputPath": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Character.Host\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -241,8 +241,8 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Infra\\DigitalWorldOnline.Infrastructure\\DigitalWorldOnline.Infrastructure.csproj": {
-                "projectPath": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Infra\\DigitalWorldOnline.Infrastructure\\DigitalWorldOnline.Infrastructure.csproj"
+              "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Infra\\DigitalWorldOnline.Infrastructure\\DigitalWorldOnline.Infrastructure.csproj": {
+                "projectPath": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Infra\\DigitalWorldOnline.Infrastructure\\DigitalWorldOnline.Infrastructure.csproj"
               }
             }
           }
@@ -324,14 +324,14 @@
         }
       }
     },
-    "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Game.Host\\DigitalWorldOnline.Game.csproj": {
+    "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Game.Host\\DigitalWorldOnline.Game.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Game.Host\\DigitalWorldOnline.Game.csproj",
+        "projectUniqueName": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Game.Host\\DigitalWorldOnline.Game.csproj",
         "projectName": "DigitalWorldOnline.Game",
-        "projectPath": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Game.Host\\DigitalWorldOnline.Game.csproj",
+        "projectPath": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Game.Host\\DigitalWorldOnline.Game.csproj",
         "packagesPath": "C:\\Users\\Diego\\.nuget\\packages\\",
-        "outputPath": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Game.Host\\obj\\",
+        "outputPath": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Distribution\\DigitalWorldOnline.Game.Host\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -353,8 +353,8 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Infra\\DigitalWorldOnline.Infrastructure\\DigitalWorldOnline.Infrastructure.csproj": {
-                "projectPath": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Infra\\DigitalWorldOnline.Infrastructure\\DigitalWorldOnline.Infrastructure.csproj"
+              "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Infra\\DigitalWorldOnline.Infrastructure\\DigitalWorldOnline.Infrastructure.csproj": {
+                "projectPath": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Infra\\DigitalWorldOnline.Infrastructure\\DigitalWorldOnline.Infrastructure.csproj"
               }
             }
           }
@@ -444,14 +444,14 @@
         }
       }
     },
-    "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Domain\\DigitalWorldOnline.Commons\\DigitalWorldOnline.Commons.csproj": {
+    "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Domain\\DigitalWorldOnline.Commons\\DigitalWorldOnline.Commons.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Domain\\DigitalWorldOnline.Commons\\DigitalWorldOnline.Commons.csproj",
+        "projectUniqueName": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Domain\\DigitalWorldOnline.Commons\\DigitalWorldOnline.Commons.csproj",
         "projectName": "DigitalWorldOnline.Commons",
-        "projectPath": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Domain\\DigitalWorldOnline.Commons\\DigitalWorldOnline.Commons.csproj",
+        "projectPath": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Domain\\DigitalWorldOnline.Commons\\DigitalWorldOnline.Commons.csproj",
         "packagesPath": "C:\\Users\\Diego\\.nuget\\packages\\",
-        "outputPath": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Domain\\DigitalWorldOnline.Commons\\obj\\",
+        "outputPath": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Domain\\DigitalWorldOnline.Commons\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -526,14 +526,14 @@
         }
       }
     },
-    "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Infra\\DigitalWorldOnline.Infrastructure\\DigitalWorldOnline.Infrastructure.csproj": {
+    "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Infra\\DigitalWorldOnline.Infrastructure\\DigitalWorldOnline.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Infra\\DigitalWorldOnline.Infrastructure\\DigitalWorldOnline.Infrastructure.csproj",
+        "projectUniqueName": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Infra\\DigitalWorldOnline.Infrastructure\\DigitalWorldOnline.Infrastructure.csproj",
         "projectName": "DigitalWorldOnline.Infrastructure",
-        "projectPath": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Infra\\DigitalWorldOnline.Infrastructure\\DigitalWorldOnline.Infrastructure.csproj",
+        "projectPath": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Infra\\DigitalWorldOnline.Infrastructure\\DigitalWorldOnline.Infrastructure.csproj",
         "packagesPath": "C:\\Users\\Diego\\.nuget\\packages\\",
-        "outputPath": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Infra\\DigitalWorldOnline.Infrastructure\\obj\\",
+        "outputPath": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Infra\\DigitalWorldOnline.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -555,8 +555,8 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Application\\DigitalWorldOnline.Application\\DigitalWorldOnline.Application.csproj": {
-                "projectPath": "G:\\Digimon Masters Online\\dev\\Dmo-Server-Source\\src\\Source\\Application\\DigitalWorldOnline.Application\\DigitalWorldOnline.Application.csproj"
+              "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Application\\DigitalWorldOnline.Application\\DigitalWorldOnline.Application.csproj": {
+                "projectPath": "G:\\Digimon Masters Online\\dev\\DME-Server-Source\\src\\Source\\Application\\DigitalWorldOnline.Application\\DigitalWorldOnline.Application.csproj"
               }
             }
           }
