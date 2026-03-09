@@ -19,6 +19,7 @@ using Microsoft.IdentityModel.Tokens;
 using MediatR;
 using Serilog;
 using GameServer.Logging;
+using DigitalWorldOnline.Commons.Models.Map;
 
 namespace DigitalWorldOnline.Game.PacketProcessors
 {
@@ -179,46 +180,76 @@ namespace DigitalWorldOnline.Game.PacketProcessors
 
                _ = GameLogger.LogInfo("[loading] Updated character state to Loading", "Loading");
 
-                var mapConfig = await _sender.Send(new GameMapConfigByMapIdQuery(client.Tamer.Location.MapId));
+            var mapId = client.Tamer.Location.MapId;
 
-                if (mapConfig == null)
+            var mapConfig = await _sender.Send(new GameMapConfigByMapIdQuery(mapId));
+
+            // ------------------------------------------------------------------------------------
+            // MAP TYPE RESOLUTION (single source of truth with safe fallback)
+            // DB config has priority, but if DB says Default and hardcoded list says PvP/Dungeon/Event,
+            // we override to avoid routing inconsistencies.
+            // ------------------------------------------------------------------------------------
+            MapTypeEnum resolvedType;
+
+            if (mapConfig == null)
+            {
+                resolvedType = GetMapType(mapId);
+
+                _logger.Warning(
+                    $"Adding Tamer {character.Id}:{character.Name} to map {mapId} Ch {character.Channel}... " +
+                    $"(No DB MapConfig. Fallback={resolvedType})"
+                );
+            }
+            else
+            {
+                resolvedType = mapConfig.Type;
+
+                // override only when DB says Default but code says something special
+                if (resolvedType == MapTypeEnum.Default)
                 {
-                    _logger.Warning(
-                        $"Adding Tamer {character.Id}:{character.Name} to map {character.Location.MapId} Ch {character.Channel}... (Default Map)");
-                    await _mapServer.AddClient(client);
-                   _ = GameLogger.LogInfo($"[loading] Added tamer to default map {character.Location.MapId} Ch {character.Channel}", "Loading");
-                }
-                else
-                {
-                    switch (mapConfig.Type)
+                    var fallback = GetMapType(mapId);
+                    if (fallback != MapTypeEnum.Default)
                     {
-                        case MapTypeEnum.Dungeon:
-                            _logger.Information(
-                                $"Adding Tamer {character.Id}:{character.Name} to map {character.Location.MapId} Ch {character.Channel}... (Dungeon Map)");
-                            client.Tamer.SetCurrentChannel(0);
-                            await _dungeonsServer.AddClient(client);
-                           _ = GameLogger.LogInfo($"[loading] Added tamer to dungeon map {character.Location.MapId} Ch 0", "Loading");
-                            break;
-                        case MapTypeEnum.Pvp:
-                            _logger.Information(
-                                $"Adding Tamer {character.Id}:{character.Name} to map {character.Location.MapId} Ch {character.Channel}... (PVP Map)");
-                            await _pvpServer.AddClient(client);
-                           _ = GameLogger.LogInfo($"[loading] Added tamer to PVP map {character.Location.MapId} Ch {character.Channel}", "Loading");
-                            break;
-                        case MapTypeEnum.Event:
-                            _logger.Information(
-                                $"Adding Tamer {character.Id}:{character.Name} to map {character.Location.MapId} Ch {character.Channel}... (Event Map)");
-                            await _eventServer.AddClient(client);
-                           _ = GameLogger.LogInfo($"[loading] Added tamer to event map {character.Location.MapId} Ch {character.Channel}", "Loading");
-                            break;
-                        case MapTypeEnum.Default:
-                            _logger.Information(
-                                $"Adding Tamer {character.Id}:{character.Name} to map {character.Location.MapId} Ch {character.Channel}... (Normal Map)");
-                            await _mapServer.AddClient(client);
-                           _ = GameLogger.LogInfo($"[loading] Added tamer to normal map {character.Location.MapId} Ch {character.Channel}", "Loading");
-                            break;
+                        _logger.Warning(
+                            $"[MapRouting] DB MapType=Default but hardcoded says {fallback}. " +
+                            $"Overriding. MapId={mapId}"
+                        );
+                        resolvedType = fallback;
                     }
                 }
+            }
+
+            // ------------------------------------------------------------------------------------
+            // ROUTE CLIENT TO THE RIGHT SERVER
+            // ------------------------------------------------------------------------------------
+            switch (resolvedType)
+            {
+                case MapTypeEnum.Dungeon:
+                    _logger.Information(
+                        $"Adding Tamer {character.Id}:{character.Name} to map {mapId} Ch 0... (Dungeon Map)");
+                    client.Tamer.SetCurrentChannel(0);
+                    await _dungeonsServer.AddClient(client);
+                    break;
+
+                case MapTypeEnum.Pvp:
+                    _logger.Information(
+                        $"Adding Tamer {character.Id}:{character.Name} to map {mapId} Ch {character.Channel}... (PVP Map)");
+                    await _pvpServer.AddClient(client);
+                    break;
+
+                case MapTypeEnum.Event:
+                    _logger.Information(
+                        $"Adding Tamer {character.Id}:{character.Name} to map {mapId} Ch {character.Channel}... (Event Map)");
+                    await _eventServer.AddClient(client);
+                    break;
+
+                default:
+                    _logger.Information(
+                        $"Adding Tamer {character.Id}:{character.Name} to map {mapId} Ch {character.Channel}... (Normal Map)");
+                    await _mapServer.AddClient(client);
+                    break;
+            }
+
 
                 while (client.Loading)
                 {
@@ -311,6 +342,21 @@ namespace DigitalWorldOnline.Game.PacketProcessors
                _ = GameLogger.LogInfo($"[loading] Exception occurred: {ex.Message}", "Loading");
             }
         }
+
+        private static MapTypeEnum GetMapType(short mapId)
+        {
+            if (GameMap.DungeonMapIds.Contains(mapId))
+                return MapTypeEnum.Dungeon;
+
+            if (GameMap.PvpMapIds.Contains(mapId))
+                return MapTypeEnum.Pvp;
+
+            if (GameMap.EventMapIds.Contains(mapId))
+                return MapTypeEnum.Event;
+
+            return MapTypeEnum.Default;
+        }
+
 
         private async Task ReceiveArenaPoints(GameClient client)
         {

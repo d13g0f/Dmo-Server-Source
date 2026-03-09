@@ -74,6 +74,16 @@ namespace DigitalWorldOnline.Game.PacketProcessors
 
             if (client.Tamer.PvpMap && targetPartner != null && targetPartner.Character.PvpMap && targetPartner.Alive)
             {
+                // ------------------------------------------------------------------
+                // PVP PROTECT CHECK
+                // ------------------------------------------------------------------
+                if (targetPartner.Character.PvpProtect)
+                {
+                    client.Partner.StopAutoAttack(); // evita loops
+                    client.Send(new SystemMessagePacket($"{targetPartner.Character.Name} is under PvP protection!"));
+                    return; // cancelamos ataque
+                }
+
                 if (DateTime.Now < client.Partner.LastHitTime.AddMilliseconds(client.Partner.AS))
                 {
                     client.Partner.StartAutoAttack();

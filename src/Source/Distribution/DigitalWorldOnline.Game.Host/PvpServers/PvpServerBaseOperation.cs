@@ -93,17 +93,22 @@ namespace DigitalWorldOnline.GameHost
                         if (newMap.Type == MapTypeEnum.Pvp)
                         {
                             newMap.Channel = client.Tamer.Channel;
+
                             _logger.Information(
-                                $"Initializing new Channel for pvp map {newMap.Id} : {newMap.Name} Ch {client.Tamer.Channel}");
+                                $"[PvP] Initializing new PvP map instance {newMap.MapId} : {newMap.Name} Ch {client.Tamer.Channel}");
+
+                            // 🔴 MUY IMPORTANTE
+                            newMap.Initialize();
+
                             Maps.Add(newMap);
                         }
+
                     }
                 }
+
+                _lastMapsSearch = DateTime.Now.AddSeconds(10);
             }
-
-            _lastMapsSearch = DateTime.Now.AddSeconds(10);
         }
-
         #endregion
 
         #region Get Mobs / Maps
@@ -249,6 +254,11 @@ namespace DigitalWorldOnline.GameHost
                 client.Tamer.MobsInView.Clear();
                 map.AddClient(client);
                 client.Tamer.Revive();
+                if (client.PvpMap)
+                {
+                    client.Tamer.SetPvpProtect(5);
+                    Console.WriteLine($"[PvP] Protection activated for {client.Tamer.Name} for 5 seconds.");
+                }
             }
             else
             {
@@ -266,7 +276,7 @@ namespace DigitalWorldOnline.GameHost
                             x.Channel == client.Tamer.Channel);
 
                         _loadChannel = client.Tamer.Channel;
-                        _logger.Information(
+                       _logger.Debug(
                             $"Waiting pvp map {client.Tamer.Location.MapId} CH {_loadChannel} initialization.");
 
                         if (map == null)
@@ -284,17 +294,84 @@ namespace DigitalWorldOnline.GameHost
                     if (map == null)
                     {
                         _loadChannel = client.Tamer.Channel;
-                        client.Disconnect();
+
+                        _logger.Warning(
+                            $"[PvP] Map {client.Tamer.Location.MapId} CH {_loadChannel} not ready. Warping player to safe map.");
+
+                        await SafeWarp(client, 3, 19993, 15116);
                     }
+
                     else
                     {
                         client.Tamer.MobsInView.Clear();
                         map.AddClient(client);
                         client.Tamer.Revive();
+                        if (client.PvpMap)
+                        {
+                            client.Tamer.SetPvpProtect(5);
+                            Console.WriteLine($"[PvP] Protection activated for {client.Tamer.Name} for 5 seconds.");
+                        }
+
                     }
                 });
             }
         }
+
+        public async Task SafeWarp(GameClient client, short fallbackMapId, int fallbackX, int fallbackY)
+        {
+            try
+            {
+                _logger.Warning($"[SafeWarp] Activado para TamerId={client.TamerId} -> MapaDestino={fallbackMapId} X={fallbackX} Y={fallbackY}");
+
+                client.SetDungeonId(0);
+                client.SetPartyId(0);
+
+                if (client.Tamer == null)
+                {
+                    _logger.Warning("[SafeWarp] Fallback fallido: Tamer es null. Forzando desconexión.");
+                    client.Disconnect();
+                    return;
+                }
+
+                client.Tamer.Location.SetMapId(fallbackMapId);
+                client.Tamer.Location.SetX(fallbackX);
+                client.Tamer.Location.SetY(fallbackY);
+
+                _logger.Warning($"[SafeWarp] Nueva ubicación seteada -> MapId={client.Tamer.Location.MapId} Ch={client.Tamer.Channel}");
+
+                var map = Maps.FirstOrDefault(x =>
+                    x.Initialized && x.MapId == fallbackMapId && x.Channel == client.Tamer.Channel);
+
+                if (map == null)
+                {
+                    _loadChannel = client.Tamer.Channel;
+                    await SearchNewMaps(client);
+
+                    map = Maps.FirstOrDefault(x =>
+                        x.Initialized && x.MapId == fallbackMapId && x.Channel == client.Tamer.Channel);
+
+                    if (map == null)
+                    {
+                        _logger.Warning($"[SafeWarp] FallbackMap {fallbackMapId} Ch {client.Tamer.Channel} sigue sin existir -> Desconectando...");
+                        client.Disconnect();
+                        return;
+                    }
+                }
+
+                client.Tamer.MobsInView.Clear();
+
+                map.AddClient(client);
+                client.Tamer.Revive();
+
+                _logger.Warning($"[SafeWarp] TamerId={client.TamerId} insertado con éxito en MapId={fallbackMapId} Ch={client.Tamer.Channel}");
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"[SafeWarp] Excepción: {ex.Message} {ex.StackTrace}");
+                client.Disconnect();
+            }
+        }
+
 
         /// <summary>
         /// Removes the gameclient from the target map.

@@ -19,6 +19,12 @@ namespace DigitalWorldOnline.Commons.Models.Asset
 
                 [JsonPropertyName("DamagePerLevel")]
                 public int DamagePerLevel { get; set; }
+                
+                [JsonPropertyName("PvpBasePercent")]
+                public double PvpBasePercent { get; set; } = 0.05; // 5% default
+
+                [JsonPropertyName("PvpPercentPerLevel")]
+                public double PvpPercentPerLevel { get; set; } = 0.002; // 0.2% por nivel
 
                 [JsonPropertyName("LevelUpPoint")]
                 public int LevelUpPoint { get; set; }

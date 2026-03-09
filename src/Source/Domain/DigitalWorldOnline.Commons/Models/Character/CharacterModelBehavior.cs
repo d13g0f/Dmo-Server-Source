@@ -2177,6 +2177,28 @@ namespace DigitalWorldOnline.Commons.Models.Character
             return this;
         }
 
+        // -------------------------------------------------------------------------------------------------
+        // PVP PROTECTION (Spawn / Revive / Loading safety)
+
+        private DateTime _pvpProtectionUntil = DateTime.MinValue;
+
+        /// <summary>
+        /// Indicates whether the character is currently protected from PvP attacks.
+        /// </summary>
+        public bool PvpProtect => DateTime.UtcNow < _pvpProtectionUntil;
+
+        /// <summary>
+        /// Activates temporary PvP protection for the character.
+        /// Intended to be called by the server (spawn, revive, map enter).
+        /// </summary>
+        /// <param name="seconds">Duration of protection in seconds.</param>
+        public void SetPvpProtect(int seconds)
+        {
+            if (seconds > 0)
+                _pvpProtectionUntil = DateTime.UtcNow.AddSeconds(seconds);
+        }
+
+
         private bool _pvpMap = false;
 
         public bool PvpMap

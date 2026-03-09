@@ -5,26 +5,18 @@ using DigitalWorldOnline.Commons.Entities;
 using DigitalWorldOnline.Commons.Enums;
 using DigitalWorldOnline.Commons.Enums.PacketProcessor;
 using DigitalWorldOnline.Commons.Interfaces;
-using DigitalWorldOnline.Commons.Models.Asset;
-using DigitalWorldOnline.Commons.Models.Config;
-using DigitalWorldOnline.Commons.Models.Digimon;
 using DigitalWorldOnline.Game.Managers;
-using DigitalWorldOnline.Commons.Models.Summon;
 using DigitalWorldOnline.Commons.Packets.GameServer.Combat;
-using DigitalWorldOnline.Commons.Utils;
 using DigitalWorldOnline.GameHost;
 using DigitalWorldOnline.GameHost.EventsServer;
 using MediatR;
 using Serilog;
 using static DigitalWorldOnline.Commons.Packets.GameServer.AddBuffPacket;
-using DigitalWorldOnline.Commons.Models.Character;
 using DigitalWorldOnline.Commons.Packets.GameServer;
 using DigitalWorldOnline.Commons.Models;
-using System.Diagnostics.Eventing.Reader;
-using System.Runtime.CompilerServices;
-using static Quartz.Logging.OperationName;
 using DigitalWorldOnline.Game.Managers.Combat;
 using GameServer.Logging;
+using DigitalWorldOnline.Commons.Packets.Chat;
 
 namespace DigitalWorldOnline.Game.PacketProcessors
 {
@@ -40,6 +32,7 @@ namespace DigitalWorldOnline.Game.PacketProcessors
         private readonly ILogger _logger;
         private readonly ISender _sender;
         private readonly ISkillDamageCalculator _skillDamageCalculator;
+        private readonly IPvpSkillDamageCalculator _pvpSkillDamageCalculator;
         private readonly IBuffManager _buffManager;
         private readonly ICombatBroadcaster _combatBroadcaster;
 
@@ -52,6 +45,7 @@ namespace DigitalWorldOnline.Game.PacketProcessors
             ILogger logger,
             ISender sender,
             ISkillDamageCalculator skillDamageCalculator,
+            IPvpSkillDamageCalculator pvpSkillDamageCalculator,
             IBuffManager buffManager,
             ICombatBroadcaster combatBroadcaster)
         {
@@ -63,9 +57,11 @@ namespace DigitalWorldOnline.Game.PacketProcessors
             _logger = logger;
             _sender = sender;
             _skillDamageCalculator = skillDamageCalculator;
+            _pvpSkillDamageCalculator = pvpSkillDamageCalculator;
             _buffManager = buffManager;
             _combatBroadcaster = combatBroadcaster;
         }
+
 
         public async Task Process(GameClient client, byte[] packetData)
         {
@@ -76,6 +72,26 @@ namespace DigitalWorldOnline.Game.PacketProcessors
             var skillSlot = packet.ReadByte();
             var attackerHandler = packet.ReadInt();
             var targetHandler = packet.ReadInt();
+
+            // -----------------------------------------------------------------------------------
+            // PVP PROTECT CHECK
+            // -----------------------------------------------------------------------------------
+
+            var targetEnemyDigimon  = _pvpServer.GetEnemyByHandler(client.Tamer.Location.MapId, targetHandler, client.TamerId);
+
+            if (client.PvpMap && targetEnemyDigimon  != null)
+            {
+                if (targetEnemyDigimon .Character.PvpProtect)
+                {
+                    // El objetivo está protegido → NO HACEMOS DAÑO
+                    await GameLogger.LogInfo($"Skill blocked: target {targetEnemyDigimon .Character.Name} has PvpProtect active.", "skills");
+
+                    client.Send(new SystemMessagePacket($"{targetEnemyDigimon .Character.Name} is protected after respawning.").Serialize());
+
+                    return; // CANCELAMOS SKILL
+                }
+            }
+
 
             await GameLogger.LogInfo($"Datos del paquete: SkillSlot={skillSlot}, AttackerHandler={attackerHandler}, TargetHandler={targetHandler}", "skills");
 
@@ -177,6 +193,61 @@ namespace DigitalWorldOnline.Game.PacketProcessors
                 await GameLogger.LogInfo($"Mob objetivo único: Handler={mob.GeneralHandler}", "skills");
             }
 
+
+            // =========================================================================================
+            // PvP PROTECTION FILTER — Applies only if the target is a PLAYER (DigimonModel)
+            // =========================================================================================
+
+            // Nueva lista de objetivos válidos
+            List<IMob> filteredTargets = new List<IMob>();
+
+            foreach (var mob in targetMobs)
+            {
+                // Caso 1 — No estamos en mapa PvP → mantener todo
+                if (!client.PvpMap)
+                {
+                    filteredTargets.Add(mob);
+                    continue;
+                }
+
+                // Intentamos resolver si el handler corresponde a un jugador
+                var playerTarget = _pvpServer.GetEnemyByHandler(
+                    client.Tamer.Location.MapId,
+                    mob.GeneralHandler,
+                    client.TamerId
+                );
+
+                // Caso 2 — No es jugador → mantener (mob normal)
+                if (playerTarget == null)
+                {
+                    filteredTargets.Add(mob);
+                    continue;
+                }
+
+                // Caso 3 — Es jugador pero NO tiene protección → mantener
+                if (!playerTarget.Character.PvpProtect)
+                {
+                    filteredTargets.Add(mob);
+                    continue;
+                }
+
+                // Caso 4 — Es jugador Y está protegido → bloquear daño
+                client.Send(new SystemMessagePacket($"{playerTarget.Character.Name} is protected after respawning.").Serialize());
+
+                await GameLogger.LogInfo($"Skill damage avoided: {playerTarget.Character.Name} has PvpProtect.", "skills");
+            }
+
+            // Reemplazar lista
+            targetMobs = filteredTargets;
+
+            // Si no quedó ningún target válido, cancelar skill sin romper animación
+            if (!targetMobs.Any())
+            {
+                await GameLogger.LogInfo("Skill canceled: All valid targets had PvP protection.", "skills");
+                return;
+            }
+
+
             if (!targetMobs.Any())
             {
                 await GameLogger.LogWarning("No se encontraron mobs objetivo", "skills");
@@ -200,7 +271,7 @@ namespace DigitalWorldOnline.Game.PacketProcessors
             if (!client.Tamer.InBattle)
             {
                 client.Tamer.SetHidden(false);
-                broadcastAction(client.TamerId, new SetCombatOnPacket(attackerHandler).Serialize());
+                broadcastAction(client.TamerId, new SetCombatOnPacket(targetMobs.First().GeneralHandler).Serialize());
                 client.Tamer.StartBattleWithSkill(targetMobs, skillType);
             }
             else
@@ -225,7 +296,7 @@ namespace DigitalWorldOnline.Game.PacketProcessors
 
                     if (!targetMob.InBattle)
                     {
-                        broadcastAction(client.TamerId, new SetCombatOnPacket(targetHandler).Serialize());
+                        broadcastAction(client.TamerId, new SetCombatOnPacket(targetMob.GeneralHandler).Serialize());
                         targetMob.StartBattle(client.Tamer);
                     }
                     else
@@ -272,7 +343,7 @@ namespace DigitalWorldOnline.Game.PacketProcessors
 
                 if (!targetMob.InBattle)
                 {
-                    broadcastAction(client.TamerId, new SetCombatOnPacket(targetHandler).Serialize());
+                    broadcastAction(client.TamerId, new SetCombatOnPacket(targetMob.GeneralHandler).Serialize());
                     targetMob.StartBattle(client.Tamer);
                 }
                 else
@@ -280,14 +351,57 @@ namespace DigitalWorldOnline.Game.PacketProcessors
                     targetMob.AddTarget(client.Tamer);
                 }
 
-                var finalDmg = client.Tamer.GodMode
-                    ? targetMob.CurrentHP
-                    : _skillDamageCalculator.CalculateDamage(client, skillAsset, skillSlot).Damage;
 
-                if (finalDmg <= 0) finalDmg = client.Tamer.Partner.AT;
-                if (finalDmg > targetMob.CurrentHP) finalDmg = targetMob.CurrentHP;
+                // ---------------------------------------------
+                // Second-level safety check (PvP only)
+                // ---------------------------------------------
+                if (client.PvpMap && targetEnemyDigimon  != null && targetEnemyDigimon .Character.PvpProtect)
+                {
+                    await GameLogger.LogInfo("Damage blocked: PvpProtect active.", "skills");
+                    return;
+                }
 
-                var newHp = targetMob.ReceiveDamage(finalDmg, client.TamerId);
+                // =====================================================
+                // PvP DAMAGE (Player target)
+                // =====================================================
+
+                int finalDmg;
+
+                if (client.PvpMap && targetEnemyDigimon  != null)
+                {
+                    // Guardamos referencia para el calculator
+                    var target = targetEnemyDigimon ;
+
+                    var pvpResult = client.Tamer.GodMode
+                        ? new DamageResult { Damage = targetEnemyDigimon .HP }
+                        : _pvpSkillDamageCalculator.CalculateDamage(client, skillAsset, skillSlot);
+
+                    finalDmg = pvpResult.Damage;
+
+                    // Clamp de seguridad
+                    if (finalDmg > targetEnemyDigimon .HP)
+                        finalDmg = targetEnemyDigimon .HP;
+
+                    // Aplicar daño al jugador
+                    targetEnemyDigimon .ReceiveDamage(finalDmg);
+                }
+                else
+                {
+                    // =====================================================
+                    // PvE fallback (Mobs)
+                    // =====================================================
+                    finalDmg = client.Tamer.GodMode
+                        ? targetMob.CurrentHP
+                        : _skillDamageCalculator.CalculateDamage(client, skillAsset, skillSlot).Damage;
+
+                    if (finalDmg <= 0)
+                        finalDmg = client.Tamer.Partner.AT;
+
+                    if (finalDmg > targetMob.CurrentHP)
+                        finalDmg = targetMob.CurrentHP;
+
+                    targetMob.ReceiveDamage(finalDmg, client.TamerId);
+                }
 
                 var effects = _buffManager.ApplyBuffs(client, targetMob, skillSlot);
                 foreach (var effect in effects)
@@ -314,16 +428,61 @@ namespace DigitalWorldOnline.Game.PacketProcessors
                     }
                 }
 
-                if (newHp > 0)
+                // =====================================================
+                // COMBAT BROADCAST
+                // =====================================================
+
+                broadcastAction(
+                    client.TamerId,
+                    new CastSkillPacket(skillSlot, attackerHandler, targetHandler).Serialize()
+                );
+
+                // PvP → solo hit visual (no kill packet)
+                if (client.PvpMap && targetEnemyDigimon  != null)
                 {
-                    broadcastAction(client.TamerId, new CastSkillPacket(skillSlot, attackerHandler, targetHandler).Serialize());
-                    broadcastAction(client.TamerId, new SkillHitPacket(attackerHandler, targetMob.GeneralHandler, skillSlot, finalDmg, targetMob.CurrentHpRate).Serialize());
+                    broadcastAction(
+                        client.TamerId,
+                        new SkillHitPacket(
+                            attackerHandler,
+                            targetHandler,
+                            skillSlot,
+                            finalDmg,
+                            targetEnemyDigimon.HpRate
+                        ).Serialize()
+                    );
                 }
                 else
                 {
-                    broadcastAction(client.TamerId, new KillOnSkillPacket(attackerHandler, targetMob.GeneralHandler, skillSlot, finalDmg).Serialize());
-                    targetMob?.Die();
+                    // PvE → mob logic
+                    if (targetMob.CurrentHP > 0)
+                    {
+                        broadcastAction(
+                            client.TamerId,
+                            new SkillHitPacket(
+                                attackerHandler,
+                                targetMob.GeneralHandler,
+                                skillSlot,
+                                finalDmg,
+                                targetMob.CurrentHpRate
+                            ).Serialize()
+                        );
+                    }
+                    else
+                    {
+                        broadcastAction(
+                            client.TamerId,
+                            new KillOnSkillPacket(
+                                attackerHandler,
+                                targetMob.GeneralHandler,
+                                skillSlot,
+                                finalDmg
+                            ).Serialize()
+                        );
+
+                        targetMob?.Die();
+                    }
                 }
+
             }
 
             var cdMs = jsonSkill.CooldownMs;

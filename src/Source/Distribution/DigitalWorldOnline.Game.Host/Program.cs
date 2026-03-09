@@ -101,6 +101,7 @@ namespace DigitalWorldOnline.Game
                     services.AddSingleton<ISkillDamageCalculator, SkillDamageCalculator>();
                     services.AddSingleton<IBuffManager, BuffManager>();
                     services.AddSingleton<ICombatBroadcaster, CombatBroadcaster>();
+                    services.AddSingleton<IPvpSkillDamageCalculator, PvPSkillDamageCalculator>();
 
 
                     services.AddSingleton<EventQueueManager>();
